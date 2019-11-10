@@ -1,19 +1,40 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Component } from 'react';
+import { BrowserRouter as Router} from "react-router-dom";
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import './App.css';
+import Routes from './routes';
+import { blue, indigo } from '@material-ui/core/colors';
+
+const theme = createMuiTheme({
+  palette: {
+    secondary: {
+      main: blue[900]
+    },
+    primary: {
+      main: indigo[700]
+    }
+  },
+  typography: {
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '"Lato"',
+      'sans-serif'
+    ].join(',')
+  }
+});
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    <Router>
+      <div>
+        <ThemeProvider theme={theme}>
+          <Routes />
+        </ThemeProvider>
       </div>
+    </Router>
     );
   }
 }
