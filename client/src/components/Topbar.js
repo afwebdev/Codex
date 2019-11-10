@@ -45,7 +45,6 @@ const styles = theme => ({
     display: 'inline-block',
     borderLeft: `1px solid ${theme.palette.grey['A100']}`,
     marginLeft: 32,
-    paddingLeft: 24,
     [theme.breakpoints.up('md')]: {
       paddingTop: '1.5em'
     }

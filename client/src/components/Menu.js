@@ -4,7 +4,7 @@ const Menu = [
     pathname: "/"
   },
   {
-    label: "Dashboard",
+    label: "Dashboard (No purpose atm)",
     pathname: "/dashboard"
   },
   {
@@ -12,16 +12,16 @@ const Menu = [
     pathname: "/signup"
   },
   {
-    label: "Wizard",
+    label: "Sign In",
+    pathname: "/signin"
+  },
+  {
+    label: "Wizard (No purpose atm)",
     pathname: "/wizard"
   },
   {
-    label: "Cards",
-    pathname: "/cards"
-  },
-  {
     label: "Github",
-    pathname: "https://github.com/alexanmtz/material-sense",
+    pathname: "https://reactjs.org/docs/getting-started.html",
     external: true
   }
 

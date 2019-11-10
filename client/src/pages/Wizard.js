@@ -16,7 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Back from './common/Back'
+import Back from '../components/common/Back'
 
 const qs = require('query-string');
 const backgroundShape = require('../images/shape.svg');

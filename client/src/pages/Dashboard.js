@@ -8,12 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
-import SimpleLineChart from './SimpleLineChart';
-import Months from './common/Months';
+import SimpleLineChart from '../components/SimpleLineChart';
+import Months from '../components/common/Months';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Loading from './common/Loading';
+import Loading from '../components/common/Loading';
 
-import Topbar from './Topbar';
+import Topbar from '../components/Topbar';
 
 const numeral = require('numeral');
 numeral.defaultFormat('0,000');
