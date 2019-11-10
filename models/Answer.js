@@ -2,13 +2,16 @@ var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
-var User_Dex_Schema = new Schema({
-    dex: {type: Number, required: true, default: 0},
+var AnswerSchema = new Schema({
+    answer: {type: String, required: true},
+    rating: {type: Number},
+    isRejected: {type: Boolean, required: true, default: false},
+    rejection_reason: {type: String},
     user_id: {type: Schema.Types.ObjectId, ref: "User"}
 },
 {timestamps: true}
 );
 
-var User_Dex = mongoose.model("User_Dex", User_Dex_Schema);
+var Answer = mongoose.model("Answer", AnswerSchema);
 
-module.exports = User_Dex;
+module.exports = Answer;
