@@ -20,6 +20,8 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "@material-ui/core": "^4.6.0",
+    "@material-ui/icons": "^4.5.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.16.3",
     "express-session": "^1.17.0",
@@ -27,6 +29,9 @@
     "mongoose": "^5.7.9",
     "mongoose-bcrypt": "^1.6.0",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2"
   }
 }
