@@ -3,6 +3,7 @@ const router = express.Router();
 
 const authRoutes = require("./auth");
 
+//Route=> ~/api/
 router.use("/", authRoutes);
 // TODO feel free to add your other routes here...
 // eg. /api/admin -> router.use("/admin", adminRoutes);
