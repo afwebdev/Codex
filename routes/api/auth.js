@@ -18,14 +18,17 @@ router.post("/login", passport.authenticate("local"), function(req, res) {
 // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
 // otherwise send back an error
 router.post("/signup", function(req, res) {
+  console.log(req.body);
   db.User.create({
     email: req.body.email,
     password: req.body.password
   })
     .then(function(newUser) {
+      console.log(newUser);
       res.status(201).json(newUser);
     })
     .catch(function(err) {
+      console.log(err);
       res.status(401).json(err);
     });
 });
@@ -39,6 +42,7 @@ router.get("/logout", function(req, res) {
 // Here we've add our isAuthenticated middleware to this route.
 // If a user who is not logged in tries to access this route they will be redirected to the signup page
 router.get("/test-protected", isAuthenticated, (req, res) => {
+  console.log(req);
   res.send(`You are accessing a protected route: ${req.user}`);
 });
 
