@@ -8,7 +8,7 @@ const passport = require("./config/passport");
 const mongoose = require("mongoose");
 
 // Setting up port and requiring models for syncing
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 const db = require("./models");
 
