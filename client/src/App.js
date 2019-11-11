@@ -1,8 +1,25 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { Route, Switch } from "react-router-dom";
-
+import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 import "./App.css";
+import Routes from "./routes";
+import { blue, indigo } from "@material-ui/core/colors";
+
+const theme = createMuiTheme({
+  palette: {
+    secondary: {
+      main: blue[900]
+    },
+    primary: {
+      main: indigo[700]
+    }
+  },
+  typography: {
+    // Use the system font instead of the default Roboto font.
+    fontFamily: ['"Lato"', "sans-serif"].join(",")
+  }
+});
 
 //Component Imports
 import Login from "./components/Login";
@@ -15,10 +32,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>APP</h1>
-        <Route exact path="/login" component={Login} />
-      </div>
+      <Router>
+        <div>
+          <ThemeProvider theme={theme}>
+            <Routes />
+          </ThemeProvider>
+        </div>
+      </Router>
     );
   }
 }

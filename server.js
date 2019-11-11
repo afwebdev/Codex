@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 const db = require("./models");
+const bodyParser = require('body-parser')
 
 //Connect to the MongoDB instance
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/codex", {
@@ -32,8 +33,14 @@ app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true 
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+
 // Requiring our API routes
 app.use(require("./routes"));
+
 
 // Send every request to the React app
 // Define any API routes before this runs
