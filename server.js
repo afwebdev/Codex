@@ -1,54 +1,51 @@
 // Requiring necessary npm packages
 const express = require("express");
-const session = require("express-session");
-// Requiring passport as we've configured it
 const path = require("path");
-const passport = require("./config/passport");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const config = require("./server/config");
+const userRoute = require("./server/routes/user");
+const authRoute = require("./server/routes/auth");
+//Init the Connection to the DB.
+require("./server/config/dbConnection");
 
-const mongoose = require("mongoose");
-
-// Setting up port and requiring models for syncing
-const PORT = process.env.PORT || 3002;
-const MONGO_URI = process.env.MONGO_URI;
-const db = require("./models");
-const bodyParser = require('body-parser')
-
-//Connect to the MongoDB instance
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/codex", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true //Server Discovery/Monitor
-});
 // Creating express app and configuring middleware needed for authentication
 const app = express();
-app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+//Static Folder (public) for client to reach assets.
 app.use(express.static("client/build"));
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-// We need to use sessions to keep track of our user's login status
-app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  if (err.name === "UnauthorizedError") {
+    res.status(401).json({ error: err.name + ":" + err.message });
+  }
+});
 
 // Requiring our API routes
-app.use(require("./routes"));
-
-
+app.use("/", userRoute);
+app.use("/", authRoute);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-// Syncing our database and logging a message to the user upon success
-app.listen(PORT, function() {
-  console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
+//Start up the server!
+app.listen(config.port, () => {
+  console.log(`Server Started at port ${config.port}`);
 });

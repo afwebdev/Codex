@@ -5,6 +5,8 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import "./App.css";
 import Routes from "./routes";
 import { blue, indigo } from "@material-ui/core/colors";
+//Component Imports
+import Login from "./components/Login";
 
 const theme = createMuiTheme({
   palette: {
@@ -20,9 +22,6 @@ const theme = createMuiTheme({
     fontFamily: ['"Lato"', "sans-serif"].join(",")
   }
 });
-
-//Component Imports
-import Login from "./components/Login";
 
 class App extends Component {
   test(e) {
