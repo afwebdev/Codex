@@ -5,12 +5,19 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema(
   {
+    name: {
+      type: String,
+    },
     email: {
       type: String,
       unique: true
     },
     password: {
       type: String
+    },
+    country: {
+      type: String,
+      require: true
     }
   },
   { timestamps: true }
