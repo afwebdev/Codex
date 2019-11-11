@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router} from "react-router-dom";
-import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import './App.css';
-import Routes from './routes';
-import { blue, indigo } from '@material-ui/core/colors';
+import React, { Component } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
+import "./App.css";
+import Routes from "./routes";
+import { blue, indigo } from "@material-ui/core/colors";
+//Component Imports
+import Login from "./components/Login";
 
 const theme = createMuiTheme({
   palette: {
@@ -17,24 +19,25 @@ const theme = createMuiTheme({
   },
   typography: {
     // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '"Lato"',
-      'sans-serif'
-    ].join(',')
+    fontFamily: ['"Lato"', "sans-serif"].join(",")
   }
 });
 
-
 class App extends Component {
+  test(e) {
+    e.preventDefault();
+    console.log("HEY");
+  }
+
   render() {
     return (
-    <Router>
-      <div>
-        <ThemeProvider theme={theme}>
-          <Routes />
-        </ThemeProvider>
-      </div>
-    </Router>
+      <Router>
+        <div>
+          <ThemeProvider theme={theme}>
+            <Routes />
+          </ThemeProvider>
+        </div>
+      </Router>
     );
   }
 }
