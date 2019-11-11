@@ -5,15 +5,14 @@ const config = require("../config/index");
 
 /* SIGN IN 
 	This is the logic behind ~/auth/signin
-
 	Call to the API will use email sent via req.body, to check if email exists in DB
 	If the email is NOT found, send back 401 status code, and err message.
 	if the email or password is incorrect, send back 401 and err message.
 
 	Note: !user.authenticate(req.body.user_password)
 	In the user model, we have defined a method called authenticate, that takes
-	a plain text password, encrypts it with salt, and compares it to the stored hashed password.
-
+  a plain text password, encrypts it with salt of user,
+   and compares it to the stored hashed password.
 */
 const signin = (req, res) => {
   User.findOne({ user_email: req.body.user_email }, (err, user) => {
@@ -76,11 +75,14 @@ This module lets you authenticate HTTP requests using JWT tokens
  https://www.npmjs.com/package/express-jwt 
  */
 
+//Use the expressJWT middleware to verify if user needs to be authenticated.
+// userProperty: "auth"
 const requireSignin = expressJwt({
   secret: config.jwtSecret,
   userProperty: "auth"
 });
 
+//Currently not setup for use.
 const hasAuthorization = (req, res) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!authorized) {
