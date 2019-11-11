@@ -167,8 +167,17 @@ function SignIn(props) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
               Sign In
             </Button>
             <Grid container>
