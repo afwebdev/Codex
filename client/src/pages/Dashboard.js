@@ -176,7 +176,7 @@ class Dashboard extends Component {
         <Topbar currentPath={currentPath} />
         <div className={classes.root}>
           <Grid container justify="center" >
-            <Grid spacing={24} alignItems="center" justify="center" container className={classes.grid}>
+            <Grid spacing={10} alignItems="center" justify="center" container className={classes.grid}>
               <Grid item xs={12}>
                 <div className={classes.topBar}>
                   <div className={classes.block}>

@@ -1,9 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
+const React = require("react");
+const ReactDOM = require("react-dom");
 import "./index.css";
 import App from "./App";
-import registerServiceWorker from "./registerServiceWorker";
-import { BrowserRouter } from "react-router-dom";
+const registerServiceWorker = require("./registerServiceWorker");
+const { browserRouter } = require("react-router-dom");
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

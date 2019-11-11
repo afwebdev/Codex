@@ -126,7 +126,7 @@ class Topbar extends Component {
     return (
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
-          <Grid container spacing={24} alignItems="baseline">
+          <Grid container spacing={10} alignItems="baseline">
             <Grid item xs={12} className={classes.flex}>
               <div className={classes.inline}>
                 <Typography variant="h6" color="inherit" noWrap>
@@ -162,7 +162,14 @@ class Topbar extends Component {
                           <ListItem
                             component={item.external ? MaterialLink : Link}
                             href={item.external ? item.pathname : null}
-                            to={item.external ? null : { pathname: item.pathname, search: this.props.location.search }}
+                            to={
+                              item.external
+                                ? null
+                                : {
+                                    pathname: item.pathname,
+                                    search: this.props.location.search
+                                  }
+                            }
                             button
                             key={item.label}
                           >
@@ -182,7 +189,14 @@ class Topbar extends Component {
                           key={index}
                           component={item.external ? MaterialLink : Link}
                           href={item.external ? item.pathname : null}
-                          to={item.external ? null : { pathname: item.pathname, search: this.props.location.search }}
+                          to={
+                            item.external
+                              ? null
+                              : {
+                                  pathname: item.pathname,
+                                  search: this.props.location.search
+                                }
+                          }
                           classes={{ root: classes.tabItem }}
                           label={item.label}
                         />
