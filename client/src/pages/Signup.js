@@ -1,138 +1,139 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import { withRouter } from 'react-router-dom'
-import Container from '@material-ui/core/Container';
-import Topbar from '../components/Topbar';
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline"; //Normalization
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/styles/withStyles";
+import { withRouter } from "react-router-dom";
+import Container from "@material-ui/core/Container";
+import Topbar from "../components/Topbar";
 
-const backgroundShape = require('../images/shape.svg');
+const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
-    root: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.secondary['A100'],
-      overflow: 'hidden',
-      background: `url(${backgroundShape}) no-repeat`,
-      backgroundSize: 'cover',
-      backgroundPosition: '0 400px',
-      marginTop: 10,
-      padding: 20,
-      paddingBottom: 500
-    },
-    grid: {
-      margin: `0 ${theme.spacing(2)}px`
-    },
-    smallContainer: {
-      width: '60%'
-    },
-    bigContainer: {
-      width: '80%'
-    },
-    logo: {
-      marginBottom: 24,
-      display: 'flex',
-      justifyContent: 'center'
-    },
-    stepContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    },
-    stepGrid: {
-      width: '80%'
-    },
-    buttonBar: {
-      marginTop: 32,
-      display: 'flex',
-      justifyContent: 'center'
-    },
-    button: {
-      backgroundColor: theme.palette.primary['A100']
-    },
-    backButton: {
-      marginRight: theme.spacing(1),
-    },
-    outlinedButtom: {
-      textTransform: 'uppercase',
-      margin: theme.spacing(1)
-    },
-    stepper: {
-      backgroundColor: 'transparent'
-    },
-    paper: {
-      padding: theme.spacing(3),
-      textAlign: 'left',
-      color: theme.palette.text.secondary
-    },
-    topInfo: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 42
-    },
-    formControl: {
-      width: '100%'
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    }
-  })
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.secondary["A100"],
+    overflow: "hidden",
+    background: `url(${backgroundShape}) no-repeat`,
+    backgroundSize: "cover",
+    backgroundPosition: "0 400px",
+    marginTop: 10,
+    padding: 20,
+    paddingBottom: 500
+  },
+  grid: {
+    margin: `0 ${theme.spacing(2)}px`
+  },
+  smallContainer: {
+    width: "60%"
+  },
+  bigContainer: {
+    width: "80%"
+  },
+  logo: {
+    marginBottom: 24,
+    display: "flex",
+    justifyContent: "center"
+  },
+  stepContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  stepGrid: {
+    width: "80%"
+  },
+  buttonBar: {
+    marginTop: 32,
+    display: "flex",
+    justifyContent: "center"
+  },
+  button: {
+    backgroundColor: theme.palette.primary["A100"]
+  },
+  backButton: {
+    marginRight: theme.spacing(1)
+  },
+  outlinedButtom: {
+    textTransform: "uppercase",
+    margin: theme.spacing(1)
+  },
+  stepper: {
+    backgroundColor: "transparent"
+  },
+  paper: {
+    padding: theme.spacing(3),
+    textAlign: "left",
+    color: theme.palette.text.secondary
+  },
+  topInfo: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 42
+  },
+  formControl: {
+    width: "100%"
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+});
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Codex
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
+  "@global": {
     body: {
-      backgroundColor: theme.palette.common.white,
-    },
+      backgroundColor: theme.palette.common.white
+    }
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+    margin: theme.spacing(3, 0, 2)
+  }
 }));
 
-function SignUp() {
+function SignUp(props) {
   const classes = useStyles();
+  const currentPath = props.location.pathname;
 
   return (
     <React.Fragment>
-      <Topbar />
+      <Topbar currentPath={currentPath} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -197,13 +198,7 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
+            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
               Sign Up
             </Button>
             <Grid container justify="flex-end">
@@ -223,4 +218,4 @@ function SignUp() {
   );
 }
 
-export default withRouter(withStyles(styles)(SignUp))
+export default withRouter(withStyles(styles)(SignUp));

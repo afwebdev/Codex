@@ -18,6 +18,7 @@ const registerUser = (req, res, next) => {
   });
 };
 
+//Set req.profile info to userId
 const findUserById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
     if (err || !user) {
