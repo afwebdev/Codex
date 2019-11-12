@@ -129,10 +129,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getUserInputInfo = (event) => {
-  event.preventDefault();
-  console.log(event.target)
-}
 
 // const classes = useStyles();
 
@@ -143,6 +139,16 @@ class SignUp extends Component {
     lastName : "",
     email : "",
     password : ""    
+  }
+
+  handleSignUpSubmission = (event) => {
+    event.preventDefault();
+    API.signUp({
+      user_firstName : this.state.firstName,
+      user_lastName : this.state.lastName,
+      user_email : this.state.email,
+      user_password : this.state.password
+    })
   }
 
   classes = () => {
@@ -236,7 +242,7 @@ class SignUp extends Component {
                 variant="contained"
                 color="primary"
                 className={this.classes.submit}
-                onClick={getUserInputInfo}
+                onClick={this.handleSignUpSubmission}
               >
                 Sign Up
               </Button>

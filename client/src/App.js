@@ -6,7 +6,7 @@ import "./App.css";
 import Routes from "./routes";
 import { blue, indigo } from "@material-ui/core/colors";
 //Component Imports
-import Login from "./components/Login";
+// import Login from "./components/Login";
 
 const theme = createMuiTheme({
   palette: {
