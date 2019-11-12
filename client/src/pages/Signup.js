@@ -129,133 +129,142 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getUserInputInfo = (event) => {
-  event.preventDefault();
-  console.log(event.target)
-}
 
 // const classes = useStyles();
 
-class SignUp extends Component {
+function SignUp() {
 
-  state = {
-    firstName : "",
-    lastName : "",
-    email : "",
-    password : ""    
-  }
+  // state = {
+  //   firstName : "",
+  //   lastName : "",
+  //   email : "",
+  //   password : "",
+  //   errorMessage : ""
+  // }
 
-  classes = () => {
-    useStyles()
-  }
+  // handleSignUpSubmission = (event) => {
+  //   event.preventDefault();
+  //   API.signUp({
+  //     user_firstName : this.state.firstName,
+  //     user_lastName : this.state.lastName,
+  //     user_email : this.state.email,
+  //     user_password : this.state.password
+  //   }).then(resp => {
+  //     console.log(resp)
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
+  const classes = useStyles();
+  
 
-  render() {
-    return (
-      <React.Fragment>
-        <Topbar />
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={this.classes.paper}>
-            <Avatar className={this.classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
-            <form className={this.classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="fname"
-                    name="firstName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I agree that Codex is far superior than Stack OverFlow."
-                  />
-                </Grid>
+  // handleInputChange = event => {
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // };
+
+  return (
+    <React.Fragment>
+      <Topbar />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  //onChange={this.handleInputChange}
+                />
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={this.classes.submit}
-                onClick={getUserInputInfo}
-              >
-                Sign Up
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="/signin" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  //onChange={this.handleInputChange}
+                />
               </Grid>
-            </form>
-          </div>
-          <Box mt={5}>
-            <Copyright />
-          </Box>
-        </Container>
-      </React.Fragment>
-    );
-  }
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  //onChange={this.handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  //onChange={this.handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I agree that Codex is far superior than Stack OverFlow."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              // onClick={this.handleSignUpSubmission}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/signin" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+    </React.Fragment>
+  );
+  
 }
 
 export default withRouter(withStyles(styles)(SignUp));

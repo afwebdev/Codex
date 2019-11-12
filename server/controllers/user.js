@@ -5,6 +5,7 @@ const User = require("../../models/User");
 */
 
 const registerUser = (req, res, next) => {
+  (!req.body.user_firstName) ? res.json({error: "Username is not passed"}) : res.json({error: "Username is not passed + empty string is not falsy"})
   const user = new User(req.body);
   user.save((err, result) => {
     if (err) {
