@@ -13,12 +13,6 @@ const userSchema = new Schema({
     trim: true,
     required: "Last Name is required"
   },
-  user_username: {
-    type: String,
-    trim: true,
-    required: "User Name is required",
-    unique: "Username already exists"
-  },
   user_email: {
     type: String,
     trim: true,

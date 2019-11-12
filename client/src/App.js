@@ -24,10 +24,6 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-  test(e) {
-    e.preventDefault();
-    console.log("HEY");
-  }
 
   render() {
     return (
