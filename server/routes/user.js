@@ -1,5 +1,9 @@
 const express = require("express");
-const { registerUser, findUserById, findUserProfile } = require("../controllers/user");
+const {
+  registerUser,
+  findUserById,
+  findUserProfile
+} = require("../controllers/user");
 // import them to protect routes
 const { requireSignin, hasAuthorization } = require("../controllers/auth");
 
