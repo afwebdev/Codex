@@ -58,7 +58,7 @@ class question extends Component {
       console.log(category);
       //Starting here, category is successfully pulled from radio button, above consolelog confirms..
       //Make a call to the API to get question, passing JSON of: example: {category: "JS"}
-      API.getQuestions({ category: event.target.value }).then(res => {
+      API.getQuestions(category).then(res => {
         console.log("Question Page-> res", res.data);
         this.setState({
           questionList: res.data

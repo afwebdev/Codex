@@ -13,8 +13,14 @@ export default {
   //Questions
   //category passed here is an object
   getQuestions: function(category) {
-    //Nothing here.
     console.log("API UTILS CAT->", category);
-    return axios.get("/api/questions", category);
+    return axios.get("/api/questions", {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      params: {
+        category
+      }
+    });
   }
 };
