@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -130,41 +130,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-// const classes = useStyles();
-
 function SignUp() {
 
-  // state = {
-  //   firstName : "",
-  //   lastName : "",
-  //   email : "",
-  //   password : "",
-  //   errorMessage : ""
-  // }
+  //Declaring User Signup info as state to be passed into Signup call to signup
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  // handleSignUpSubmission = (event) => {
-  //   event.preventDefault();
-  //   API.signUp({
-  //     user_firstName : this.state.firstName,
-  //     user_lastName : this.state.lastName,
-  //     user_email : this.state.email,
-  //     user_password : this.state.password
-  //   }).then(resp => {
-  //     console.log(resp)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
+  const handleSignUpSubmission = (event) => {
+    event.preventDefault();
+    API.signUp({
+      user_firstName : firstName,
+      user_lastName : lastName,
+      user_email : email,
+      user_password : password
+    }).then(resp => {
+      console.log(`Received from resp ${resp}`)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
   const classes = useStyles();
-  
-
-  // handleInputChange = event => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
 
   return (
     <React.Fragment>
@@ -190,7 +178,7 @@ function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
-                  //onChange={this.handleInputChange}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -202,7 +190,7 @@ function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
-                  //onChange={this.handleInputChange}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -214,7 +202,7 @@ function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  //onChange={this.handleInputChange}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -227,7 +215,7 @@ function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  //onChange={this.handleInputChange}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -245,7 +233,7 @@ function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              // onClick={this.handleSignUpSubmission}
+              onClick={handleSignUpSubmission}
             >
               Sign Up
             </Button>

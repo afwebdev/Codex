@@ -22,6 +22,6 @@ export default {
   },
   // Saves a book to the database
   signIn: function(userLogin) {
-    return axios.post("/auth/signin/", userLogin);
+    return axios.post("/auth/signin", userLogin);
   }
 };

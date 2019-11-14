@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,6 +15,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import { withRouter } from 'react-router-dom'
 import Container from '@material-ui/core/Container';
 import Topbar from '../components/Topbar';
+import API from "../utils/API";
 
 const backgroundShape = require('../images/shape.svg');
 
@@ -129,8 +130,19 @@ const useStyles = makeStyles(theme => ({
 
 
 function SignIn() {
-  
-  const classes = useStyles(); 
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    console.log("Submissio was clicked.")
+    API.signIn({
+      user_email: email,
+      user_password: password
+    }).then(resp => console.log(resp)).catch(err => console.log(err))
+  }
+
+  const classes = useStyles();
   
   return (
     <React.Fragment>
@@ -155,6 +167,7 @@ function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => {setEmail(e.target.value)}}
             />
             <TextField
               variant="outlined"
@@ -166,6 +179,7 @@ function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => {setPassword(e.target.value)}}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -177,6 +191,7 @@ function SignIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleFormSubmission}
             >
               Sign In
             </Button>
