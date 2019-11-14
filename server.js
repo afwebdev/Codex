@@ -30,6 +30,8 @@ app.use(
   })
 );
 
+app.use(bodyParser.json());
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {

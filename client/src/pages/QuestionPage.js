@@ -15,12 +15,13 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Box from "@material-ui/core/Box";
+import API from "../utils/API";
 
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
   root: {
-    marginTop: "5em",
+    marginTop: "2em",
     padding: theme.spacing(3, 2),
     flexGrow: 1,
     overflow: "hidden",
@@ -36,18 +37,33 @@ const styles = theme => ({
 });
 
 class question extends Component {
+  componentDidMount() {
+    console.log("Component mounted");
+  }
+
+  state = {
+    questionList: null
+  };
+
   render() {
-    //These props are passed via Component. Default props include history/path/
+    //These props are passed via PageRoutes(?). Default props include
+    //window history/path/location/etc
     const { classes } = this.props;
     const currentPath = this.props.location.pathname;
-    console.log(classes);
     console.log(this.props);
 
     const handleChange = event => {
+      //change handler of radio buttons.
       //Got name of radio button selected.
       //DO WORK TO FETCH QUESTIONS TAGGED WITH category
       const category = event.target.value;
-      console.log(event.target.value);
+      console.log(category);
+      API.getQuestions({ category: event.target.value }).then(res => {
+        console.log(res);
+        this.setState({
+          questionList: res.data
+        });
+      });
     };
 
     return (
@@ -67,7 +83,7 @@ class question extends Component {
                       name="category"
                       aria-label="category"
                       onChange={handleChange}
-                      column
+                      column="true"
                     >
                       {["JS", "HTML", "CSS", "REACT"].map(value => (
                         <FormControlLabel
@@ -85,15 +101,7 @@ class question extends Component {
             <Grid item xs={12} sm={9} md={9}>
               <Container>
                 <Paper className={classes.questionList}>
-                  <Container>
-                    <Typography variant="h5" component="h3">
-                      This is a sheet of paper.
-                    </Typography>
-                    <Typography component="p">
-                      Paper can be used to build surface or other elements for
-                      your application.
-                    </Typography>
-                  </Container>
+                  <Container style={{ marginTop: "2em" }}>a</Container>
                 </Paper>
               </Container>
             </Grid>

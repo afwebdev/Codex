@@ -7,8 +7,7 @@ var QuestionSchema = new Schema(
     category: { type: String, required: true },
     question: { type: String, required: true },
     dex: { type: Number, required: true },
-    language: { type: String, required: true },
-    expiry_time: { type: Date, required: true },
+    expiry_time: { type: Date },
     is_pickedup: { type: Boolean, required: true, default: false },
     is_answer_approved: { type: Boolean, required: true, default: false },
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
@@ -18,7 +17,7 @@ var QuestionSchema = new Schema(
   { timestamps: true }
 );
 
-//just testing something  here, it defaults expiry_time to 24hours.
+//just testing something  here, it defaults expiry_time to +24hours later.
 QuestionSchema.virtual("exp_date").set(function(date) {
   this._date = new Date();
   this._date.setDate(this._date.getDate() + 1);
