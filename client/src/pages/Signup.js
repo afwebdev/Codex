@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,7 +16,6 @@ import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
-
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -129,42 +128,37 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 // const classes = useStyles();
 
 function SignUp() {
-
-  // state = {
-  //   firstName : "",
-  //   lastName : "",
-  //   email : "",
-  //   password : "",
-  //   errorMessage : ""
-  // }
-
-  // handleSignUpSubmission = (event) => {
-  //   event.preventDefault();
-  //   API.signUp({
-  //     user_firstName : this.state.firstName,
-  //     user_lastName : this.state.lastName,
-  //     user_email : this.state.email,
-  //     user_password : this.state.password
-  //   }).then(resp => {
-  //     console.log(resp)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
+  const [signUpState, setSignUpState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    errorMessage: ""
+  });
 
   const classes = useStyles();
-  
 
-  // handleInputChange = event => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
+  const onChangeHandler = event => {
+    console.log(signUpState);
+    let { name, value } = event;
+    console.log(name, value);
+    setSignUpState(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSignUpSubmission = event => {
+    event.preventDefault();
+    // console.log(signUpState.firstName, signUpState.lastName);
+    // console.log("HEY");
+    API.signUp({
+      user_firstName: signUpState.firstName,
+      user_lastName: signUpState.lastName,
+      user_email: signUpState.email,
+      user_password: signUpState.password
+    });
+  };
 
   return (
     <React.Fragment>
@@ -190,7 +184,7 @@ function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
-                  //onChange={this.handleInputChange}
+                  onChange={e => onChangeHandler(e.target)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -202,7 +196,7 @@ function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
-                  //onChange={this.handleInputChange}
+                  onChange={e => onChangeHandler(e.target)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -214,7 +208,7 @@ function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  //onChange={this.handleInputChange}
+                  onChange={e => onChangeHandler(e.target)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -227,7 +221,7 @@ function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  //onChange={this.handleInputChange}
+                  onChange={e => onChangeHandler(e.target)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -245,7 +239,7 @@ function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              // onClick={this.handleSignUpSubmission}
+              onClick={handleSignUpSubmission}
             >
               Sign Up
             </Button>
@@ -264,7 +258,6 @@ function SignUp() {
       </Container>
     </React.Fragment>
   );
-  
 }
 
 export default withRouter(withStyles(styles)(SignUp));

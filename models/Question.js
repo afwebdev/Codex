@@ -8,6 +8,7 @@ var QuestionSchema = new Schema(
     dex: { type: Number, required: true },
     language: { type: String, required: true },
     expiry_time: { type: Date, required: true },
+    solver_id: {type: Schema.Types.ObjectId, required: true, ref: "User"}
     is_pickedup: { type: Boolean, required: true, default: false },
     is_answer_approved: { type: Boolean, required: true, default: false },
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
