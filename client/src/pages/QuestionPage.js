@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
-import Loading from "../components/common/Loading";
 import Topbar from "../components/Topbar";
 import Container from "@material-ui/core/Container";
 import Radio from "@material-ui/core/Radio";
@@ -52,14 +50,14 @@ class question extends Component {
     const currentPath = this.props.location.pathname;
     console.log(this.props);
 
+    //Change handler of radio buttons.
     const handleChange = event => {
-      //change handler of radio buttons.
+      const category = event.target.value;
       //Got name of radio button selected.
       //DO WORK TO FETCH QUESTIONS TAGGED WITH category
-      const category = event.target.value;
       console.log(category);
       API.getQuestions({ category: event.target.value }).then(res => {
-        console.log(res);
+        console.log("Question Page-> res", res.data);
         this.setState({
           questionList: res.data
         });
