@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 
 var QuestionSchema = new Schema(
   {
+    category: { type: String, required: true },
     question: { type: String, required: true },
     dex: { type: Number, required: true },
     language: { type: String, required: true },
