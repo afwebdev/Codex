@@ -16,7 +16,6 @@ const getQuestion = (req, resp) => {
   //WHY CANT I GET THE DAMN REQ.BODY!
   const category = req.query.category;
   // console.log(req.body);
-  console.log("WHY IS THIS CAT UNDEFINED FML:", category);
   if (category) {
     //Send back questions relating to category selected.
     Question.find({ category }, (err, res) => {
