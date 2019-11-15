@@ -13,16 +13,15 @@ const askQuestion = (req, resp) => {
 
 const getQuestion = (req, resp) => {
   console.log("REQ.QUERY", req.query);
-  //WHY CANT I GET THE DAMN REQ.BODY!
   const category = req.query.category;
-  // console.log(req.body);
+
   if (category) {
     //Send back questions relating to category selected.
-    Question.find({ category }, (err, res) => {
+    Question.find({ category, is_pickedup: false }, (err, res) => {
       err ? resp.json(err) : resp.json(res);
     });
   } else {
-    Question.find((err, res) => {
+    Question.find({ is_pickedup: false }, (err, res) => {
       //Send all questions back(not category selected)
       resp.json(res);
     });

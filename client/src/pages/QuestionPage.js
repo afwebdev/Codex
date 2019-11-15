@@ -35,13 +35,19 @@ const styles = theme => ({
 });
 
 class question extends Component {
-  componentDidMount() {
-    console.log("Component mounted");
-  }
-
   state = {
-    questionList: null
+    questionList: []
   };
+
+  componentWillMount() {
+    let questionList = [];
+    API.getQuestions().then(res => {
+      console.log(res);
+    });
+    this.setState({
+      questionList
+    });
+  }
 
   render() {
     //These props are passed via PageRoutes(?). Default props include
@@ -101,7 +107,12 @@ class question extends Component {
             <Grid item xs={12} sm={9} md={9}>
               <Container>
                 <Paper className={classes.questionList}>
-                  <Container style={{ marginTop: "2em" }}>a</Container>
+                  <Container style={{ marginTop: "2em" }}>
+                    {this.state.questionList.map(question => {
+                      console.log(question);
+                      return <p>{question.category}</p>;
+                    })}
+                  </Container>
                 </Paper>
               </Container>
             </Grid>
