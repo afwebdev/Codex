@@ -130,16 +130,32 @@ const useStyles = makeStyles(theme => ({
 
 
 function SignIn() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+
+  //Declaring User Signin state to be passed into Signin call
+  const [values, setValues] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handleChange = e => {
+    //Destructure name and value from event
+    const { name, value } = e.target
+    //Use the state update function to update the values object
+    //Note that I spread the existing values and overwrite only what changed
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
+
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
     // console.log("Submissio was clicked.")
-    API.signIn({
-      user_email: email,
-      user_password: password
-    }).then(resp => console.log(resp)).catch(err => console.log(err))
+    // API.signIn({
+    //   user_email: email,
+    //   user_password: password
+    // }).then(resp => console.log(resp)).catch(err => console.log(err))
   }
 
   const classes = useStyles();
@@ -167,7 +183,7 @@ function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={(e) => {setEmail(e.target.value)}}
+              onChange={handleChange}
             />
             <TextField
               variant="outlined"
@@ -179,7 +195,7 @@ function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e) => {setPassword(e.target.value)}}
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

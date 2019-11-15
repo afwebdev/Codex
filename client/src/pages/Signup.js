@@ -130,7 +130,7 @@ const useStyles = makeStyles(theme => ({
 
 function SignUp() {
 
-  //Declaring User Signup info as state to be passed into Signup call to signup
+  //Declaring User Signup state to be passed into Signup call
   const [values, setValues] = useState({
     firstName: "", 
     lastName: "",
