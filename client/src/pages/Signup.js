@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,7 +16,6 @@ import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
-
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -129,42 +128,93 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-// const classes = useStyles();
-
 function SignUp() {
 
-  // state = {
-  //   firstName : "",
-  //   lastName : "",
-  //   email : "",
-  //   password : "",
-  //   errorMessage : ""
-  // }
+  //Declaring User Signup state to be passed into Signup call
+  const [values, setValues] = useState({
+    firstName: "", 
+    lastName: "",
+    email: "",
+    password: ""
+  })
 
-  // handleSignUpSubmission = (event) => {
-  //   event.preventDefault();
-  //   API.signUp({
-  //     user_firstName : this.state.firstName,
-  //     user_lastName : this.state.lastName,
-  //     user_email : this.state.email,
-  //     user_password : this.state.password
-  //   }).then(resp => {
-  //     console.log(resp)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
+  const [valuesError, setValuesError] = useState({
+    firstNameErr: "", 
+    lastNameErr: "",
+    emailErr: "",
+    passwordErr: ""
+  })
+
+  const [isSubmitted, toggleIsSubmitted] = useState(false)
+
+  //Destructure error state for cleaner conditional rendering in JSX code
+  const { firstNameErr, lastNameErr, emailErr, passwordErr } =  valuesError
+
+  const validate = (values) => {
+    let errors = {};
+    console.log('hi');
+
+    if (values.firstName.length < 2) {
+      errors.firstNameErr = "Please enter a valid First Name i.e John" 
+    }
+    if (values.lastName.length < 2 ) {
+      errors.lastNameErr = "Please enter a valid Last Name i.e Doe"
+    }
+    if (!/(.+)@(.+){2,}\.(.+){2,}/.test(values.email)) {
+      errors.emailErr = "Please enter a valid Email Address i.e john.doe@codex.com"
+    }
+    if (values.password.length < 5) {
+      errors.passwordErr = "Your password must be at least 5 characters long!"
+    }
+    console.log(errors)
+    return errors
+  }
+  
+  const handleChange = e => {
+    //Destructure name and value from event
+    const { name, value } = e.target
+    //Use the state update function to update the values object
+    //Note that I spread the existing values and overwrite only what changed
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
+
+  const handleFormSubmission = event => {
+    //Prevent Default
+    event.preventDefault();
+    console.log(event.target);
+    //Set Submission boolean to true to trigger validation
+    toggleIsSubmitted(true);
+    //Call the error state update function to update the error state object
+    //with any errors that we need to show user based on input
+    setValuesError(validate(values));
+  };
+
+  useEffect(() => {
+
+    if (Object.keys(valuesError).length === 0 && isSubmitted) {
+      console.log("Execute api call here")
+    // API.signUp({
+    //   user_firstName: firstName,
+    //   user_lastName: lastName,
+    //   user_email: email,
+    //   user_password: password
+    // })
+    //   .then(resp => {
+    //     console.log(`Received from resp ${JSON.stringify(resp)}`);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    }
+
+  }, [valuesError])
+
+
 
   const classes = useStyles();
-  
-
-  // handleInputChange = event => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
 
   return (
     <React.Fragment>
@@ -182,6 +232,8 @@ function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={isSubmitted && firstNameErr ? true : false}
+                  helperText={isSubmitted && firstNameErr ? firstNameErr : ""}                  
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -190,11 +242,13 @@ function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
-                  //onChange={this.handleInputChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={isSubmitted && lastNameErr ? true : false}
+                  helperText={isSubmitted && lastNameErr ? lastNameErr : ""}
                   variant="outlined"
                   required
                   fullWidth
@@ -202,11 +256,13 @@ function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
-                  //onChange={this.handleInputChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={isSubmitted && emailErr ? true : false}
+                  helperText={isSubmitted && emailErr ? emailErr : ""}
                   variant="outlined"
                   required
                   fullWidth
@@ -214,11 +270,13 @@ function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  //onChange={this.handleInputChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={isSubmitted && passwordErr ? true : false}
+                  helperText={isSubmitted && passwordErr ? passwordErr : ""}
                   variant="outlined"
                   required
                   fullWidth
@@ -227,7 +285,7 @@ function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  //onChange={this.handleInputChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -245,7 +303,7 @@ function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              // onClick={this.handleSignUpSubmission}
+              onClick={handleFormSubmission}
             >
               Sign Up
             </Button>
@@ -264,7 +322,6 @@ function SignUp() {
       </Container>
     </React.Fragment>
   );
-  
 }
 
 export default withRouter(withStyles(styles)(SignUp));
