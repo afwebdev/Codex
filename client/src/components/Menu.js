@@ -20,11 +20,14 @@ const Menu = [
     pathname: "/wizard"
   },
   {
-    label: "Github",
-    pathname: "https://reactjs.org/docs/getting-started.html",
-    external: true
+    label: "Open Questions",
+    pathname: "/Questions"
   }
-
+  // {
+  //   label: "Github",
+  //   pathname: "https://reactjs.org/docs/getting-started.html",
+  //   external: true
+  // }
 ];
 
 export default Menu;
