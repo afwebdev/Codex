@@ -39,13 +39,12 @@ class question extends Component {
     questionList: []
   };
 
-  componentWillMount() {
-    let questionList = [];
-    API.getQuestions().then(res => {
-      console.log(res);
-    });
-    this.setState({
-      questionList
+  //Set the initial view,
+  componentDidMount() {
+    API.getQuestions(null).then(res => {
+      this.setState({
+        questionList: res.data
+      });
     });
   }
 
@@ -106,14 +105,24 @@ class question extends Component {
             </Grid>
             <Grid item xs={12} sm={9} md={9}>
               <Container>
-                <Paper className={classes.questionList}>
-                  <Container style={{ marginTop: "2em" }}>
-                    {this.state.questionList.map(question => {
-                      console.log(question);
-                      return <p>{question.category}</p>;
-                    })}
-                  </Container>
-                </Paper>
+                {this.state.questionList.map(questions => {
+                  const { question, category, dex } = questions;
+                  const { user_email, user_firstName } = questions.user_id;
+                  console.log(
+                    question,
+                    category,
+                    dex,
+                    user_email,
+                    user_firstName
+                  );
+                  return (
+                    <Paper key={questions._id} className={classes.questionList}>
+                      <Container style={{ marginTop: "2em", padding: "1em" }}>
+                        {`${question}, ${category}, ${dex}, ${user_email}, ${user_firstName}`}
+                      </Container>
+                    </Paper>
+                  );
+                })}
               </Container>
             </Grid>
           </Grid>

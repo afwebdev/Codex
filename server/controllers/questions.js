@@ -17,14 +17,17 @@ const getQuestion = (req, resp) => {
 
   if (category) {
     //Send back questions relating to category selected.
-    Question.find({ category, is_pickedup: false }, (err, res) => {
-      err ? resp.json(err) : resp.json(res);
-    });
+    Question.find({ category, is_pickedup: false })
+      .populate("user_id", "user_email user_firstName")
+      .exec((err, res) => {
+        err ? resp.json(err) : resp.json(res);
+      });
   } else {
-    Question.find({ is_pickedup: false }, (err, res) => {
-      //Send all questions back(not category selected)
-      resp.json(res);
-    });
+    Question.find({ is_pickedup: false })
+      .populate("user_id", "user_email user_firstName")
+      .exec((err, res) => {
+        err ? resp.json(err) : resp.json(res);
+      });
   }
 };
 
