@@ -135,7 +135,7 @@ function SignIn() {
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    console.log("Submissio was clicked.")
+    // console.log("Submissio was clicked.")
     API.signIn({
       user_email: email,
       user_password: password

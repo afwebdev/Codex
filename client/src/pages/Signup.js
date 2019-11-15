@@ -17,7 +17,6 @@ import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
 
-
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
@@ -129,28 +128,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 function SignUp() {
-
   //Declaring User Signup info as state to be passed into Signup call to signup
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSignUpSubmission = (event) => {
+  const handleSignUpSubmission = event => {
     event.preventDefault();
     API.signUp({
-      user_firstName : firstName,
-      user_lastName : lastName,
-      user_email : email,
-      user_password : password
-    }).then(resp => {
-      console.log(`Received from resp ${resp}`)
-    }).catch(err => {
-      console.log(err)
+      user_firstName: firstName,
+      user_lastName: lastName,
+      user_email: email,
+      user_password: password
     })
-  }
+      .then(resp => {
+        console.log(`Received from resp ${resp}`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const classes = useStyles();
 
@@ -178,7 +177,7 @@ function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={e => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -190,7 +189,7 @@ function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={e => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -202,7 +201,7 @@ function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -215,7 +214,7 @@ function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -252,7 +251,6 @@ function SignUp() {
       </Container>
     </React.Fragment>
   );
-  
 }
 
 export default withRouter(withStyles(styles)(SignUp));
