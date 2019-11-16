@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,6 +15,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import { withRouter } from 'react-router-dom'
 import Container from '@material-ui/core/Container';
 import Topbar from '../components/Topbar';
+import API from "../utils/API";
 
 const backgroundShape = require('../images/shape.svg');
 
@@ -127,9 +128,38 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SignIn() {
-  const classes = useStyles();
 
+function SignIn() {
+
+  //Declaring User Signin state to be passed into Signin call
+  const [values, setValues] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handleChange = e => {
+    //Destructure name and value from event
+    const { name, value } = e.target
+    //Use the state update function to update the values object
+    //Note that I spread the existing values and overwrite only what changed
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
+
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    // console.log("Submissio was clicked.")
+    // API.signIn({
+    //   user_email: email,
+    //   user_password: password
+    // }).then(resp => console.log(resp)).catch(err => console.log(err))
+  }
+
+  const classes = useStyles();
+  
   return (
     <React.Fragment>
       <Topbar />
@@ -153,6 +183,7 @@ function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange}
             />
             <TextField
               variant="outlined"
@@ -164,6 +195,7 @@ function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -175,6 +207,7 @@ function SignIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleFormSubmission}
             >
               Sign In
             </Button>
@@ -198,6 +231,7 @@ function SignIn() {
       </Container>
     </React.Fragment>
   );
+  
 }
 
 export default withRouter(withStyles(styles)(SignIn))

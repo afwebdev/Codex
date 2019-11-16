@@ -1,20 +1,26 @@
 import axios from "axios";
 
 export default {
-  // Gets all books
-  getBooks: function() {
-    return axios.get("/api/books");
+  //Sign IN/UP
+  //userInfo passed here is an object.
+  signUp: function(userInfo) {
+    return axios.post("/api/users", userInfo);
   },
-  // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
+  //userLogin passed here is an object.
+  signIn: function(userLogin) {
+    return axios.post("/auth/signin", userLogin);
   },
-  // Deletes the book with the given id
-  deleteBook: function(id) {
-    return axios.delete("/api/books/" + id);
-  },
-  // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
+  //Questions
+  //category passed here is an object
+  getQuestions: function(category) {
+    console.log("API UTILS CAT->", category);
+    return axios.get("/api/questions", {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      params: {
+        category
+      }
+    });
   }
 };

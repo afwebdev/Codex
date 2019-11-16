@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const config = require("./server/config");
 const userRoute = require("./server/routes/user");
 const authRoute = require("./server/routes/auth");
+const questionRoute = require("./server/routes/questions");
+const answerRoute = require("./server/routes/answer");
 //Init the Connection to the DB.
 require("./server/config/dbConnection");
 
@@ -29,6 +31,8 @@ app.use(
   })
 );
 
+app.use(bodyParser.json());
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
@@ -39,6 +43,8 @@ app.use((err, req, res, next) => {
 // Requiring our API routes
 app.use("/", userRoute);
 app.use("/", authRoute);
+app.use("/", questionRoute);
+app.use("/", answerRoute);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {

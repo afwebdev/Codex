@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,7 +16,6 @@ import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
-
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -129,133 +128,200 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getUserInputInfo = (event) => {
-  event.preventDefault();
-  console.log(event.target)
-}
+function SignUp() {
 
-// const classes = useStyles();
+  //Declaring User Signup state to be passed into Signup call
+  const [values, setValues] = useState({
+    firstName: "", 
+    lastName: "",
+    email: "",
+    password: ""
+  })
 
-class SignUp extends Component {
+  const [valuesError, setValuesError] = useState({
+    firstNameErr: "", 
+    lastNameErr: "",
+    emailErr: "",
+    passwordErr: ""
+  })
 
-  state = {
-    firstName : "",
-    lastName : "",
-    email : "",
-    password : ""    
+  const [isSubmitted, toggleIsSubmitted] = useState(false)
+
+  //Destructure error state for cleaner conditional rendering in JSX code
+  const { firstNameErr, lastNameErr, emailErr, passwordErr } =  valuesError
+
+  const validate = (values) => {
+    let errors = {};
+    console.log('hi');
+
+    if (values.firstName.length < 2) {
+      errors.firstNameErr = "Please enter a valid First Name i.e John" 
+    }
+    if (values.lastName.length < 2 ) {
+      errors.lastNameErr = "Please enter a valid Last Name i.e Doe"
+    }
+    if (!/(.+)@(.+){2,}\.(.+){2,}/.test(values.email)) {
+      errors.emailErr = "Please enter a valid Email Address i.e john.doe@codex.com"
+    }
+    if (values.password.length < 5) {
+      errors.passwordErr = "Your password must be at least 5 characters long!"
+    }
+    console.log(errors)
+    return errors
   }
-
-  classes = () => {
-    useStyles()
-  }
-
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
+  
+  const handleChange = e => {
+    //Destructure name and value from event
+    const { name, value } = e.target
+    //Use the state update function to update the values object
+    //Note that I spread the existing values and overwrite only what changed
+    setValues({
+      ...values,
       [name]: value
-    });
+    })
+  }
+
+  const handleFormSubmission = event => {
+    //Prevent Default
+    event.preventDefault();
+    console.log(event.target);
+    //Set Submission boolean to true to trigger validation
+    toggleIsSubmitted(true);
+    //Call the error state update function to update the error state object
+    //with any errors that we need to show user based on input
+    setValuesError(validate(values));
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <Topbar />
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={this.classes.paper}>
-            <Avatar className={this.classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
-            <form className={this.classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="fname"
-                    name="firstName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={this.handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I agree that Codex is far superior than Stack OverFlow."
-                  />
-                </Grid>
+  useEffect(() => {
+
+    if (Object.keys(valuesError).length === 0 && isSubmitted) {
+      console.log("Execute api call here")
+    // API.signUp({
+    //   user_firstName: firstName,
+    //   user_lastName: lastName,
+    //   user_email: email,
+    //   user_password: password
+    // })
+    //   .then(resp => {
+    //     console.log(`Received from resp ${JSON.stringify(resp)}`);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    }
+
+  }, [valuesError])
+
+
+
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <Topbar />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  error={isSubmitted && firstNameErr ? true : false}
+                  helperText={isSubmitted && firstNameErr ? firstNameErr : ""}                  
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  onChange={handleChange}
+                />
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={this.classes.submit}
-                onClick={getUserInputInfo}
-              >
-                Sign Up
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="/signin" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  error={isSubmitted && lastNameErr ? true : false}
+                  helperText={isSubmitted && lastNameErr ? lastNameErr : ""}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  onChange={handleChange}
+                />
               </Grid>
-            </form>
-          </div>
-          <Box mt={5}>
-            <Copyright />
-          </Box>
-        </Container>
-      </React.Fragment>
-    );
-  }
+              <Grid item xs={12}>
+                <TextField
+                  error={isSubmitted && emailErr ? true : false}
+                  helperText={isSubmitted && emailErr ? emailErr : ""}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={isSubmitted && passwordErr ? true : false}
+                  helperText={isSubmitted && passwordErr ? passwordErr : ""}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I agree that Codex is far superior than Stack OverFlow."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleFormSubmission}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/signin" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+    </React.Fragment>
+  );
 }
 
 export default withRouter(withStyles(styles)(SignUp));

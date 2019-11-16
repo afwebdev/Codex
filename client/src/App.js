@@ -3,10 +3,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import "./App.css";
-import Routes from "./routes";
+import PageRoutes from "./routes";
 import { blue, indigo } from "@material-ui/core/colors";
-//Component Imports
-import Login from "./components/Login";
 
 const theme = createMuiTheme({
   palette: {
@@ -24,17 +22,12 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-  test(e) {
-    e.preventDefault();
-    console.log("HEY");
-  }
-
   render() {
     return (
       <Router>
         <div>
           <ThemeProvider theme={theme}>
-            <Routes />
+            <PageRoutes />
           </ThemeProvider>
         </div>
       </Router>
