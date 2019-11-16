@@ -21,6 +21,12 @@ const userSchema = new Schema({
     required: "Email is required",
     get: obfuscate
   },
+  user_username: {
+    type: String,
+    trim: true,
+    unique: "Username already exists",
+    required: "Username is required"
+  },
   user_country: {
     type: String,
     trim: true
