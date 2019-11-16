@@ -32,11 +32,11 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 export default props => (
   <Switch>
     <Route exact path="/" component={Main} />
-    <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+    <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/signup" component={Signup} />
     <Route exact path="/signin" component={SignIn} />
     <Route exact path="/wizard" component={Wizard} />
-    <ProtectedRoute exact path="/Questions" component={Questions} />
+    <Route exact path="/Questions" component={Questions} />
     <Route component={NoMatch} />
   </Switch>
 );
