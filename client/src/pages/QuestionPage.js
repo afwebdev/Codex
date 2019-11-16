@@ -14,7 +14,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Box from "@material-ui/core/Box";
 import API from "../utils/API";
-
+import ToolTip from "@material-ui/core/Tooltip";
+import QuestionItems from "../components/QuestionListItem";
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
@@ -30,7 +31,14 @@ const styles = theme => ({
     height: "100vh"
   },
   questionList: {
-    color: "red"
+    // color: "red"
+  },
+  avatar: {
+    fontSize: "14px",
+    fontWeight: "bold"
+  },
+  button: {
+    margin: theme.spacing(1)
   }
 });
 
@@ -76,56 +84,62 @@ class question extends Component {
         <CssBaseline />
         <Topbar currentPath={currentPath} />
         <div className={classes.root}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={3} md={3}>
-              <Container>
-                <Paper>
-                  <Container>
-                    <Box component="h4" textAlign="center">
-                      Categories
-                    </Box>
-                    <RadioGroup
-                      name="category"
-                      aria-label="category"
-                      onChange={handleChange}
-                      column="true"
-                    >
-                      {["JS", "HTML", "CSS", "REACT"].map(value => (
-                        <FormControlLabel
-                          key={value}
-                          value={value.toString()}
-                          control={<Radio />}
-                          label={value.toString()}
-                        />
-                      ))}
-                    </RadioGroup>
-                  </Container>
-                </Paper>
-              </Container>
-            </Grid>
-            <Grid item xs={12} sm={9} md={9}>
-              <Container>
-                {this.state.questionList.map(questions => {
-                  const { question, category, dex } = questions;
-                  const { user_email, user_firstName } = questions.user_id;
-                  console.log(
-                    question,
-                    category,
-                    dex,
-                    user_email,
-                    user_firstName
-                  );
-                  return (
-                    <Paper key={questions._id} className={classes.questionList}>
-                      <Container style={{ marginTop: "2em", padding: "1em" }}>
-                        {`${question}, ${category}, ${dex}, ${user_email}, ${user_firstName}`}
+          {/*v Top most grid */}
+          <Container>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={12} md={3}>
+                <Grid container direction="column" spacing={1}>
+                  <Grid item xs={12} sm={6} md={12}>
+                    <Paper>
+                      <Container>
+                        <Box component="h4" textAlign="center">
+                          Categories
+                        </Box>
+                        <RadioGroup
+                          name="category"
+                          aria-label="category"
+                          onChange={handleChange}
+                          column="true"
+                        >
+                          {["JS", "HTML", "CSS", "REACT"].map(value => (
+                            <FormControlLabel
+                              key={value}
+                              value={value.toString()}
+                              control={<Radio />}
+                              label={value.toString()}
+                            />
+                          ))}
+                        </RadioGroup>
                       </Container>
                     </Paper>
-                  );
-                })}
-              </Container>
+                  </Grid>
+                  <Grid item xs={6} sm={6} md={12}>
+                    <Paper>
+                      <Container>
+                        {" "}
+                        <Box component="h4" textAlign="center">
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                          >
+                            New Question
+                          </Button>
+                        </Box>
+                      </Container>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} sm={8} md={8}>
+                <Container>
+                  <QuestionItems questions={this.state.questionList} />
+                </Container>
+              </Grid>
             </Grid>
-          </Grid>
+          </Container>
+          {/* ^Top most grid */}
         </div>
       </>
     );
