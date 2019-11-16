@@ -4,7 +4,7 @@ const Menu = [
     pathname: "/"
   },
   {
-    label: "Dashboard (No purpose atm)",
+    label: "Dashboard",
     pathname: "/dashboard"
   },
   {
