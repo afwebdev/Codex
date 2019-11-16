@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var QuestionSchema = new Schema(
   {
     category: { type: String, required: true },
-    question: { type: String, required: true },
+    question_title: { type: String, required: true },
+    question_description: { type: String, required: true },
     dex: { type: Number, required: true },
     expiry_time: { type: Date },
     is_pickedup: { type: Boolean, required: true, default: false },
