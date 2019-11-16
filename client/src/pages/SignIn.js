@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -137,6 +137,11 @@ function SignIn() {
     password: ""
   })
 
+  const [valuesError, setValuesError] = useState({
+    emailErr: "",
+    passwordErr: ""
+  });
+
   const handleChange = e => {
     //Destructure name and value from event
     const { name, value } = e.target
@@ -146,17 +151,41 @@ function SignIn() {
       ...values,
       [name]: value
     })
-  }
+  };
 
+  const { emailErr, passwordErr } = valuesError;
+
+  const validate = (values) => {
+    let errors = {};
+
+    if (!/(.+)@(.+){2,}\.(.+){2,}/.test(values.email)) {
+      errors.emailErr = "Please enter a valid Email Address."
+    }
+    if (values.password.length < 5) {
+      errors.passwordErr = "Passwords must be at least 5 characters long."
+    }
+    return errors
+  };
+
+  const [isSubmitted, toggleIsSubmitted] = useState(false);
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
+    toggleIsSubmitted(true);    
+    setValuesError(validate(values));
     // console.log("Submissio was clicked.")
+
+  }
+
+  useEffect(() => {
+    if (Object.keys(valuesError).length === 0 && isSubmitted) {
+      console.log("Api would execute")
     // API.signIn({
     //   user_email: email,
     //   user_password: password
     // }).then(resp => console.log(resp)).catch(err => console.log(err))
-  }
+    }
+  }, [valuesError])
 
   const classes = useStyles();
   
@@ -174,6 +203,8 @@ function SignIn() {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={isSubmitted && emailErr ? true : false}
+              helperText={isSubmitted && emailErr ? emailErr : ""}
               variant="outlined"
               margin="normal"
               required
@@ -186,6 +217,8 @@ function SignIn() {
               onChange={handleChange}
             />
             <TextField
+              error={isSubmitted && passwordErr ? true : false}
+              helperText={isSubmitted && passwordErr ? passwordErr : ""}
               variant="outlined"
               margin="normal"
               required

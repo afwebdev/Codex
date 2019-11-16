@@ -15,6 +15,7 @@ import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
+import CountryDropDown from "../components/CountryDropDown";
 import API from "../utils/API";
 
 const backgroundShape = require("../images/shape.svg");
@@ -129,56 +130,84 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignUp() {
-
   //Declaring User Signup state to be passed into Signup call
   const [values, setValues] = useState({
-    firstName: "", 
+    firstName: "",
     lastName: "",
     email: "",
-    password: ""
-  })
+    password: "",
+    userName: "",
+    userCountry: ""
+  });
 
   const [valuesError, setValuesError] = useState({
-    firstNameErr: "", 
+    firstNameErr: "",
     lastNameErr: "",
     emailErr: "",
-    passwordErr: ""
-  })
+    passwordErr: "",
+    userNameErr: "",
+    userCountryErr: ""
+  });
 
-  const [isSubmitted, toggleIsSubmitted] = useState(false)
+  const [isSubmitted, toggleIsSubmitted] = useState(false);
 
   //Destructure error state for cleaner conditional rendering in JSX code
-  const { firstNameErr, lastNameErr, emailErr, passwordErr } =  valuesError
+  const {
+    firstNameErr,
+    lastNameErr,
+    emailErr,
+    passwordErr,
+    userNameErr,
+    userCountryErr
+  } = valuesError;
 
-  const validate = (values) => {
+  const validate = values => {
     let errors = {};
-    console.log('hi');
 
     if (values.firstName.length < 2) {
-      errors.firstNameErr = "Please enter a valid First Name i.e John" 
+      errors.firstNameErr = "Please enter a valid First Name i.e John";
     }
-    if (values.lastName.length < 2 ) {
-      errors.lastNameErr = "Please enter a valid Last Name i.e Doe"
+    if (values.lastName.length < 2) {
+      errors.lastNameErr = "Please enter a valid Last Name i.e Doe";
+    }
+    if (values.userName.length < 2) {
+      errors.userNameErr = "Please enter a valid User Name";
     }
     if (!/(.+)@(.+){2,}\.(.+){2,}/.test(values.email)) {
-      errors.emailErr = "Please enter a valid Email Address i.e john.doe@codex.com"
+      errors.emailErr =
+        "Please enter a valid Email Address i.e john.doe@codex.com";
     }
     if (values.password.length < 5) {
-      errors.passwordErr = "Your password must be at least 5 characters long!"
+      errors.passwordErr = "Your password must be at least 5 characters long!";
     }
-    console.log(errors)
-    return errors
-  }
-  
+    console.log(errors);
+    return errors;
+  };
+
   const handleChange = e => {
     //Destructure name and value from event
-    const { name, value } = e.target
+    const { name, value } = e.target;
+    
     //Use the state update function to update the values object
     //Note that I spread the existing values and overwrite only what changed
     setValues({
       ...values,
       [name]: value
-    })
+    });
+  };
+
+  //Had to create a seperate event handler for country as I could not get the value of the input element
+  const handleCountry = () => {
+    //On input change (an onEvent change found in Auto-Complete api documentation) I get the value of the country
+    let country = document.getElementById("country-select-demo").getAttribute("value")
+    //Since we only plan to use this for the flag API I will be getting the letters of the country only
+    let countryCode = country.split(" ")[country.split(" ").length-1]
+    if (country) {
+      setValues({
+        ...values,
+        userCountry: countryCode
+      })
+    }
   }
 
   const handleFormSubmission = event => {
@@ -192,27 +221,24 @@ function SignUp() {
     setValuesError(validate(values));
   };
 
-  useEffect(() => {
-
+  useEffect((values) => {
     if (Object.keys(valuesError).length === 0 && isSubmitted) {
-      console.log("Execute api call here")
-    // API.signUp({
-    //   user_firstName: firstName,
-    //   user_lastName: lastName,
-    //   user_email: email,
-    //   user_password: password
-    // })
-    //   .then(resp => {
-    //     console.log(`Received from resp ${JSON.stringify(resp)}`);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+      console.log("Execute api call here");
+      const {firstName, lastName, email, password} = values
+      API.signUp({
+        user_firstName: firstName,
+        user_lastName: lastName,
+        user_email: email,
+        user_password: password
+      })
+        .then(resp => {
+          console.log(`Received from resp ${JSON.stringify(resp)}`);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-
-  }, [valuesError])
-
-
+  }, [valuesError]);
 
   const classes = useStyles();
 
@@ -233,7 +259,7 @@ function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={isSubmitted && firstNameErr ? true : false}
-                  helperText={isSubmitted && firstNameErr ? firstNameErr : ""}                  
+                  helperText={isSubmitted && firstNameErr ? firstNameErr : ""}
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -258,6 +284,40 @@ function SignUp() {
                   autoComplete="lname"
                   onChange={handleChange}
                 />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  error={isSubmitted && userNameErr ? true : false}
+                  helperText={isSubmitted && userNameErr ? userNameErr : ""}
+                  autoComplete="uname"
+                  name="userName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="userName"
+                  label="User Name"
+                  autoFocus
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CountryDropDown
+                handleCountry={handleCountry}
+                />
+                {/* <TextField
+                  error={isSubmitted && userCountryErr ? true : false}
+                  helperText={
+                    isSubmitted && userCountryErr ? userCountryErr : ""
+                  }
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="userCountry"
+                  label="Country"
+                  name="userCountry"
+                  autoComplete="country"
+                  onChange={handleChange}
+                /> */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
