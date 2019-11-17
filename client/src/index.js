@@ -1,12 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { LoginProvider } from "./components/LoginContext";
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <LoginProvider>
+      <App />
+    </LoginProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );
