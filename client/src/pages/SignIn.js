@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import withStyles from '@material-ui/styles/withStyles';
@@ -133,9 +134,14 @@ function SignIn() {
 
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
-    email: "",
+    userName: "",
     password: ""
   })
+
+  const [valuesError, setValuesError] = useState({
+    userNameErr: "",
+    passwordErr: ""
+  });
 
   const handleChange = e => {
     //Destructure name and value from event
@@ -146,17 +152,46 @@ function SignIn() {
       ...values,
       [name]: value
     })
-  }
+  };
 
+  const { userNameErr, passwordErr } = valuesError;
+
+  const validate = (values) => {
+    let errors = {};
+
+    if (values.userName.length < 2) {
+      errors.userNameErr = "Please enter a valid User Name";
+    }
+    if (values.password.length < 5) {
+      errors.passwordErr = "Passwords must be at least 5 characters long."
+    }
+    return errors
+  };
+  
+
+  const [isSubmitted, toggleIsSubmitted] = useState(false);
+  const [isFailAuthentication, toggleIsFailAuthentication] = useState(false);
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
+    toggleIsSubmitted(true);    
+    setValuesError(validate(values));
     // console.log("Submissio was clicked.")
-    // API.signIn({
-    //   user_email: email,
-    //   user_password: password
-    // }).then(resp => console.log(resp)).catch(err => console.log(err))
+
   }
+
+  useEffect(() => {
+    const { userName, password } = values
+    if (Object.keys(valuesError).length === 0 && isSubmitted) {
+      console.log("Api would execute")
+    API.signIn({
+      user_username: userName,
+      user_password: password
+    })
+    .then(resp => window.location = "/")
+    .catch(err => toggleIsFailAuthentication(true))
+    }
+  }, [valuesError])
 
   const classes = useStyles();
   
@@ -167,25 +202,29 @@ function SignIn() {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            {!isFailAuthentication ? <LockOutlinedIcon /> : <ErrorOutlineIcon />}
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+          {!isFailAuthentication ? "Sign in" : "Invalid username or password."}            
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={isSubmitted && userNameErr || isFailAuthentication ? true : false}
+              helperText={isSubmitted && userNameErr ? userNameErr : ""}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="userName"
+              label="User Name"
+              name="userName"
+              autoComplete="userName"
               autoFocus
               onChange={handleChange}
             />
             <TextField
+              error={isSubmitted && passwordErr || isFailAuthentication ? true : false}
+              helperText={isSubmitted && passwordErr ? passwordErr : ""}
               variant="outlined"
               margin="normal"
               required
@@ -212,11 +251,6 @@ function SignIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
