@@ -23,4 +23,15 @@ export default {
       }
     });
   }
+
+  // getUserInfo: function(userId) {
+  //   return axios.get("/api/users", {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     params: {
+  //       userId
+  //     }
+  //   });
+  // }
 };
