@@ -145,8 +145,7 @@ function SignUp() {
     lastNameErr: "",
     emailErr: "",
     passwordErr: "",
-    userNameErr: "",
-    userCountryErr: ""
+    userNameErr: ""
   });
 
   const [isSubmitted, toggleIsSubmitted] = useState(false);
@@ -157,8 +156,7 @@ function SignUp() {
     lastNameErr,
     emailErr,
     passwordErr,
-    userNameErr,
-    userCountryErr
+    userNameErr
   } = valuesError;
 
   const validate = values => {
@@ -221,18 +219,20 @@ function SignUp() {
     setValuesError(validate(values));
   };
 
-  useEffect((values) => {
+  useEffect(() => {
     if (Object.keys(valuesError).length === 0 && isSubmitted) {
       console.log("Execute api call here");
-      const {firstName, lastName, email, password} = values
+      const {firstName, lastName, email, password, userName, userCountry} = values
       API.signUp({
         user_firstName: firstName,
         user_lastName: lastName,
         user_email: email,
-        user_password: password
+        user_password: password,
+        user_username: userName,
+        user_country: userCountry
       })
         .then(resp => {
-          console.log(`Received from resp ${JSON.stringify(resp)}`);
+          window.location = "/signin  "
         })
         .catch(err => {
           console.log(err);
