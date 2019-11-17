@@ -17,7 +17,7 @@ const config = require("../config/index");
 */
 const signin = (req, res) => {
   // console.log(req.body.user_email, req.body.user_password)
-  User.findOne({ user_email: req.body.user_email }, (err, user) => {
+  User.findOne({ user_username: req.body.user_username }, (err, user) => {
     if (err || !user) {
       return res.status(401).json({
         error: "User not found"
