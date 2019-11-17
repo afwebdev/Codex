@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,6 +17,7 @@ import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
+import { LoginContext } from "../components/LoginContext";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -130,6 +131,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn() {
+  const [userStatus, setUserStatus] = useContext(LoginContext);
+  // console.log(userStatus);
+
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
     userName: "",
@@ -171,6 +175,15 @@ function SignIn() {
 
   const handleFormSubmission = e => {
     e.preventDefault();
+    console.log(e);
+
+    //Set our global vars, check Dashboard page for the console.log showing the changed false to true flag
+    //init of the state, loggedIn = false
+    setUserStatus(prevState => ({
+      ...prevState,
+      loggedIn: true
+    }));
+    console.log(userStatus);
     toggleIsSubmitted(true);
     setValuesError(validate(values));
     // console.log("Submissio was clicked.")

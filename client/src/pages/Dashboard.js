@@ -47,7 +47,13 @@ const Dashboard = props => {
   const { classes } = props;
   const currentPath = props.location.pathname;
   const [userStatus, setUserStatus] = useContext(LoginContext);
-  console.log(userStatus.loggedIn);
+  // console.log(userStatus.loggedIn);
+  // setUserStatus(prevState => ({
+  //   ...prevState,
+  //   loggedIn: true
+  // }));
+  // console.log(userStatus.loggedIn);
+  console.log(userStatus);
 
   return (
     <React.Fragment>
