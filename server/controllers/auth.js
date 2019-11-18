@@ -52,7 +52,9 @@ const signin = (req, res) => {
       user: {
         _id: user._id,
         username: user.user_username,
-        user_email: user.user_email
+        user_email: user.user_email,
+        user_firstName: user.user_firstName,
+        user_lastName: user.user_lastName
       }
     });
   });
