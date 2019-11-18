@@ -18,6 +18,7 @@ import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
+import { useHistory } from "react-router-dom";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -131,9 +132,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn() {
+  let history = useHistory();
   const [userStatus, setUserStatus] = useContext(LoginContext);
-  // console.log(userStatus);
 
+  const userStatusObject = {};
+
+  const storeUserStatus = user => {
+    let { _id, username, user_firstName, user_lastName, user_email } = user;
+    setUserStatus(prevState => user);
+    history.push("/");
+  };
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
     userName: "",
@@ -175,15 +183,6 @@ function SignIn() {
 
   const handleFormSubmission = e => {
     e.preventDefault();
-    console.log(e);
-
-    //Set our global vars, check Dashboard page for the console.log showing the changed false to true flag
-    //init of the state, loggedIn = false
-    setUserStatus(prevState => ({
-      ...prevState,
-      loggedIn: true
-    }));
-    console.log(userStatus);
     toggleIsSubmitted(true);
     setValuesError(validate(values));
     // console.log("Submissio was clicked.")
@@ -197,7 +196,10 @@ function SignIn() {
         user_username: userName,
         user_password: password
       })
-        .then(resp => (window.location = "/"))
+        .then(resp => {
+          console.log(resp.data.user);
+          storeUserStatus(resp.data.user);
+        })
         .catch(err => toggleIsFailAuthentication(true));
     }
   }, [valuesError]);
