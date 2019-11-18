@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,6 +17,8 @@ import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import API from "../utils/API";
+import { LoginContext } from "../components/LoginContext";
+import { useHistory } from "react-router-dom";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -130,6 +132,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn() {
+  let history = useHistory();
+  const [userStatus, setUserStatus] = useContext(LoginContext);
+
+  const userStatusObject = {};
+
+  const storeUserStatus = user => {
+    let { _id, username, user_firstName, user_lastName, user_email } = user;
+    setUserStatus(prevState => ({
+      loggedIn: true,
+      prevState
+    }));
+    history.push("/");
+  };
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
     userName: "",
@@ -184,7 +199,10 @@ function SignIn() {
         user_username: userName,
         user_password: password
       })
-        .then(resp => (window.location = "/"))
+        .then(resp => {
+          console.log(resp.data.user);
+          storeUserStatus(resp.data.user);
+        })
         .catch(err => toggleIsFailAuthentication(true));
     }
   }, [valuesError]);
