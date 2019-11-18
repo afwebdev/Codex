@@ -17,6 +17,7 @@ import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
 import CountryDropDown from "../components/CountryDropDown";
 import API from "../utils/API";
+import { useHistory } from "react-router-dom";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -129,7 +130,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignUp() {
+function SignUp(props) {
+  const currentPath = props.location.pathname;
+
+  let history = useHistory();
   //Declaring User Signup state to be passed into Signup call
   const [values, setValues] = useState({
     firstName: "",
@@ -185,7 +189,7 @@ function SignUp() {
   const handleChange = e => {
     //Destructure name and value from event
     const { name, value } = e.target;
-    
+
     //Use the state update function to update the values object
     //Note that I spread the existing values and overwrite only what changed
     setValues({
@@ -197,16 +201,18 @@ function SignUp() {
   //Had to create a seperate event handler for country as I could not get the value of the input element
   const handleCountry = () => {
     //On input change (an onEvent change found in Auto-Complete api documentation) I get the value of the country
-    let country = document.getElementById("country-select-demo").getAttribute("value")
+    let country = document
+      .getElementById("country-select-demo")
+      .getAttribute("value");
     //Since we only plan to use this for the flag API I will be getting the letters of the country only
-    let countryCode = country.split(" ")[country.split(" ").length-1]
+    let countryCode = country.split(" ")[country.split(" ").length - 1];
     if (country) {
       setValues({
         ...values,
         userCountry: countryCode
-      })
+      });
     }
-  }
+  };
 
   const handleFormSubmission = event => {
     //Prevent Default
@@ -222,7 +228,14 @@ function SignUp() {
   useEffect(() => {
     if (Object.keys(valuesError).length === 0 && isSubmitted) {
       console.log("Execute api call here");
-      const {firstName, lastName, email, password, userName, userCountry} = values
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        userName,
+        userCountry
+      } = values;
       API.signUp({
         user_firstName: firstName,
         user_lastName: lastName,
@@ -231,9 +244,7 @@ function SignUp() {
         user_username: userName,
         user_country: userCountry
       })
-        .then(resp => {
-          window.location = "/signin  "
-        })
+        .then(history.push("/signin"))
         .catch(err => {
           console.log(err);
         });
@@ -244,7 +255,7 @@ function SignUp() {
 
   return (
     <React.Fragment>
-      <Topbar />
+      <Topbar currentPath={currentPath} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -301,9 +312,7 @@ function SignUp() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CountryDropDown
-                handleCountry={handleCountry}
-                />
+                <CountryDropDown handleCountry={handleCountry} />
                 {/* <TextField
                   error={isSubmitted && userCountryErr ? true : false}
                   helperText={

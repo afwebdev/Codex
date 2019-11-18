@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -131,7 +131,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignIn() {
+function SignIn(props) {
+  const currentPath = props.location.pathname;
+
   let history = useHistory();
   const [userStatus, setUserStatus] = useContext(LoginContext);
 
@@ -139,12 +141,14 @@ function SignIn() {
 
   const storeUserStatus = user => {
     let { _id, username, user_firstName, user_lastName, user_email } = user;
+    //fix the state to store everything.
     setUserStatus(prevState => ({
       loggedIn: true,
       prevState
     }));
     history.push("/");
   };
+
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
     userName: "",
@@ -201,6 +205,7 @@ function SignIn() {
       })
         .then(resp => {
           console.log(resp.data.user);
+          //STORE THE USER INFO IN GLOBAL STATE
           storeUserStatus(resp.data.user);
         })
         .catch(err => toggleIsFailAuthentication(true));
@@ -211,7 +216,7 @@ function SignIn() {
 
   return (
     <React.Fragment>
-      <Topbar />
+      <Topbar currentPath={currentPath} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
