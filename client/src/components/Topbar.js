@@ -14,6 +14,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import { Link as MaterialLink } from "@material-ui/core";
+import SignUpIn from "./SignUpIn";
 import Menu from "./Menu";
 
 const logo = require("../images/logo.svg");
@@ -200,11 +201,12 @@ class Topbar extends Component {
                           classes={{ root: classes.tabItem }}
                           label={item.label}
                         />
-                      ))}
+                      ))}                      
                     </Tabs>
                   </div>
                 </React.Fragment>
               )}
+              <SignUpIn style={{marginRight: "50px"}} />
             </Grid>
           </Grid>
         </Toolbar>
