@@ -65,30 +65,14 @@ const Dashboard = props => {
           {/* Sidebar Profile */}
           <Paper className={classes.paper}>
             <Container>
-              <Grid container spacing={2}>
-                <Grid item>
-                  <Avatar className={classes.avatarImg}>AF</Avatar>
-                </Grid>
-                <Grid item xs={12} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1">
-                        Standard license
-                      </Typography>
-                      <Typography variant="body2" gutterBottom>
-                        Full resolution 1920x1080 • JPEG
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body2" style={{ cursor: "pointer" }}>
-                        Remove
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle1">$19.00</Typography>
-                  </Grid>
-                </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item xs={12}></Grid>
               </Grid>
             </Container>
           </Paper>

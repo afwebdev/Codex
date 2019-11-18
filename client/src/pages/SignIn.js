@@ -139,7 +139,7 @@ function SignIn() {
 
   const storeUserStatus = user => {
     let { _id, username, user_firstName, user_lastName, user_email } = user;
-    setUserStatus(prevState => user);
+    setUserStatus(prevState => {(...prevState, loggedIn: prevState.user.loggedIn)});
     history.push("/");
   };
   //Declaring User Signin state to be passed into Signin call
