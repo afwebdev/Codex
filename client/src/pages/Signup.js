@@ -307,7 +307,6 @@ function SignUp(props) {
                   fullWidth
                   id="userName"
                   label="User Name"
-                  autoFocus
                   onChange={handleChange}
                 />
               </Grid>

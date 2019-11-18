@@ -106,7 +106,7 @@ const Topbar = props => {
       })
       .catch(err => {
         //User is not logged in.
-        console.log(err);
+        console.error(err);
       });
   });
 
@@ -183,6 +183,12 @@ const Topbar = props => {
                     <AppBar title="Menu" />
                     <List>
                       {Menu.map((item, index) => {
+                        let action = null;
+                        if (item.label === "logout") {
+                          action = () => {
+                            API.signOut();
+                          };
+                        }
                         return (
                           <ListItem
                             component={item.external ? MaterialLink : Link}
