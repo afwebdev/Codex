@@ -54,7 +54,8 @@ const signin = (req, res) => {
         username: user.user_username,
         user_email: user.user_email,
         user_firstName: user.user_firstName,
-        user_lastName: user.user_lastName
+        user_lastName: user.user_lastName,
+        user_country: user.user_country
       }
     });
   });
@@ -85,6 +86,7 @@ const requireSignin = expressJwt({
 });
 
 const hasAuthorization = (req, res) => {
+  console.log(req.auth);
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!authorized) {
     return res.status(403).json({

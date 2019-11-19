@@ -9,6 +9,8 @@
     "@material-ui/lab": "latest",
     "@material-ui/styles": "latest",
     "axios": "^0.19.0",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^2.2.0",
     "mini-create-react-context": "^0.3.2",
     "numeral": "^2.0.6",
     "query-string": "^6.2.0",
@@ -31,5 +33,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {}
 }
