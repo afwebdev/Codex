@@ -15,6 +15,7 @@ import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
 import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -58,31 +59,33 @@ const Dashboard = props => {
   // console.log(userStatus);
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Topbar currentPath={currentPath} />
-      <div className={classes.root}>
-        {/* v Top Parent Grid */}
-        <Grid className={classes.topGrid} container spacing={1}>
-          {/* Sidebar Profile */}
-          <Paper className={classes.paper}>
-            <Container>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                spacing={2}
-              >
-                <Grid item xs={12}></Grid>
-              </Grid>
-            </Container>
-          </Paper>
+    <ReactCSSTransitionGroup>
+      <React.Fragment>
+        <CssBaseline />
+        <Topbar currentPath={currentPath} />
+        <div className={classes.root}>
+          {/* v Top Parent Grid */}
+          <Grid className={classes.topGrid} container spacing={1}>
+            {/* Sidebar Profile */}
+            <Paper className={classes.paper}>
+              <Container>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12}></Grid>
+                </Grid>
+              </Container>
+            </Paper>
 
-          {/* v Top Most Grid End */}
-        </Grid>
-      </div>
-    </React.Fragment>
+            {/* v Top Most Grid End */}
+          </Grid>
+        </div>
+      </React.Fragment>
+    </ReactCSSTransitionGroup>
   );
 };
 
