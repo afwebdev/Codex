@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -19,6 +19,7 @@ import Topbar from "../components/Topbar";
 import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
 import { useHistory } from "react-router-dom";
+import Grow from "@material-ui/core/Grow";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -131,7 +132,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignIn() {
+function SignIn(props) {
+  const [animateIn, setAnimateIn] = useState(true);
+  const currentPath = props.location.pathname;
+
   let history = useHistory();
   const [userStatus, setUserStatus] = useContext(LoginContext);
 
@@ -139,12 +143,14 @@ function SignIn() {
 
   const storeUserStatus = user => {
     let { _id, username, user_firstName, user_lastName, user_email } = user;
+    //fix the state to store everything.
     setUserStatus(prevState => ({
       loggedIn: true,
       prevState
     }));
     history.push("/");
   };
+
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
     userName: "",
@@ -201,6 +207,7 @@ function SignIn() {
       })
         .then(resp => {
           console.log(resp.data.user);
+          //STORE THE USER INFO IN GLOBAL STATE
           storeUserStatus(resp.data.user);
         })
         .catch(err => toggleIsFailAuthentication(true));
@@ -211,86 +218,88 @@ function SignIn() {
 
   return (
     <React.Fragment>
-      <Topbar />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            {!isFailAuthentication ? (
-              <LockOutlinedIcon />
-            ) : (
-              <ErrorOutlineIcon />
-            )}
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {!isFailAuthentication
-              ? "Sign in"
-              : "Invalid username or password."}
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              error={
-                (isSubmitted && userNameErr) || isFailAuthentication
-                  ? true
-                  : false
-              }
-              helperText={isSubmitted && userNameErr ? userNameErr : ""}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="userName"
-              label="User Name"
-              name="userName"
-              autoComplete="userName"
-              autoFocus
-              onChange={handleChange}
-            />
-            <TextField
-              error={
-                (isSubmitted && passwordErr) || isFailAuthentication
-                  ? true
-                  : false
-              }
-              helperText={isSubmitted && passwordErr ? passwordErr : ""}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChange}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleFormSubmission}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+      <Topbar currentPath={currentPath} />
+      <Grow in={animateIn}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              {!isFailAuthentication ? (
+                <LockOutlinedIcon />
+              ) : (
+                <ErrorOutlineIcon />
+              )}
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {!isFailAuthentication
+                ? "Sign in"
+                : "Invalid username or password."}
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                error={
+                  (isSubmitted && userNameErr) || isFailAuthentication
+                    ? true
+                    : false
+                }
+                helperText={isSubmitted && userNameErr ? userNameErr : ""}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="userName"
+                label="User Name"
+                name="userName"
+                autoComplete="userName"
+                autoFocus
+                onChange={handleChange}
+              />
+              <TextField
+                error={
+                  (isSubmitted && passwordErr) || isFailAuthentication
+                    ? true
+                    : false
+                }
+                helperText={isSubmitted && passwordErr ? passwordErr : ""}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={handleChange}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleFormSubmission}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+            </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      </Grow>
     </React.Fragment>
   );
 }

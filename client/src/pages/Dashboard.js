@@ -1,4 +1,4 @@
-import React, { Component, useContext } from "react";
+import React, { useEffect, Component, useContext } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter, Link } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,8 +13,9 @@ import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
-
+import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -43,44 +44,48 @@ const styles = theme => ({
 // const value = useContext(LoginContext);
 // console.log(value.email);
 
+// console.log(userStatus.loggedIn);
+// setUserStatus(prevState => ({
+//   ...prevState,
+//   loggedIn: true
+// }));
+// console.log(userStatus.loggedIn);
+
 const Dashboard = props => {
   const { classes } = props;
   const currentPath = props.location.pathname;
-  const [userStatus, setUserStatus] = useContext(LoginContext);
-  // console.log(userStatus.loggedIn);
-  // setUserStatus(prevState => ({
-  //   ...prevState,
-  //   loggedIn: true
-  // }));
-  // console.log(userStatus.loggedIn);
-  console.log(userStatus);
+  //Obtaining state.
+  // const [userStatus, setUserStatus] = useContext(LoginContext);
+  // console.log(userStatus);
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Topbar currentPath={currentPath} />
-      <div className={classes.root}>
-        {/* v Top Parent Grid */}
-        <Grid className={classes.topGrid} container spacing={1}>
-          {/* Sidebar Profile */}
-          <Paper className={classes.paper}>
-            <Container>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                spacing={2}
-              >
-                <Grid item xs={12}></Grid>
-              </Grid>
-            </Container>
-          </Paper>
+    <ReactCSSTransitionGroup>
+      <React.Fragment>
+        <CssBaseline />
+        <Topbar currentPath={currentPath} />
+        <div className={classes.root}>
+          {/* v Top Parent Grid */}
+          <Grid className={classes.topGrid} container spacing={1}>
+            {/* Sidebar Profile */}
+            <Paper className={classes.paper}>
+              <Container>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12}></Grid>
+                </Grid>
+              </Container>
+            </Paper>
 
-          {/* v Top Most Grid End */}
-        </Grid>
-      </div>
-    </React.Fragment>
+            {/* v Top Most Grid End */}
+          </Grid>
+        </div>
+      </React.Fragment>
+    </ReactCSSTransitionGroup>
   );
 };
 

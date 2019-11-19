@@ -10,6 +10,9 @@ export default {
   signIn: function(userLogin) {
     return axios.post("/auth/signin", userLogin);
   },
+  signOut: function() {
+    return axios.get("/auth/signout");
+  },
   //Questions
   //category passed here is an object
   getQuestions: function(category) {
