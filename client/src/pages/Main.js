@@ -11,7 +11,7 @@ import SwipeDialog from "../components/dialogs/SwipeDialog";
 
 import Topbar from "../components/Topbar";
 
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {
@@ -21,7 +21,8 @@ const styles = theme => ({
     background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
-    paddingBottom: 200
+    paddingBottom: 200,
+    height: "100vh"
   },
   grid: {
     width: 1200,
@@ -120,7 +121,7 @@ class Main extends Component {
       <React.Fragment>
         <CssBaseline />
         <Topbar />
-        <div className={classes.root} style={{ marginBottom: 50 }}>
+        <div className={classes.root}>
           <Grid container justify="center">
             <Grid
               spacing={4}
@@ -154,7 +155,6 @@ class Main extends Component {
                   </div>
                 </Paper>
               </Grid>
-
               <Grid item xs={12} md={4}>
                 <Paper className={classes.paper}>
                   <div className={classes.box}>

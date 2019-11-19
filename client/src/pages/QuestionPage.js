@@ -1,5 +1,5 @@
-import React, { Component} from "react";
-import {BrowserRouter as Router,Link,Route} from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,7 +17,7 @@ import Box from "@material-ui/core/Box";
 import API from "../utils/API";
 import ToolTip from "@material-ui/core/Tooltip";
 import QuestionItems from "../components/QuestionListItem";
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {

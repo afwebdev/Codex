@@ -21,7 +21,7 @@ import { LoginContext } from "../components/LoginContext";
 import { useHistory } from "react-router-dom";
 import Grow from "@material-ui/core/Grow";
 
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {
@@ -189,8 +189,7 @@ function SignIn(props) {
 
   const [isSubmitted, toggleIsSubmitted] = useState(false);
   const [isFailAuthentication, toggleIsFailAuthentication] = useState(false);
-  
-  
+
   const handleFormSubmission = e => {
     e.preventDefault();
     toggleIsSubmitted(true);

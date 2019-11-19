@@ -16,7 +16,7 @@ import { LoginContext } from "../components/LoginContext";
 import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
 
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {
