@@ -41,8 +41,8 @@ const styles = theme => ({
   }
 });
 
-// const value = useContext(LoginContext);
-// console.log(value.email);
+//  const value = useContext(LoginContext);
+//  console.log(value.email);
 
 // console.log(userStatus.loggedIn);
 // setUserStatus(prevState => ({
