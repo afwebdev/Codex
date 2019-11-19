@@ -1,4 +1,5 @@
 import React from "react";
+import {BrowserRouter as Router,Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
@@ -24,7 +25,9 @@ const questionItem = props => {
     <>
       {/*  */}
       {props.questions.map(questions => {
+        console.log(questions);
         const {
+          _id,
           question_title,
           question_description,
           category,
@@ -32,6 +35,7 @@ const questionItem = props => {
         } = questions;
         const { user_email, user_firstName } = questions.user_id;
         console.log(
+          _id,
           question_title,
           question_description,
           category,
@@ -68,6 +72,9 @@ const questionItem = props => {
                   <Typography variant="body1">
                     {question_description}
                   </Typography>
+                  <div>
+                    <Link to={`/answer/${_id}`}>Answer this question </Link>
+                  </div>
                 </Grid>
               </Grid>
             </Container>

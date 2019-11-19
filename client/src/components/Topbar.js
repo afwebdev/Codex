@@ -86,7 +86,7 @@ const Topbar = props => {
 
   //Global Context
   const [userStatus, setUserStatus] = useContext(LoginContext);
-
+  console.log(userStatus);
   const { classes } = props;
   const currentPath = props.location.pathname;
 
@@ -101,13 +101,13 @@ const Topbar = props => {
       .checkStatus()
       .then(res => {
         //User is logged in, re-store global state vars
-        console.log(res);
+        setUserStatus(res.data);
       })
       .catch(err => {
         //User is not logged in.
         console.error(err);
       });
-  });
+  }, []);
 
   const handleChange = (event, value) => {
     setState({ value });
