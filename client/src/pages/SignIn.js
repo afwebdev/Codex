@@ -189,12 +189,12 @@ function SignIn(props) {
 
   const [isSubmitted, toggleIsSubmitted] = useState(false);
   const [isFailAuthentication, toggleIsFailAuthentication] = useState(false);
-
+  
+  
   const handleFormSubmission = e => {
     e.preventDefault();
     toggleIsSubmitted(true);
     setValuesError(validate(values));
-    // console.log("Submissio was clicked.")
   };
 
   useEffect(() => {

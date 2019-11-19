@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
+import Answer from "./pages/Answer"
 import Dashboard from "./pages/Dashboard";
 import Wizard from "./pages/Wizard";
 import Main from "./pages/Main";
@@ -37,6 +38,7 @@ export default props => (
     <Route exact path="/signin" component={SignIn} />
     <Route exact path="/wizard" component={Wizard} />
     <Route exact path="/Questions" component={Questions} />
+    <Route exact path="/answer/:id" component={Answer} />
     <Route component={NoMatch} />
   </Switch>
 );

@@ -25,6 +25,15 @@ export default {
         category
       }
     });
+  },
+
+  // Post an answer
+  postAnswer: function(answer){
+    return axios.post("/api/answers",answer);
+  },
+  // Answers Page. On component mount get answers for that question.
+  getQuestionAnswers: function(questionID) {
+    return axios.get(`/api/question/${questionID}`);
   }
 
   // getUserInfo: function(userId) {
