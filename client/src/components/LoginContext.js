@@ -8,7 +8,8 @@ export const LoginProvider = props => {
     username: "",
     user_firstName: "",
     user_lastName: "",
-    user_id: ""
+    user_id: "",
+    user_country: ""
   });
   return (
     <LoginContext.Provider value={[userStatus, setUserStatus]}>

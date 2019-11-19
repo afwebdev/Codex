@@ -15,6 +15,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import { Link as MaterialLink } from "@material-ui/core";
+import SignUpIn from "./SignUpIn";
 import Menu from "./Menu";
 import { LoginContext } from "../components/LoginContext";
 import currentLoginStatus from "../utils/currentLoginStatus";
@@ -82,15 +83,12 @@ const styles = theme => ({
 });
 
 const Topbar = props => {
+
   //Global Context
   const [userStatus, setUserStatus] = useContext(LoginContext);
   console.log(userStatus);
   const { classes } = props;
   const currentPath = props.location.pathname;
-  // state = {
-  //   value: 0,
-  //   menuDrawer: false
-  // };
 
   const [state, setState] = useState({
     value: 0,
@@ -98,6 +96,7 @@ const Topbar = props => {
   });
 
   useEffect(() => {
+    // console.log(userStatus)
     currentLoginStatus
       .checkStatus()
       .then(res => {
@@ -124,7 +123,7 @@ const Topbar = props => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   const current = () => {
     if (props.currentPath === "/home") {
@@ -247,6 +246,7 @@ const Topbar = props => {
                 </div>
               </React.Fragment>
             )}
+            <SignUpIn style={{marginRight: "50px"}} />
           </Grid>
         </Grid>
       </Toolbar>
