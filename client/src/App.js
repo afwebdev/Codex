@@ -21,18 +21,16 @@ const theme = createMuiTheme({
   }
 });
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div>
-          <ThemeProvider theme={theme}>
-            <PageRoutes />
-          </ThemeProvider>
-        </div>
-      </Router>
-    );
-  }
+function App() {
+  return (
+    <Router>
+      <div>
+        <ThemeProvider theme={theme}>
+          <PageRoutes />
+        </ThemeProvider>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

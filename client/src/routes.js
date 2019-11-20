@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
+import Answer from "./pages/Answer"
 import Dashboard from "./pages/Dashboard";
 import Wizard from "./pages/Wizard";
 import Main from "./pages/Main";
@@ -32,11 +33,12 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 export default props => (
   <Switch>
     <Route exact path="/" component={Main} />
-    <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+    <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/signup" component={Signup} />
     <Route exact path="/signin" component={SignIn} />
     <Route exact path="/wizard" component={Wizard} />
-    <ProtectedRoute exact path="/Questions" component={Questions} />
+    <Route exact path="/Questions" component={Questions} />
+    <Route exact path="/answer/:id" component={Answer} />
     <Route component={NoMatch} />
   </Switch>
 );

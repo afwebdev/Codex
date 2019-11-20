@@ -22,6 +22,9 @@ const Menu = [
   {
     label: "Open Questions",
     pathname: "/Questions"
+  },
+  {
+    label: "logout"
   }
   // {
   //   label: "Github",

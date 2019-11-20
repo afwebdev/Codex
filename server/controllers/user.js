@@ -5,6 +5,7 @@ const User = require("../../models/User");
 */
 
 const registerUser = (req, res, next) => {
+  console.log(req.body)
   const user = new User(req.body);
   user.save((err, result) => {
     if (err) {

@@ -10,6 +10,9 @@ export default {
   signIn: function(userLogin) {
     return axios.post("/auth/signin", userLogin);
   },
+  signOut: function() {
+    return axios.get("/auth/signout");
+  },
   //Questions
   //category passed here is an object
   getQuestions: function(category) {
@@ -22,5 +25,25 @@ export default {
         category
       }
     });
+  },
+
+  // Post an answer
+  postAnswer: function(answer){
+    return axios.post("/api/answers",answer);
+  },
+  // Answers Page. On component mount get answers for that question.
+  getQuestionAnswers: function(questionID) {
+    return axios.get(`/api/question/${questionID}`);
   }
+
+  // getUserInfo: function(userId) {
+  //   return axios.get("/api/users", {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     params: {
+  //       userId
+  //     }
+  //   });
+  // }
 };

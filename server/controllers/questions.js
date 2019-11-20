@@ -31,4 +31,31 @@ const getQuestion = (req, resp) => {
   }
 };
 
-module.exports = { askQuestion, getQuestion };
+// Gets question with a certain _id, when you are trying to answer it
+// and loads all answers
+
+const getQuestionByID = (req,resp) =>{
+  console.log('Accesing getQuestionByID function')
+  const id = req.params._id
+//   Question.findOne({_id: id}, (err,docs) =>{
+//     if(!err){
+//     console.log(docs)
+//     resp.json(docs);
+//   }
+//   else{
+//     throw err;
+//   }
+// })
+Question.findOne({_id: id}).
+populate('answer_id')
+.exec((err,docs)=>{
+  if(!err){
+    resp.json(docs)
+  }
+  else{
+    throw err
+  }
+})
+};
+
+module.exports = { askQuestion, getQuestion, getQuestionByID };
