@@ -15,8 +15,10 @@ import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
+import CountryDropDown from "../components/CountryDropDown";
 import API from "../utils/API";
-
+import { useHistory } from "react-router-dom";
+import Grow from "@material-ui/core/Grow";
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
@@ -128,58 +130,91 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignUp() {
+function SignUp(props) {
+  const [animateIn, setAnimateIn] = useState(true);
 
+  const currentPath = props.location.pathname;
+
+  let history = useHistory();
   //Declaring User Signup state to be passed into Signup call
   const [values, setValues] = useState({
-    firstName: "", 
+    firstName: "",
     lastName: "",
     email: "",
-    password: ""
-  })
+    password: "",
+    userName: "",
+    userCountry: ""
+  });
 
   const [valuesError, setValuesError] = useState({
-    firstNameErr: "", 
+    firstNameErr: "",
     lastNameErr: "",
     emailErr: "",
-    passwordErr: ""
-  })
+    passwordErr: "",
+    userNameErr: ""
+  });
 
-  const [isSubmitted, toggleIsSubmitted] = useState(false)
+  const [isSubmitted, toggleIsSubmitted] = useState(false);
 
   //Destructure error state for cleaner conditional rendering in JSX code
-  const { firstNameErr, lastNameErr, emailErr, passwordErr } =  valuesError
+  const {
+    firstNameErr,
+    lastNameErr,
+    emailErr,
+    passwordErr,
+    userNameErr
+  } = valuesError;
 
-  const validate = (values) => {
+  const validate = values => {
     let errors = {};
-    console.log('hi');
 
     if (values.firstName.length < 2) {
-      errors.firstNameErr = "Please enter a valid First Name i.e John" 
+      errors.firstNameErr = "Please enter a valid First Name i.e John";
     }
-    if (values.lastName.length < 2 ) {
-      errors.lastNameErr = "Please enter a valid Last Name i.e Doe"
+    if (values.lastName.length < 2) {
+      errors.lastNameErr = "Please enter a valid Last Name i.e Doe";
+    }
+    if (values.userName.length < 2) {
+      errors.userNameErr = "Please enter a valid User Name";
     }
     if (!/(.+)@(.+){2,}\.(.+){2,}/.test(values.email)) {
-      errors.emailErr = "Please enter a valid Email Address i.e john.doe@codex.com"
+      errors.emailErr =
+        "Please enter a valid Email Address i.e john.doe@codex.com";
     }
     if (values.password.length < 5) {
-      errors.passwordErr = "Your password must be at least 5 characters long!"
+      errors.passwordErr = "Your password must be at least 5 characters long!";
     }
-    console.log(errors)
-    return errors
-  }
-  
+    console.log(errors);
+    return errors;
+  };
+
   const handleChange = e => {
     //Destructure name and value from event
-    const { name, value } = e.target
+    const { name, value } = e.target;
+
     //Use the state update function to update the values object
     //Note that I spread the existing values and overwrite only what changed
     setValues({
       ...values,
       [name]: value
-    })
-  }
+    });
+  };
+
+  //Had to create a seperate event handler for country as I could not get the value of the input element
+  const handleCountry = () => {
+    //On input change (an onEvent change found in Auto-Complete api documentation) I get the value of the country
+    let country = document
+      .getElementById("country-select-demo")
+      .getAttribute("value");
+    //Since we only plan to use this for the flag API I will be getting the letters of the country only
+    let countryCode = country.split(" ")[country.split(" ").length - 1];
+    if (country) {
+      setValues({
+        ...values,
+        userCountry: countryCode
+      });
+    }
+  };
 
   const handleFormSubmission = event => {
     //Prevent Default
@@ -193,133 +228,171 @@ function SignUp() {
   };
 
   useEffect(() => {
-
     if (Object.keys(valuesError).length === 0 && isSubmitted) {
-      console.log("Execute api call here")
-    // API.signUp({
-    //   user_firstName: firstName,
-    //   user_lastName: lastName,
-    //   user_email: email,
-    //   user_password: password
-    // })
-    //   .then(resp => {
-    //     console.log(`Received from resp ${JSON.stringify(resp)}`);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+      console.log("Execute api call here");
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        userName,
+        userCountry
+      } = values;
+      API.signUp({
+        user_firstName: firstName,
+        user_lastName: lastName,
+        user_email: email,
+        user_password: password,
+        user_username: userName,
+        user_country: userCountry
+      })
+        .then(history.push("/signin"))
+        .catch(err => {
+          console.log(err);
+        });
     }
-
-  }, [valuesError])
-
-
+  }, [valuesError]);
 
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <Topbar />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <form className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={isSubmitted && firstNameErr ? true : false}
-                  helperText={isSubmitted && firstNameErr ? firstNameErr : ""}                  
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={isSubmitted && lastNameErr ? true : false}
-                  helperText={isSubmitted && lastNameErr ? lastNameErr : ""}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={isSubmitted && emailErr ? true : false}
-                  helperText={isSubmitted && emailErr ? emailErr : ""}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={isSubmitted && passwordErr ? true : false}
-                  helperText={isSubmitted && passwordErr ? passwordErr : ""}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+      <Topbar currentPath={currentPath} />
+
+      <Grow in={animateIn}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <form className={classes.form} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    error={isSubmitted && firstNameErr ? true : false}
+                    helperText={isSubmitted && firstNameErr ? firstNameErr : ""}
+                    autoComplete="fname"
+                    name="firstName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    error={isSubmitted && lastNameErr ? true : false}
+                    helperText={isSubmitted && lastNameErr ? lastNameErr : ""}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="lname"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    error={isSubmitted && userNameErr ? true : false}
+                    helperText={isSubmitted && userNameErr ? userNameErr : ""}
+                    autoComplete="uname"
+                    name="userName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="userName"
+                    label="User Name"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <CountryDropDown handleCountry={handleCountry} />
+                  {/* <TextField
+                  error={isSubmitted && userCountryErr ? true : false}
+                  helperText={
+                    isSubmitted && userCountryErr ? userCountryErr : ""
                   }
-                  label="I agree that Codex is far superior than Stack OverFlow."
-                />
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="userCountry"
+                  label="Country"
+                  name="userCountry"
+                  autoComplete="country"
+                  onChange={handleChange}
+                /> */}
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    error={isSubmitted && emailErr ? true : false}
+                    helperText={isSubmitted && emailErr ? emailErr : ""}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    error={isSubmitted && passwordErr ? true : false}
+                    helperText={isSubmitted && passwordErr ? passwordErr : ""}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox value="allowExtraEmails" color="primary" />
+                    }
+                    label="I agree that Codex is far superior than Stack OverFlow."
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleFormSubmission}
-            >
-              Sign Up
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="/signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleFormSubmission}
+              >
+                Sign Up
+              </Button>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <Link href="/signin" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
+            </form>
+          </div>
+          <Box mt={5}>
+            <Copyright />
+          </Box>
+        </Container>
+      </Grow>
     </React.Fragment>
   );
 }

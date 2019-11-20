@@ -154,6 +154,7 @@ class Main extends Component {
                   </div>
                 </Paper>
               </Grid>
+
               <Grid item xs={12} md={4}>
                 <Paper className={classes.paper}>
                   <div className={classes.box}>
