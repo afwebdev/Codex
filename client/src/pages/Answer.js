@@ -17,6 +17,7 @@ import API from "../utils/API";
 import ToolTip from "@material-ui/core/Tooltip";
 import { Questionlist, Answerlist } from "../components/QuestionAnswerList";
 import { LoginContext } from "./../components/LoginContext";
+import Footer from "../components/Footer";
 import { Reply } from "../components/Reply";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
@@ -144,6 +145,7 @@ const Answer = props => {
       </textarea>
       <button onClick={submitAnswer}>Answer</button>
     </div>
+   
   );
 };
 

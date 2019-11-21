@@ -19,6 +19,7 @@ import CountryDropDown from "../components/CountryDropDown";
 import API from "../utils/API";
 import { useHistory } from "react-router-dom";
 import Grow from "@material-ui/core/Grow";
+import Footer from "../components/Footer";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
@@ -393,6 +394,8 @@ function SignUp(props) {
           </Box>
         </Container>
       </Grow>
+      <br/>
+      <Footer />
     </React.Fragment>
   );
 }

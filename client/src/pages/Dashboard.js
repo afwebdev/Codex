@@ -28,6 +28,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import Footer from "../components/Footer";
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
@@ -291,6 +292,7 @@ const Dashboard = props => {
         </Grid>
         {/*Top Level Grid End*/}
       </div>
+      <Footer />
     </React.Fragment>
   );
 };
