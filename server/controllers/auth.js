@@ -49,6 +49,7 @@ const signin = (req, res) => {
 	THE TOKEN IS BEING SAVED ON CLIENT VIA COOKIE ABOVE. */
     return res.json({
       token,
+      loggedIn: true,
       user: {
         _id: user._id,
         username: user.user_username,

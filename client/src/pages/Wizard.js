@@ -20,7 +20,7 @@ import Back from '../components/common/Back';
 import Footer from "../components/Footer";
 
 const qs = require('query-string');
-const backgroundShape = require('../images/shape.svg');
+const backgroundShape = require('../images/Liquid-Cheese.svg');
 
 const numeral = require('numeral');
 numeral.defaultFormat('0,000');
