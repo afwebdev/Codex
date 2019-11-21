@@ -17,6 +17,7 @@ import API from "../utils/API";
 import ToolTip from "@material-ui/core/Tooltip";
 import { Questionlist, Answerlist } from "../components/QuestionAnswerList";
 import { LoginContext } from "./../components/LoginContext";
+import { Reply } from "../components/Reply";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
@@ -46,8 +47,37 @@ const styles = theme => ({
 const Answer = props => {
   const [answerstate, setanswerstate] = useState({
     questions: [],
-    answers: []
-  });
+    answers: [],
+    reply: false
+  })
+
+  // Once you click reply, this function will run
+  const reply = () => {
+    console.log('REPLY IS CLICKED STILL')
+    setanswerstate((prevState) => ({
+      ...prevState,
+      reply: true
+    }))
+  }
+
+  // API call to post a reply to an answer
+  const submitReply = (event) => {
+    const reply = document.getElementById("Reply").value;
+    const answer_id = event.target.id
+    console.log(reply);
+    const comment = { 
+      answer_id,
+      comment: reply,
+      rejection_reason: null,
+      user_id: userStatus.userId
+    }
+    API.postReply(comment).then(res => {
+      console.log("Posted the reply")
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  };
 
   const [userStatus, setUserStatus] = useContext(LoginContext);
   const questionID = props.match.params.id;
@@ -80,19 +110,33 @@ const Answer = props => {
       setanswerstate(prevState => ({
         ...prevState,
         answers: res.data.answer_id
-      }));
-    });
-  };
+      }))
+    })
+  }
+  let replyHTML;
+  let buttonId;
 
+  
   return (
     <div>
       <Questionlist question={answerstate.questions} />
       <li>
         {answerstate.answers.map(answer => {
-          console.log(answer);
+          console.log(answer)
+          buttonId = answer._id
+          // setting the ID of the reply button
+          if(answerstate.reply){
+             replyHTML = <Reply id={buttonId} submitReply={submitReply}/>
+          }
+          else{
+            replyHTML = <></>
+          }
           return (
-            <Answerlist key={answer.answer_id}>{answer.answer}</Answerlist>
-          );
+            <>
+            <Answerlist id={answer._id} key={answer._id} reply={reply}>{answer.answer}</Answerlist>
+            {replyHTML}
+            </>
+            )
         })}
       </li>
       <textarea id="answertext" rows="4" cols="50">
