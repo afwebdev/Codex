@@ -17,6 +17,7 @@ import Box from "@material-ui/core/Box";
 import API from "../utils/API";
 import ToolTip from "@material-ui/core/Tooltip";
 import QuestionItems from "../components/QuestionListItem";
+import Footer from "../components/Footer";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
