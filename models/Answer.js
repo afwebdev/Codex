@@ -7,7 +7,8 @@ var AnswerSchema = new Schema({
     rating: {type: Number},
     isRejected: {type: Boolean, required: true, default: false},
     rejection_reason: {type: String},
-    user_id: {type: Schema.Types.ObjectId, ref: "User"}
+    user_id: {type: Schema.Types.ObjectId, ref: "User"},
+    comment_id: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
 },
 {timestamps: true}
 );

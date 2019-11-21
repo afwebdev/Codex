@@ -13,7 +13,6 @@ var QuestionSchema = new Schema(
     is_answer_approved: { type: Boolean, required: true, default: false },
     user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
     answer_id: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-    comment_id: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
   },
   { timestamps: true }
 );
