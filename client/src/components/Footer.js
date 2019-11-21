@@ -16,6 +16,14 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link as MaterialLink } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+
+import HomeIcon from "@material-ui/icons/Home";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import MoneyIcon from "@material-ui/icons/Money";
+import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
 import logo from "../images/LogoMakr_5Jc4Ki.png";
 
@@ -28,20 +36,25 @@ const styles = theme => ({
     backgroundColor: "red"
   },
   footer: {
-    backgroundColor: "grey"
+    backgroundColor: "black"
   },
   root: {
     flexGrow: 1,
-    backgroundColor: "grey"
+    backgroundColor: "black"
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
+  // paper: {
+  //   padding: theme.spacing(2),
+  //   textAlign: "center",
+  //   color: theme.palette.text.secondary
+  // },
   logo: {
     height: 50
+  },
+  link: {
+    color: "grey",
+    textDecoration: "none"
   }
+  
 });
 const useStyles = makeStyles(theme => ({}));
 
@@ -53,49 +66,65 @@ class Footer extends Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs>
-            <Paper className={classes.paper}>
-              <a>
-                <img className={classes.logo}src={logo}></img>
-              </a>
-            </Paper>
+            {/* <Paper className={classes.paper}> */}
+            <img className={classes.logo} src={logo}></img>
+            {/* </Paper> */}
           </Grid>
-          <Grid item xs>
-            <Paper className={classes.paper}>
+          <Grid item xs={5}>
+            {/* <Paper className={classes.paper}> */}
             <List>
-                      {Menu.map((item, index) => {
-                        let action = null;
-                        if (item.label === "logout") {
-                          action = () => {
-                            API.signOut();
-                          };
-                        }
-                        return (
-                          <ListItem
-                            component={item.external ? MaterialLink : Link}
-                            href={item.external ? item.pathname : null}
-                            to={
-                              item.external
-                                ? null
-                                : {
-                                    pathname: item.pathname,
-                                    // search: props.location.search
-                                  }
-                            }
-                            button
-                            key={item.label}
-                          >
-                            <ListItemText primary={item.label} />
-                          </ListItem>
-                        );
-                      })}
-                    </List>
-            </Paper>
+              <ListItem>
+                <Link className={classes.link} to={{ pathname: "/" }}>
+                  <HomeIcon />
+                  Home
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link className={classes.link} to={{ pathname: "/dashboard" }}>
+                  <DashboardIcon />
+                  Dashboard
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link className={classes.link} to={{ pathname: "/wizard" }}>
+                  <MoneyIcon />
+                  Wizard
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link className={classes.link} to={{ pathname: "/Questions" }}>
+                  <QuestionAnswerIcon />
+                  Questions
+                </Link>
+              </ListItem>
+
+
+ 
+
+            </List>
+            {/* </Paper> */}
           </Grid>
           <Grid item xs>
-            <Paper className={classes.paper}>xs</Paper>
+            <List>
+
+            <ListItem>
+                <Link className={classes.link} to={{ pathname: "/signup" }}>
+                  <LockOpenIcon />
+                  Signup
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link className={classes.link} to={{ pathname: "/help" }}>
+                  <ContactSupportIcon />
+                  Help
+                </Link>
+              </ListItem>
+            
+            </List>
+            {/* <Paper className={classes.paper}>xs</Paper> */}
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
+        {/* <Grid container spacing={3}>
           <Grid item xs>
             <Paper className={classes.paper}>xs</Paper>
           </Grid>
@@ -105,7 +134,7 @@ class Footer extends Component {
           <Grid item xs>
             <Paper className={classes.paper}>xs</Paper>
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
 
       // <footer className="footer" style={{backgroundColor: "grey"}}>
