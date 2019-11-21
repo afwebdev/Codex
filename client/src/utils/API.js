@@ -34,6 +34,11 @@ export default {
   // Answers Page. On component mount get answers for that question.
   getQuestionAnswers: function(questionID) {
     return axios.get(`/api/question/${questionID}`);
+  },
+
+  // Answers Page. Post a reply to an answer
+  postReply: function(comment){
+    return axios.post("/api/comment",comment)
   }
 
   // getUserInfo: function(userId) {
