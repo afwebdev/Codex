@@ -11,6 +11,7 @@ import SwipeDialog from "../components/dialogs/SwipeDialog";
 import { makeStyles } from "@material-ui/core/styles";
 import Grow from '@material-ui/core/Grow';
 import Topbar from "../components/Topbar";
+import Footer from "../components/Footer";
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
@@ -326,6 +327,7 @@ function Main(props) {
           />
         </div>
       </Grow>
+      <Footer />
     </React.Fragment>
   );
   
