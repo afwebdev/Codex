@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
 export default function MenuListComposition(props) {
   let history = useHistory();
   const [userStatus, setUserStatus] = useContext(LoginContext);
-  const { loggedIn, curState } = userStatus;
+  const { loggedIn, user } = userStatus;
+  console.log(userStatus)
   
 
   const classes = useStyles();
@@ -65,7 +66,7 @@ export default function MenuListComposition(props) {
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
-    console.log(userStatus)
+    // console.log(userStatus)
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
@@ -82,8 +83,8 @@ export default function MenuListComposition(props) {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          {loggedIn ? <img src={`https://www.countryflags.io/${curState.user_country}/shiny/32.png`}></img> : false }
-          {loggedIn ? ` Hi, ${curState.username}` : `Guest` }
+          {loggedIn ? <img src={`https://www.countryflags.io/${user.user_country}/shiny/32.png`}></img> : false }
+          {loggedIn ? ` Hi, ${user.user_username}` : `Guest` }
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
@@ -98,13 +99,13 @@ export default function MenuListComposition(props) {
                       loggedIn
                       ?
                       <div>
-                        <MenuItem onClick={() => history.push("/")}>Profile</MenuItem>
+                        <MenuItem onClick={() => console.log(loggedIn)}>Profile</MenuItem>
                         <MenuItem onClick={() => history.push("/")}>My account</MenuItem>
                         <MenuItem onClick={signOut}>Logout</MenuItem>
                       </div>
                       :
                       <div>
-                        <MenuItem onClick={() => history.push("/")}>Profile</MenuItem>
+                        <MenuItem onClick={() => console.log(loggedIn)}>Profile</MenuItem>
                         <MenuItem onClick={() => history.push("/")}>My account</MenuItem>
                         <MenuItem onClick={signOut}>Logout</MenuItem>
                       </div>

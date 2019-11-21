@@ -212,7 +212,7 @@ const Dashboard = props => {
   const { email, firstName, lastName } = userStatus;
 
   // useEffect(() => {
-  //   API.getQuestions(userStatus.);
+  //   API.getQuestions(userStatus.user.);
   // });
   const classes = useStyles();
   return (
@@ -235,15 +235,15 @@ const Dashboard = props => {
                 <div className={classes.box}>
                   <Avatar className={classes.avatar}>
                     {(() =>
-                      `${userStatus.user_firstName[0]}${userStatus.user_lastName[0]}`.toUpperCase())()}
+                      `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()}
                   </Avatar>
                   <Typography variant="body2" gutterBottom>
                     Hello,
                     <br />
-                    {`${userStatus.user_firstName}`.charAt(0).toUpperCase() +
-                      `${userStatus.user_firstName}`.slice(
+                    {`${userStatus.user.user_firstName}`.charAt(0).toUpperCase() +
+                      `${userStatus.user.user_firstName}`.slice(
                         1,
-                        userStatus.user_firstName.length
+                        userStatus.user.user_firstName.length
                       )}
                   </Typography>
                   <Typography variant="body2">Dex: 00</Typography>

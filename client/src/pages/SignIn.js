@@ -144,11 +144,14 @@ function SignIn(props) {
   const storeUserStatus = user => {
     let { _id, username, user_firstName, user_lastName, user_email, user_country } = user;
     //fix the state to store everything.
-    setUserStatus(curState => ({
+    setUserStatus(user => ({
       loggedIn: true,
-      curState: user
+      user: user
     }));
+    // localStorage.setItem("userId", _id)
+    localStorage.setItem("user", JSON.stringify(user))
     history.push("/");
+    // console.log(userStatus)
   };
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
@@ -204,7 +207,7 @@ function SignIn(props) {
         user_password: password
       })
         .then(resp => {
-          console.log(resp.data.user);
+          // console.log(resp.data.user);
           //STORE THE USER INFO IN GLOBAL STATE
           storeUserStatus(resp.data.user);
         })
