@@ -97,7 +97,7 @@ const Topbar = props => {
 
   useEffect(() => {
     // console.log(userStatus)
-    if (localStorage.userId !== userStatus._id) {
+    if (JSON.parse(localStorage.getItem('user'))._id !== userStatus._id) {
       currentLoginStatus
       .checkStatus()
       .then(res => {

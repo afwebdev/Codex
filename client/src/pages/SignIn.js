@@ -148,7 +148,8 @@ function SignIn(props) {
       loggedIn: true,
       user: user
     }));
-    localStorage.setItem("userId", _id)
+    // localStorage.setItem("userId", _id)
+    localStorage.setItem("user", JSON.stringify(user))
     history.push("/");
     // console.log(userStatus)
   };
