@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Topbar from '../components/Topbar';
+import Ufo from '../images/ufo.png';
+import Footer from '../components/Footer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,11 +25,13 @@ export default function NoMatch() {
       <Paper className={classes.root} style={{marginTop: "5vh"}}>
         <Typography variant="h5" component="h3">
           404 Page Not Found
+          <img src={Ufo}></img>
         </Typography>
         <Typography component="p">
-          <span role="img" aria-label="Face With Rolling Eyes Emoji">🙄</span>
+          
         </Typography>
       </Paper>
+      <Footer />
     </React.Fragment>
   );
 }
