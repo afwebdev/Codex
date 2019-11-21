@@ -15,6 +15,7 @@ import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
 import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
+import Footer from "../components/Footer";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -117,6 +118,7 @@ const Dashboard = props => {
           {/* v Top Most Grid End */}
         </Grid>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

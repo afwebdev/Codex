@@ -17,6 +17,7 @@ import API from "../utils/API";
 import ToolTip from "@material-ui/core/Tooltip";
 import { Questionlist, Answerlist } from "../components/QuestionAnswerList";
 import { LoginContext } from "./../components/LoginContext";
+import Footer from "../components/Footer";
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
@@ -98,6 +99,7 @@ const Answer = props => {
       <textarea id="answertext" rows="4" cols="50">HUH</textarea>
       <button onClick={submitAnswer}>Answer</button>
     </div>
+   
   );
 }
 

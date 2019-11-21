@@ -20,6 +20,7 @@ import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
 import { useHistory } from "react-router-dom";
 import Grow from "@material-ui/core/Grow";
+import Footer from "../components/Footer";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -299,6 +300,8 @@ function SignIn(props) {
           </Box>
         </Container>
       </Grow>
+      <br/>
+      <Footer />
     </React.Fragment>
   );
 }

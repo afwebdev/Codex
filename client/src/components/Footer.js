@@ -40,7 +40,7 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-    backgroundColor: "black"
+    backgroundColor: "grey"
   },
   // paper: {
   //   padding: theme.spacing(2),
@@ -51,7 +51,7 @@ const styles = theme => ({
     height: 50
   },
   link: {
-    color: "grey",
+    color: "DarkGrey",
     textDecoration: "none"
   }
   
@@ -67,7 +67,9 @@ class Footer extends Component {
         <Grid container spacing={3}>
           <Grid item xs>
             {/* <Paper className={classes.paper}> */}
-            <img className={classes.logo} src={logo}></img>
+            <Link className={classes.link} to={{ pathname: "/" }}>
+              <img className={classes.logo} src={logo}></img>
+            </Link>
             {/* </Paper> */}
           </Grid>
           <Grid item xs={5}>
@@ -124,32 +126,8 @@ class Footer extends Component {
             {/* <Paper className={classes.paper}>xs</Paper> */}
           </Grid>
         </Grid>
-        {/* <Grid container spacing={3}>
-          <Grid item xs>
-            <Paper className={classes.paper}>xs</Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>xs=6</Paper>
-          </Grid>
-          <Grid item xs>
-            <Paper className={classes.paper}>xs</Paper>
-          </Grid>
-        </Grid> */}
       </div>
 
-      // <footer className="footer" style={{backgroundColor: "grey"}}>
-      //   <div className="container footerBox">
-
-      //   <a href="/"><img src={ logo } style={{ height: 50 }}></img></a>
-
-      //   </div>
-      // </footer>
-
-      //   <BottomNavigation className={classes.bottomnavigation}>
-      //     <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-      //     <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      //     <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-      //   </BottomNavigation>
     );
   }
 }
