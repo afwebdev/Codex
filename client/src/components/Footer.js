@@ -23,7 +23,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import MoneyIcon from "@material-ui/icons/Money";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 
 import logo from "../images/LogoMakr_5Jc4Ki.png";
 
@@ -40,7 +40,7 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-    backgroundColor: "grey"
+    backgroundColor: "white"
   },
   // paper: {
   //   padding: theme.spacing(2),
@@ -51,10 +51,9 @@ const styles = theme => ({
     height: 50
   },
   link: {
-    color: "DarkGrey",
-    textDecoration: "none"
+    textDecoration: "none",
+    color: "grey"
   }
-  
 });
 const useStyles = makeStyles(theme => ({}));
 
@@ -99,17 +98,12 @@ class Footer extends Component {
                   Questions
                 </Link>
               </ListItem>
-
-
- 
-
             </List>
             {/* </Paper> */}
           </Grid>
           <Grid item xs>
             <List>
-
-            <ListItem>
+              <ListItem>
                 <Link className={classes.link} to={{ pathname: "/signup" }}>
                   <LockOpenIcon />
                   Signup
@@ -121,13 +115,11 @@ class Footer extends Component {
                   Help
                 </Link>
               </ListItem>
-            
             </List>
             {/* <Paper className={classes.paper}>xs</Paper> */}
           </Grid>
         </Grid>
       </div>
-
     );
   }
 }
