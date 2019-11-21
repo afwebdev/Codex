@@ -10,6 +10,7 @@ import InstructionDialog from "../components/dialogs/InstructionDialog";
 import SwipeDialog from "../components/dialogs/SwipeDialog";
 
 import Topbar from "../components/Topbar";
+import Footer from "../components/Footer";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -253,6 +254,7 @@ class Main extends Component {
             onClose={this.closeGetStartedDialog}
           />
         </div>
+        <Footer />
       </React.Fragment>
     );
   }
