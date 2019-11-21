@@ -182,8 +182,8 @@ function SignUp(props) {
       errors.emailErr =
         "Please enter a valid Email Address i.e john.doe@codex.com";
     }
-    if (values.password.length < 5) {
-      errors.passwordErr = "Your password must be at least 5 characters long!";
+    if (values.password.length < 6) {
+      errors.passwordErr = "Your password must be at least 6 characters long!";
     }
     console.log(errors);
     return errors;
@@ -239,6 +239,14 @@ function SignUp(props) {
         userName,
         userCountry
       } = values;
+      // console.log({
+      //     user_firstName: firstName,
+      //     user_lastName: lastName,
+      //     user_email: email,
+      //     user_password: password,
+      //     user_username: userName,
+      //     user_country: userCountry
+      //   })
       API.signUp({
         user_firstName: firstName,
         user_lastName: lastName,
