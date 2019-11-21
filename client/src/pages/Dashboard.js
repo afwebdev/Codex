@@ -1,4 +1,6 @@
-import React, { useEffect, Component, useContext } from "react";
+import React, { useEffect, Component, useContext, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter, Link } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,23 +17,29 @@ import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
 import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import StarBorder from "@material-ui/icons/StarBorder";
+import Collapse from "@material-ui/core/Collapse";
+import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    backgroundColor: theme.palette.grey["100"],
     overflow: "hidden",
     background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
     paddingBottom: 200
-  },
-  profilePanel: {
-    minHeight: "10em"
-  },
-  topGrid: {
-    margin: "3em"
   },
   grid: {
     width: 1200,
@@ -40,32 +48,161 @@ const styles = theme => ({
       width: "calc(100% - 20px)"
     }
   },
-  paper: {
-    padding: theme.spacing(3),
-    textAlign: "center",
-    color: theme.palette.text.secondary
+
+  rangeLabel: {
+    display: "flex",
+    justifyContent: "space-between",
+    paddingTop: theme.spacing(2)
   },
+  topBar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 32
+  },
+  outlinedButtom: {
+    textTransform: "uppercase",
+    margin: theme.spacing(1)
+  },
+  actionButtom: {
+    textTransform: "uppercase",
+    margin: theme.spacing(1),
+    width: 152
+  },
+  blockCenter: {
+    padding: theme.spacing(2),
+    textAlign: "center"
+  },
+  block: {
+    padding: theme.spacing(2)
+  },
+
+  inlining: {
+    display: "inline-block",
+    marginRight: 10
+  },
+  buttonBar: {
+    display: "flex"
+  },
+  alignRight: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  noBorder: {
+    borderBottomStyle: "hidden"
+  },
+  box: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 40,
+    height: 65
+  },
+
   nameBox: {
     marginTop: "1em"
   },
   avatar: {
     height: 100,
     width: 100
+  },
+  content: {
+    padding: theme.spacing(3),
+    color: theme.palette.text.secondary,
+    display: "flex",
+    justifyContent: "center"
+  },
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.grey["100"],
+    overflow: "hidden",
+    background: `url(${backgroundShape}) no-repeat`,
+    backgroundSize: "cover",
+    backgroundPosition: "0 400px",
+    paddingBottom: 200
+  },
+  grid: {
+    width: 1200,
+    marginTop: 40,
+    [theme.breakpoints.down("sm")]: {
+      width: "calc(100% - 20px)"
+    }
+  },
+  paperProfile: {
+    textAlign: "center",
+    padding: theme.spacing(3),
+    color: theme.palette.text.secondary
+  },
+  listQA: {
+    width: "100%",
+    // maxWidth: 360,
+    backgroundColor: theme.palette.background.paper
   }
-});
+}));
 
-//  const value = useContext(LoginContext);
-//  console.log(value.email);
+const ListData = props => {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState({ question: false, answer: false });
+  const [questions, setQuestions] = React.useState({ questions: [] });
+  const [answers, setAnswers] = React.useState({ answers: [] });
 
-// console.log(userStatus.user.loggedIn);
-// setUserStatus(prevState => ({
-//   ...prevState,
-//   loggedIn: true
-// }));
-// console.log(userStatus.user.loggedIn);
+  useEffect(() => {});
+
+  const handleClick = e => {
+    e.persist();
+    if (e.target.innerText === "My Asked Questions") {
+      setOpen({ question: !open.question });
+    }
+    if (e.target.innerText === "My Answered Questions") {
+      setOpen({ answer: !open.answer });
+    }
+    console.log(e);
+  };
+  return (
+    <List
+      aria-labelledby="nested-list-subheader"
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          My Q&A
+        </ListSubheader>
+      }
+      className={classes.listQA}
+    >
+      <ListItem button onClick={handleClick}>
+        <ListItemIcon>
+          <HelpOutlineIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Asked Questions" />
+        {open.question ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open.question} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemText primary="Question" />
+          </ListItem>
+        </List>
+      </Collapse>
+
+      <ListItem id="answers" button onClick={handleClick}>
+        <ListItemIcon>
+          <QuestionAnswerIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Answered Questions" />
+        {open.question ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open.answer} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemText primary="Answer" />
+          </ListItem>
+        </List>
+      </Collapse>
+    </List>
+  );
+};
 
 const Dashboard = props => {
-  const { classes } = props;
   const currentPath = props.location.pathname;
 
   //Obtaining state.
@@ -74,23 +211,17 @@ const Dashboard = props => {
 
   const { email, firstName, lastName } = userStatus;
 
-  useEffect(() => {});
-
+  // useEffect(() => {
+  //   API.getQuestions(userStatus.);
+  // });
+  const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
       <Topbar currentPath={currentPath} />
-      <div className={classes.root} style={{ marginBottom: 50 }}>
-        {/* v Top Parent Grid */}
-        <Grid
-          container
-          spacing={0}
-          direction="row"
-          alignItems="center"
-          justify="center"
-        >
-          {/* Sidebar Profile */}
-
+      <div className={classes.root}>
+        {/* Top Level Grid */}
+        <Grid container justify="center">
           <Grid
             spacing={4}
             alignItems="center"
@@ -98,27 +229,70 @@ const Dashboard = props => {
             container
             className={classes.grid}
           >
+            {/* Profile Grid Item Start */}
             <Grid item xs={12} md={4}>
-              <Paper justify="center" className={classes.paper}>
-                <Grid container justify="center">
+              <Paper className={classes.paperProfile}>
+                <div className={classes.box}>
                   <Avatar className={classes.avatar}>
                     {(() =>
                       `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()}
                   </Avatar>
-                </Grid>
-                <Box className={classes.nameBox}>
-                  Hello,
-                  {`${userStatus.user.user_firstName}`.charAt(0).toUpperCase()}
-                </Box>
+                  <Typography variant="body2" gutterBottom>
+                    Hello,
+                    <br />
+                    {`${userStatus.user_firstName}`.charAt(0).toUpperCase() +
+                      `${userStatus.user_firstName}`.slice(
+                        1,
+                        userStatus.user_firstName.length
+                      )}
+                  </Typography>
+                  <Typography variant="body2">Dex: 00</Typography>
+                </div>
+                <div
+                  style={{
+                    marginTop: "5em",
+                    display: "flex",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.actionButtom}
+                  >
+                    My Questions
+                  </Button>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.actionButtom}
+                  >
+                    My Answers
+                  </Button>
+                </div>
               </Paper>
             </Grid>
-          </Grid>
+            {/* Parent Profile Item End */}
 
-          {/* v Top Most Grid End */}
+            <Grid container item xs={12}>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <div>
+                    <div className={classes.content}>
+                      <ListData />
+                    </div>
+                  </div>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
+        {/*Top Level Grid End*/}
       </div>
     </React.Fragment>
   );
 };
 
-export default withRouter(withStyles(styles)(Dashboard));
+export default withRouter(withStyles(useStyles)(Dashboard));
