@@ -57,12 +57,12 @@ const styles = theme => ({
 //  const value = useContext(LoginContext);
 //  console.log(value.email);
 
-// console.log(userStatus.loggedIn);
+// console.log(userStatus.user.loggedIn);
 // setUserStatus(prevState => ({
 //   ...prevState,
 //   loggedIn: true
 // }));
-// console.log(userStatus.loggedIn);
+// console.log(userStatus.user.loggedIn);
 
 const Dashboard = props => {
   const { classes } = props;
@@ -103,12 +103,12 @@ const Dashboard = props => {
                 <Grid container justify="center">
                   <Avatar className={classes.avatar}>
                     {(() =>
-                      `${userStatus.user_firstName[0]}${userStatus.user_lastName[0]}`.toUpperCase())()}
+                      `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()}
                   </Avatar>
                 </Grid>
                 <Box className={classes.nameBox}>
                   Hello,
-                  {`${userStatus.user_firstName}`.charAt(0).toUpperCase()}
+                  {`${userStatus.user.user_firstName}`.charAt(0).toUpperCase()}
                 </Box>
               </Paper>
             </Grid>
