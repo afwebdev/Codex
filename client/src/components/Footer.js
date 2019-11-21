@@ -40,7 +40,10 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    borderStyle: 'solid',
+    borderColor: "grey",
+    borderWidth: 1
   },
   // paper: {
   //   padding: theme.spacing(2),
@@ -48,6 +51,7 @@ const styles = theme => ({
   //   color: theme.palette.text.secondary
   // },
   logo: {
+    marginTop: 1,
     height: 50
   },
   link: {
