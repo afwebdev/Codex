@@ -21,8 +21,7 @@ const styles = theme => ({
     background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
-    paddingBottom: 200,
-    height: "100vh"
+    paddingBottom: 200
   },
   grid: {
     width: 1200,
