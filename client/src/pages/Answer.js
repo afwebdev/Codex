@@ -18,7 +18,7 @@ import ToolTip from "@material-ui/core/Tooltip";
 import { Questionlist, Answerlist } from "../components/QuestionAnswerList";
 import { LoginContext } from "./../components/LoginContext";
 import { Reply } from "../components/Reply";
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {
@@ -84,14 +84,14 @@ const Answer = props => {
   useEffect(() => {
     // Just accessing the id passed in order to query once component mounts
     // sets state to the question and answers for that question
-    console.log(questionID)
+    console.log(questionID);
     API.getQuestionAnswers(questionID).then(res => {
-      console.log(res.data)
+      console.log(res.data);
       setanswerstate({
         questions: res.data.question_description,
         answers: res.data.answer_id
-      })
-      console.log(res.data)
+      });
+      console.log(res.data);
     });
   }, []);
 
@@ -99,15 +99,15 @@ const Answer = props => {
   // This will update answer collection, as well as question collection
   const submitAnswer = () => {
     const answer = document.getElementById("answertext").value;
-    console.log(userStatus.userId)
+    console.log(userStatus.userId);
     const answerObj = {
       question_id: questionID,
       answer,
       user_id: userStatus.userId
-    }
-    console.log(answerObj)
+    };
+    console.log(answerObj);
     API.postAnswer(answerObj).then(res => {
-      setanswerstate((prevState) => ({
+      setanswerstate(prevState => ({
         ...prevState,
         answers: res.data.answer_id
       }))
@@ -139,10 +139,12 @@ const Answer = props => {
             )
         })}
       </li>
-      <textarea id="answertext" rows="4" cols="50">HUH</textarea>
+      <textarea id="answertext" rows="4" cols="50">
+        HUH
+      </textarea>
       <button onClick={submitAnswer}>Answer</button>
     </div>
   );
-}
+};
 
 export default withRouter(withStyles(styles)(Answer));

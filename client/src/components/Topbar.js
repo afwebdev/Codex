@@ -83,10 +83,9 @@ const styles = theme => ({
 });
 
 const Topbar = props => {
-
   //Global Context
   const [userStatus, setUserStatus] = useContext(LoginContext);
-  console.log(userStatus);
+  // console.log(userStatus);
   const { classes } = props;
   const currentPath = props.location.pathname;
 
@@ -97,16 +96,21 @@ const Topbar = props => {
 
   useEffect(() => {
     // console.log(userStatus)
-    currentLoginStatus
-      .checkStatus()
-      .then(res => {
-        //User is logged in, re-store global state vars
-        setUserStatus(res.data);
-      })
-      .catch(err => {
-        //User is not logged in.
-        console.error(err);
-      });
+    if (localStorage.getItem("user")) {
+      if (JSON.parse(localStorage.getItem("user"))._id !== userStatus._id) {
+        currentLoginStatus
+          .checkStatus()
+          .then(res => {
+            //User is logged in, re-store global state vars
+            setUserStatus(res.data);
+            console.log(res.data);
+          })
+          .catch(err => {
+            //User is not logged in.
+            console.error(err);
+          });
+      }
+    }
   }, []);
 
   const handleChange = (event, value) => {
@@ -246,7 +250,7 @@ const Topbar = props => {
                 </div>
               </React.Fragment>
             )}
-            <SignUpIn style={{marginRight: "50px"}} />
+            <SignUpIn style={{ marginRight: "50px" }} />
           </Grid>
         </Grid>
       </Toolbar>

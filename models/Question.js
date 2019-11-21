@@ -11,7 +11,7 @@ var QuestionSchema = new Schema(
     expiry_time: { type: Date },
     is_pickedup: { type: Boolean, required: true, default: false },
     is_answer_approved: { type: Boolean, required: true, default: false },
-    user_id: { type: Schema.Types.ObjectId, ref: "User" },
+    user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
     answer_id: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
   },
   { timestamps: true }
