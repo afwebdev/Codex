@@ -35,7 +35,13 @@ const findUserProfile = (req, res) => {
   // eliminate password related fields before sending the user object
   req.profile.hashedPassword = undefined;
   req.profile.salt = undefined;
-  return res.json(req.profile);
+  console.log(req.profile)
+  return res.json({
+    loggedIn: true,
+    user: {
+      ...req.profile._doc
+    }
+  });
 };
 
 module.exports = { findUserById, findUserProfile, registerUser };

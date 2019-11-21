@@ -31,31 +31,44 @@ const getQuestion = (req, resp) => {
   }
 };
 
+const getQuestionByUser = (req, resp) => {
+  console.log("Question By User");
+  // const userId = req.params.user
+  let id = "5dd0b527f8671cb0e4d68648";
+  Question.find({ user_id: id }).exec((err, res) => {
+    err ? resp.json(err) : resp.json(res);
+  });
+};
+
 // Gets question with a certain _id, when you are trying to answer it
 // and loads all answers
 
-const getQuestionByID = (req,resp) =>{
-  console.log('Accesing getQuestionByID function')
-  const id = req.params._id
-//   Question.findOne({_id: id}, (err,docs) =>{
-//     if(!err){
-//     console.log(docs)
-//     resp.json(docs);
-//   }
-//   else{
-//     throw err;
-//   }
-// })
-Question.findOne({_id: id}).
-populate('answer_id')
-.exec((err,docs)=>{
-  if(!err){
-    resp.json(docs)
-  }
-  else{
-    throw err
-  }
-})
+const getQuestionByID = (req, resp) => {
+  console.log("Accesing getQuestionByID function");
+  const id = req.params._id;
+  //   Question.findOne({_id: id}, (err,docs) =>{
+  //     if(!err){
+  //     console.log(docs)
+  //     resp.json(docs);
+  //   }
+  //   else{
+  //     throw err;
+  //   }
+  // })
+  Question.findOne({ _id: id })
+    .populate("answer_id")
+    .exec((err, docs) => {
+      if (!err) {
+        resp.json(docs);
+      } else {
+        throw err;
+      }
+    });
 };
 
-module.exports = { askQuestion, getQuestion, getQuestionByID };
+module.exports = {
+  askQuestion,
+  getQuestion,
+  getQuestionByID,
+  getQuestionByUser
+};
