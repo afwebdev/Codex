@@ -125,6 +125,11 @@ const Topbar = props => {
     setState({ menuDrawer: false });
   };
 
+  const signOut = () => {
+    localStorage.setItem("loggedIn", false);
+    API.signOut();
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -189,7 +194,7 @@ const Topbar = props => {
                         let action = null;
                         if (item.label === "logout") {
                           action = () => {
-                            API.signOut();
+                            localStorage.setItem("loggedIn", false);
                           };
                         }
                         return (
@@ -223,7 +228,7 @@ const Topbar = props => {
                       let action = null;
                       if (item.label === "logout") {
                         action = () => {
-                          API.signOut();
+                          localStorage.setItem("loggedIn", false);
                         };
                       }
 
@@ -250,7 +255,7 @@ const Topbar = props => {
                 </div>
               </React.Fragment>
             )}
-            <SignUpIn style={{ marginRight: "50px" }} />
+            <SignUpIn className={classes.tagline} />
           </Grid>
         </Grid>
       </Toolbar>
