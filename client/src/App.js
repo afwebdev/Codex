@@ -4,7 +4,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import "./App.css";
 import PageRoutes from "./routes";
-import { blue, indigo } from "@material-ui/core/colors";
+import { blue, indigo, grey } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
@@ -13,6 +13,9 @@ const theme = createMuiTheme({
     },
     primary: {
       main: indigo[700]
+    },
+    grey: {
+      main: grey[600]
     }
   },
   typography: {

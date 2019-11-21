@@ -19,7 +19,7 @@ import CountryDropDown from "../components/CountryDropDown";
 import API from "../utils/API";
 import { useHistory } from "react-router-dom";
 import Grow from "@material-ui/core/Grow";
-const backgroundShape = require("../images/shape.svg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {
