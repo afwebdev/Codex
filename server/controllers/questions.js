@@ -57,7 +57,13 @@ const getQuestionByID = (req, resp) => {
   //   }
   // })
   Question.findOne({ _id: id })
-    .populate("answer_id")
+    .populate({
+      path: "answer_id",
+      populate: {
+        path:"comment_id",
+        model: "Comment"
+      }
+    })
     .exec((err, docs) => {
       if (!err) {
         resp.json(docs);

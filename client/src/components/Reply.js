@@ -4,7 +4,7 @@ import { Button, Comment, Form, Header, Grid } from 'semantic-ui-react'
 const Reply = props =>{
 return(
 <Form>
-    <Form.TextArea id="Reply"/>
+    <Form.TextArea id={props.id+1}/>
     <Button
         id={props.id}
         content='Add Reply'

@@ -37,4 +37,10 @@ const Answerlist = props => {
     )
 }
 
-export { Questionlist, Answerlist };
+const Replylist = props => {
+    return (
+    <Comment.Text>{props.children}</Comment.Text>
+    )
+}
+
+export { Questionlist, Answerlist,Replylist };
