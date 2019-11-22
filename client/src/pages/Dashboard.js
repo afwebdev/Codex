@@ -32,7 +32,13 @@ import Footer from "../components/Footer";
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
-const useStyles = makeStyles(theme => ({
+//retrieve and store user info
+const storage = localStorage.getItem("user");
+const user = JSON.parse(storage);
+console.log(user);
+// console.log(user);
+
+const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.grey["100"],
@@ -41,7 +47,10 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
     paddingBottom: 200
-  },
+  }
+});
+
+const useStyles = makeStyles(theme => ({
   grid: {
     width: 1200,
     marginTop: 40,
@@ -142,80 +151,96 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ListData = props => {
+//MAIN Component.
+function Dashboard(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState({ question: false, answer: false });
-  const [questions, setQuestions] = React.useState({ questions: [] });
-  const [answers, setAnswers] = React.useState({ answers: [] });
-
-  useEffect(() => {});
-
-  const handleClick = e => {
-    e.persist();
-    if (e.target.innerText === "My Asked Questions") {
-      setOpen({ question: !open.question });
-    }
-    if (e.target.innerText === "My Answered Questions") {
-      setOpen({ answer: !open.answer });
-    }
-    console.log(e);
-  };
-  return (
-    <List
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          My Q&A
-        </ListSubheader>
-      }
-      className={classes.listQA}
-    >
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <HelpOutlineIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Asked Questions" />
-        {open.question ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open.question} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemText primary="Question" />
-          </ListItem>
-        </List>
-      </Collapse>
-
-      <ListItem id="answers" button onClick={handleClick}>
-        <ListItemIcon>
-          <QuestionAnswerIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Answered Questions" />
-        {open.question ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open.answer} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemText primary="Answer" />
-          </ListItem>
-        </List>
-      </Collapse>
-    </List>
-  );
-};
-
-const Dashboard = props => {
   const currentPath = props.location.pathname;
 
-  //Obtaining state.
-  const [userStatus, setUserStatus] = useContext(LoginContext);
-  // console.log(userStatus);
+  //Hooks for question/answer to be displayed
+  const [questions, setQuestions] = React.useState({ userQuestions: [] });
+  const [answers, setAnswers] = React.useState({ userAnswers: [] });
 
-  const { email, firstName, lastName } = userStatus;
+  //Dashboard useEfect
+  useEffect(() => {
+    API.getQuestionByUser(user._id).then(res => {
+      console.log(res);
+      setQuestions(prev => ({
+        userQuestions: res.data
+      }));
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   API.getQuestions(userStatus.user.);
-  // });
-  const classes = useStyles();
+  //List Item Link Component
+  const ListItemLink = props => {
+    return (
+      <Link {...props}>
+        <ListItem button {...props} />
+      </Link>
+    );
+  };
+
+  //ListData Component.
+  const ListData = props => {
+    const [open, setOpen] = React.useState({ question: false, answer: false });
+
+    const handleClick = e => {
+      e.persist();
+      if (e.target.innerText === "My Asked Questions") {
+        setOpen({ question: !open.question });
+      }
+      if (e.target.innerText === "My Answered Questions") {
+        setOpen({ answer: !open.answer });
+      }
+      console.log(e);
+    };
+
+    return (
+      <List
+        aria-labelledby="nested-list-subheader"
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            My Q&A
+          </ListSubheader>
+        }
+        className={classes.listQA}
+      >
+        <ListItem button onClick={handleClick}>
+          <ListItemIcon>
+            <HelpOutlineIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Asked Questions" />
+          {open.question ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={open.question} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {questions.userQuestions.map(question => {
+              return (
+                <ListItemLink to={`/answer/${question._id}`}>
+                  <ListItemText primary={question.question_title} />
+                </ListItemLink>
+              );
+            })}
+          </List>
+        </Collapse>
+
+        <ListItem id="answers" button onClick={handleClick}>
+          <ListItemIcon>
+            <QuestionAnswerIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Answered Questions" />
+          {open.question ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={open.answer} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              <ListItemText primary="Answer" />
+            </ListItem>
+          </List>
+        </Collapse>
+      </List>
+    );
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -236,15 +261,15 @@ const Dashboard = props => {
                 <div className={classes.box}>
                   <Avatar className={classes.avatar}>
                     {(() =>
-                      `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()}
+                      `${user.user_firstName[0]}${user.user_lastName[0]}`.toUpperCase())()}
                   </Avatar>
                   <Typography variant="body2" gutterBottom>
                     Hello,
                     <br />
-                    {`${userStatus.user.user_firstName}`.charAt(0).toUpperCase() +
-                      `${userStatus.user.user_firstName}`.slice(
+                    {`${user.user_firstName}`.charAt(0).toUpperCase() +
+                      `${user.user_firstName}`.slice(
                         1,
-                        userStatus.user.user_firstName.length
+                        user.user_firstName.length
                       )}
                   </Typography>
                   <Typography variant="body2">Dex: 00</Typography>
@@ -295,6 +320,6 @@ const Dashboard = props => {
       <Footer />
     </React.Fragment>
   );
-};
+}
 
-export default withRouter(withStyles(useStyles)(Dashboard));
+export default withRouter(withStyles(styles)(Dashboard));
