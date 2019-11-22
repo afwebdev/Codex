@@ -1,4 +1,4 @@
-const Question = require("../../models/Question");
+const Question = require("../models/Question");
 
 const askQuestion = (req, resp) => {
   const question = new Question(req.body);
@@ -60,7 +60,7 @@ const getQuestionByID = (req, resp) => {
     .populate({
       path: "answer_id",
       populate: {
-        path:"comment_id",
+        path: "comment_id",
         model: "Comment"
       }
     })

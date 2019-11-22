@@ -1,4 +1,4 @@
-const User = require("../../models/User");
+const User = require("../models/User");
 
 /* Our User controller
 	to be used as a a link between server, and the front end (Our API Calls)
