@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { LoginContext } from "../components/LoginContext";
 import Grid from "@material-ui/core/Grid";
 import API from "../utils/API";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+// import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MenuListComposition(props) {
+export default function SignUpIn(props) {
   let history = useHistory();
   const [userStatus, setUserStatus] = useContext(LoginContext);
 
@@ -100,7 +100,7 @@ export default function MenuListComposition(props) {
           onClick={handleToggle}
         >
           <Grid container justify="center" spacing={0}>
-            <Grid item justify="center">
+            <Grid item >
               {loggedIn ? (
                 <Avatar className={classes.loggedInAvatar}>{user_firstName[0] + user_lastName[0]}</Avatar>
               ) : (
@@ -113,7 +113,7 @@ export default function MenuListComposition(props) {
             <Grid item xs={12}>
               {loggedIn ? (
                 <React.Fragment>
-                  <i class="fas fa-wallet"></i> 69
+                  <i className="fas fa-wallet"></i> 69
                 </React.Fragment>
               ) : (
                 <p>Guest</p>

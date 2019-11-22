@@ -143,7 +143,7 @@ function SignIn(props) {
   const userStatusObject = {};
 
   const storeUserStatus = user => {
-    let { _id, username, user_firstName, user_lastName, user_email, user_country } = user;
+    // let { _id, username, user_firstName, user_lastName, user_email, user_country } = user;
     //fix the state to store everything.
     setUserStatus(user => ({
       loggedIn: true,

@@ -9,13 +9,13 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import Loading from "../components/common/Loading";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
+// import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+// import Loading from "../components/common/Loading";
+// import Box from "@material-ui/core/Box";
+// import Container from "@material-ui/core/Container";
 import API from "../utils/API";
-import { LoginContext } from "../components/LoginContext";
-import currentLoginStatus from "../utils/currentLoginStatus";
+// import { LoginContext } from "../components/LoginContext";
+// import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -25,7 +25,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+// import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import Footer from "../components/Footer";
@@ -35,8 +35,6 @@ const backgroundShape = require("../images/Liquid-Cheese.svg");
 //retrieve and store user info
 const storage = localStorage.getItem("user");
 const user = JSON.parse(storage);
-console.log(user);
-// console.log(user);
 
 const styles = theme => ({
   root: {
