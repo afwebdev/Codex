@@ -29,6 +29,7 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import Footer from "../components/Footer";
+import ListData from "../components/ListData/ListData";
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
@@ -156,91 +157,7 @@ function Dashboard(props) {
   const classes = useStyles();
   const currentPath = props.location.pathname;
 
-  //Hooks for question/answer to be displayed
-  const [questions, setQuestions] = React.useState({ userQuestions: [] });
-  const [answers, setAnswers] = React.useState({ userAnswers: [] });
-
-  //Dashboard useEfect
-  useEffect(() => {
-    API.getQuestionByUser(user._id).then(res => {
-      console.log(res);
-      setQuestions(prev => ({
-        userQuestions: res.data
-      }));
-    });
-  }, []);
-
-  //List Item Link Component
-  const ListItemLink = props => {
-    return (
-      <Link {...props}>
-        <ListItem button {...props} />
-      </Link>
-    );
-  };
-
-  //ListData Component.
-  const ListData = props => {
-    const [open, setOpen] = React.useState({ question: false, answer: false });
-
-    const handleClick = e => {
-      e.persist();
-      if (e.target.innerText === "My Asked Questions") {
-        setOpen({ question: !open.question });
-      }
-      if (e.target.innerText === "My Answered Questions") {
-        setOpen({ answer: !open.answer });
-      }
-      console.log(e);
-    };
-
-    return (
-      <List
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            My Q&A
-          </ListSubheader>
-        }
-        className={classes.listQA}
-      >
-        <ListItem button onClick={handleClick}>
-          <ListItemIcon>
-            <HelpOutlineIcon />
-          </ListItemIcon>
-          <ListItemText primary="My Asked Questions" />
-          {open.question ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open.question} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {questions.userQuestions.map(question => {
-              return (
-                <ListItemLink to={`/answer/${question._id}`}>
-                  <ListItemText primary={question.question_title} />
-                </ListItemLink>
-              );
-            })}
-          </List>
-        </Collapse>
-
-        <ListItem id="answers" button onClick={handleClick}>
-          <ListItemIcon>
-            <QuestionAnswerIcon />
-          </ListItemIcon>
-          <ListItemText primary="My Answered Questions" />
-          {open.question ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open.answer} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
-              <ListItemText primary="Answer" />
-            </ListItem>
-          </List>
-        </Collapse>
-      </List>
-    );
-  };
-
+  //Dashboard Return Component.
   return (
     <React.Fragment>
       <CssBaseline />
@@ -307,7 +224,7 @@ function Dashboard(props) {
                 <Paper className={classes.paper}>
                   <div>
                     <div className={classes.content}>
-                      <ListData />
+                      <ListData user={user} />
                     </div>
                   </div>
                 </Paper>
