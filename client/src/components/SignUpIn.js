@@ -39,14 +39,14 @@ export default function MenuListComposition(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const loggedIn = JSON.parse(localStorage.getItem("loggedIn"));
+  const loggedIn = (localStorage.getItem("loggedIn") ? JSON.parse(localStorage.getItem("loggedIn")) : "");
   const {
     user_country,
     user_firstName,
     user_lastName,
     username,
     _id
-  } = JSON.parse(localStorage.getItem("user"));
+  } = (localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "")
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
