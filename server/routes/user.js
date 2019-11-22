@@ -3,7 +3,7 @@ const {
   registerUser,
   findUserById,
   findUserProfile
-} = require("../controllers/user");
+} = require("../controllers/User");
 // import them to protect routes
 const { requireSignin, hasAuthorization } = require("../controllers/auth");
 

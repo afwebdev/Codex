@@ -5,7 +5,7 @@ const User = require("../../models/User");
 */
 
 const registerUser = (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   const user = new User(req.body);
   user.save((err, result) => {
     if (err) {
@@ -35,7 +35,7 @@ const findUserProfile = (req, res) => {
   // eliminate password related fields before sending the user object
   req.profile.hashedPassword = undefined;
   req.profile.salt = undefined;
-  console.log(req.profile)
+  console.log(req.profile);
   return res.json({
     loggedIn: true,
     user: {
