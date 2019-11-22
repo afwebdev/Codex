@@ -129,6 +129,20 @@ const Answer = props => {
         ...prevState,
         answers: res.data.answer_id
       }))
+       // This will allow you to get the refreshed comments, while updating state as well.
+       API.getQuestionAnswers(questionID).then(res => {
+        console.log('THIS IS ON COMPONENT MOUNT')
+        console.log(res.data.answer_id[0].comment_id);
+        setanswerstate({
+          questions: res.data.question_description,
+          answers: res.data.answer_id,
+        });
+        console.log(res.data);
+      });
+      console.log("Posted the reply")
+    })
+    .catch((err)=>{
+      console.log(err)
     })
   }
   let replyHTML;
