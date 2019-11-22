@@ -28,8 +28,8 @@ export default {
   },
 
   // Post an answer
-  postAnswer: function(answer){
-    return axios.post("/api/answers",answer);
+  postAnswer: function(answer) {
+    return axios.post("/api/answers", answer);
   },
   // Answers Page. On component mount get answers for that question.
   getQuestionAnswers: function(questionID) {
@@ -37,8 +37,12 @@ export default {
   },
 
   // Answers Page. Post a reply to an answer
-  postReply: function(comment){
-    return axios.post("/api/comment",comment)
+  postReply: function(comment) {
+    return axios.post("/api/comment", comment);
+  },
+
+  getQuestionByUser: function(user) {
+    return axios.get("/api/questions", user);
   }
 
   // getUserInfo: function(userId) {
