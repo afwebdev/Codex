@@ -9,6 +9,7 @@ const authRoute = require("./server/routes/auth");
 const questionRoute = require("./server/routes/questions");
 const answerRoute = require("./server/routes/answer");
 const commentRoute = require("./server/routes/comment");
+
 //Init the Connection to the DB.
 require("./server/config/dbConnection");
 
