@@ -21,7 +21,7 @@ import { LoginContext } from "../components/LoginContext";
 import currentLoginStatus from "../utils/currentLoginStatus";
 import API from "../utils/API";
 
-const logo = require("../images/logo.svg");
+const logo = require("../images/LogoMakr_5Jc4Ki.png");
 
 const styles = theme => ({
   appBar: {
@@ -79,6 +79,9 @@ const styles = theme => ({
     paddingTop: 20,
     paddingBottom: 20,
     minWidth: "auto"
+  },
+  img: {
+    paddingTop: 15
   }
 });
 
@@ -128,7 +131,7 @@ const Topbar = props => {
   const signOut = () => {
     localStorage.setItem("loggedIn", false);
     API.signOut();
-  }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -163,8 +166,8 @@ const Topbar = props => {
             <div className={classes.inline}>
               <Typography variant="h6" color="inherit" noWrap>
                 <Link to="/" className={classes.link}>
-                  <img width={20} src={logo} alt="" />
-                  <span className={classes.tagline}>Codex</span>
+                  <img className={classes.img} width={100} src={logo} alt="" />
+                  {/* <span className={classes.tagline}>Codex</span> */}
                 </Link>
               </Typography>
             </div>
