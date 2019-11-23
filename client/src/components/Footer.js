@@ -29,14 +29,9 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: "white",
     borderStyle: "solid",
-    borderColor: "grey",
+    borderColor: "lightgrey",
     borderWidth: 1
   },
-  // paper: {
-  //   padding: theme.spacing(2),
-  //   textAlign: "center",
-  //   color: theme.palette.text.secondary
-  // },
   logo: {
     marginTop: 1,
     height: 50
