@@ -15,7 +15,11 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Box from "@material-ui/core/Box";
 import API from "../utils/API";
 import ToolTip from "@material-ui/core/Tooltip";
-import { Questionlist, Answerlist,Replylist } from "../components/QuestionAnswerList";
+import {
+  Questionlist,
+  Answerlist,
+  Replylist
+} from "../components/QuestionAnswerList";
 import { LoginContext } from "./../components/LoginContext";
 import Footer from "../components/Footer";
 import { Reply } from "../components/Reply";
@@ -49,51 +53,52 @@ const Answer = props => {
   const [answerstate, setanswerstate] = useState({
     questions: [],
     answers: [],
-    reply: false,
-  })
+    reply: false
+  });
 
   // Once you click reply, this function will run
-  const reply = (event) => {
-    console.log('REPLY IS CLICKED STILL')
-    const replyId = event.target.id
-    setanswerstate((prevState) => ({
+  const reply = event => {
+    console.log("REPLY IS CLICKED STILL");
+    const replyId = event.target.id;
+    setanswerstate(prevState => ({
       ...prevState,
       reply: replyId
-    }))
-  }
-  
+    }));
+  };
+
   // API call to post a reply to an answer
-  const submitReply = (event) => {
-    const answer_id = event.target.id
-    console.log(answer_id)
-    const reply = document.getElementById(answer_id+1).value;
+  const submitReply = event => {
+    const answer_id = event.target.id;
+    console.log(answer_id);
+    const reply = document.getElementById(answer_id + 1).value;
     console.log(reply);
-    const comment = { 
+    const comment = {
       answer_id,
       comment: reply,
       rejection_reason: null,
       user_id: userStatus.userId
-    }
-    API.postReply(comment).then(res => {
-      setanswerstate(prevState => ({
-        ...prevState,
-        reply:false
-      }))
-      // This will allow you to get the refreshed comments, while updating state as well.
-      API.getQuestionAnswers(questionID).then(res => {
-        console.log('THIS IS ON COMPONENT MOUNT')
-        console.log(res.data.answer_id[0].comment_id);
-        setanswerstate({
-          questions: res.data.question_description,
-          answers: res.data.answer_id,
+    };
+    API.postReply(comment)
+      .then(res => {
+        setanswerstate(prevState => ({
+          ...prevState,
+          reply: false
+        }));
+        // This will allow you to get the refreshed comments, while updating state as well.
+        API.getQuestionAnswers(questionID).then(res => {
+          console.log("THIS IS ON COMPONENT MOUNT");
+          console.log(res.data.answer_id[0].comment_id);
+          setanswerstate({
+            questions: res.data.question_description,
+            answers: res.data.answer_id
+          });
+          console.log(res.data);
         });
-        console.log(res.data);
+        console.log("Posted the reply");
+      })
+      .catch(err => {
+        console.log(err);
       });
-      console.log("Posted the reply")
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
   };
 
   const [userStatus, setUserStatus] = useContext(LoginContext);
@@ -103,11 +108,12 @@ const Answer = props => {
     // sets state to the question and answers for that question
     console.log(questionID);
     API.getQuestionAnswers(questionID).then(res => {
-      console.log('THIS IS ON COMPONENT MOUNT')
-      console.log(res.data.answer_id[0].comment_id);
+      console.log("THIS IS ON COMPONENT MOUNT");
+
+      // console.log(res.data.answer_id[0].comment_id)
       setanswerstate({
         questions: res.data.question_description,
-        answers: res.data.answer_id,
+        answers: res.data.answer_id
       });
       console.log(res.data);
     });
@@ -128,40 +134,38 @@ const Answer = props => {
       setanswerstate(prevState => ({
         ...prevState,
         answers: res.data.answer_id
-      }))
-    })
-  }
+      }));
+    });
+  };
   let replyHTML;
   let buttonId;
 
-  
   return (
     <div>
       <Questionlist question={answerstate.questions} />
       <li>
         {answerstate.answers.map(answer => {
-          console.log(answer)
-          buttonId = answer._id
+          console.log(answer);
+          buttonId = answer._id;
           // setting the ID of the reply box
           // This is for the conditional rendering of the reply box.
-          if(answerstate.reply === answer._id){
-             replyHTML = <Reply id={buttonId} submitReply={submitReply}/>
-          }
-          else{
-            replyHTML = <></>
+          if (answerstate.reply === answer._id) {
+            replyHTML = <Reply id={buttonId} submitReply={submitReply} />;
+          } else {
+            replyHTML = <></>;
           }
           return (
             <>
-            <Answerlist id={answer._id} key={answer._id} reply={reply}>{answer.answer}</Answerlist>
-            {answer.comment_id.map(comment =>{
-              console.log(comment)
-              return (
-              <Replylist>{comment.comment}</Replylist>
-              )
-            })}
-            {replyHTML}
+              <Answerlist id={answer._id} key={answer._id} reply={reply}>
+                {answer.answer}
+              </Answerlist>
+              {answer.comment_id.map(comment => {
+                console.log(comment);
+                return <Replylist>{comment.comment}</Replylist>;
+              })}
+              {replyHTML}
             </>
-            )
+          );
         })}
       </li>
       <textarea id="answertext" rows="4" cols="50">
@@ -169,7 +173,6 @@ const Answer = props => {
       </textarea>
       <button onClick={submitAnswer}>Answer</button>
     </div>
-   
   );
 };
 
