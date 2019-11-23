@@ -43,7 +43,8 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     textAlign: "center",
-    backgroundColor: "transparent"
+    // backgroundColor: "transparent",
+    backgroundColor: "rgba(255, 255, 255, 0.3)"
   },
   headerContent: {
     height: "78vh",
