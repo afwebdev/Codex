@@ -106,7 +106,7 @@ const Topbar = props => {
           .then(res => {
             //User is logged in, re-store global state vars
             setUserStatus(res.data);
-            console.log(res.data);
+            // console.log(res.data);
           })
           .catch(err => {
             //User is not logged in.
