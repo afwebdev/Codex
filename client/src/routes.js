@@ -9,26 +9,26 @@ import SignIn from "./pages/SignIn";
 import NoMatch from "./pages/NoMatch";
 import Questions from "./pages/QuestionPage";
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  console.log(document.cookie);
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        document.cookie ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/signin",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  );
-};
+// const ProtectedRoute = ({ component: Component, ...rest }) => {
+//   console.log(document.cookie);
+//   return (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         document.cookie ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect
+//             to={{
+//               pathname: "/signin",
+//               state: { from: props.location }
+//             }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// };
 
 export default props => (
   <Switch>
