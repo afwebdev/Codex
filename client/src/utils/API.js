@@ -6,13 +6,16 @@ export default {
   signUp: function(userInfo) {
     return axios.post("/api/users", userInfo);
   },
+
   //userLogin passed here is an object.
   signIn: function(userLogin) {
     return axios.post("/auth/signin", userLogin);
   },
+
   signOut: function() {
     return axios.get("/auth/signout");
   },
+
   //Questions
   //category passed here is an object
   getQuestions: function(category) {
@@ -31,6 +34,7 @@ export default {
   postAnswer: function(answer) {
     return axios.post("/api/answers", answer);
   },
+
   // Answers Page. On component mount get answers for that question.
   getQuestionAnswers: function(questionID) {
     return axios.get(`/api/question/${questionID}`);
@@ -44,6 +48,7 @@ export default {
   getQuestionByUser: function(user) {
     return axios.get("/api/questions", user);
   },
+
   getAnswersByUser: function(user) {
     return axios.get("/api/answers", user);
   }

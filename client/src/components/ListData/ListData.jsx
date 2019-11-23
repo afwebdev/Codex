@@ -94,7 +94,9 @@ const ListData = props => {
         userQuestions: res.data
       }));
     });
-    API.getAnswersByUser(user.id).then(res => {
+    API.getAnswersByUser(user._id).then(res => {
+      console.log("GETANSWERBYUSER");
+      console.log(res);
       setAnswers(prev => ({
         userAnswers: res.data
       }));
@@ -154,11 +156,11 @@ const ListData = props => {
         <List component="div" disablePadding>
           {answers.userAnswers.map(question => {
             console.log(question);
-            // return (
-            //   <ListItemLink to={`/answer/${question._id}`}>
-            //     <ListItemText primary={question.question_title} />
-            //   </ListItemLink>
-            // );
+            return (
+              <ListItemLink to={`/answer/${question.question_id._id}`}>
+                <ListItemText primary={question.question_id.question_title} />
+              </ListItemLink>
+            );
           })}
         </List>
       </Collapse>

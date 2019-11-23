@@ -6,13 +6,15 @@ const { Answer, Question } = require("../models");
 const getAnsweredQuestions = (req, res, next) => {
   // allows you to get user id from the cookie
   var userID = req.cookies._id;
-  Answer.find({ user_id: userID }, (err, docs) => {
-    if (!err) {
-      res.json(docs);
-    } else {
-      throw err;
-    }
-  });
+  Answer.find({ user_id: userID })
+    .populate("question_id")
+    .exec((err, docs) => {
+      if (!err) {
+        res.json(docs);
+      } else {
+        throw err;
+      }
+    });
 };
 
 // Posts an answer with that specific user id which will be accessed from context
