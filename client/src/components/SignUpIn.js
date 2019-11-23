@@ -12,7 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { LoginContext } from "../components/LoginContext";
 import Grid from "@material-ui/core/Grid";
 import API from "../utils/API";
-// import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import Box from '@material-ui/core/Box';
+import AccountBalanceWalletTwoToneIcon from '@material-ui/icons/AccountBalanceWalletTwoTone';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -112,9 +113,13 @@ export default function SignUpIn(props) {
             </Grid>
             <Grid item xs={12}>
               {loggedIn ? (
-                <React.Fragment>
-                  <i className="fas fa-wallet"></i> 69
-                </React.Fragment>
+                <Box display="flex" justifyContent="center" flexDirection="row">
+                  <AccountBalanceWalletTwoToneIcon />
+                  <p>69</p>
+                </Box>
+                // <React.Fragment>
+                //   <i className="fas fa-wallet"></i> 69
+                // </React.Fragment>
               ) : (
                 <p>Guest</p>
               )}

@@ -1,38 +1,52 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
+import React, { useState } from "react";
+// import withStyles from "@material-ui/styles/withStyles";
+import { withRouter, useHistory } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+// import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { makeStyles } from "@material-ui/core/styles";
+import Grow from '@material-ui/core/Grow';
+import Topbar from "../components/Topbar";
+import TestimonialAvatar from "../components/TestimonialAvatar";
+import Footer from "../components/Footer";
+import Quote from "../components/Quote";
+import logo from "../images/pngLogo.png";
+import Box from '@material-ui/core/Box';
+import { flexbox } from '@material-ui/system';
+import Rating from '@material-ui/lab/Rating';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: "transparent",
+    overflow: "hidden",
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
+    backgroundSize: "cover",
+    // height: "100%",
+    // width: "100%",
+    // backgroundPosition: "0 400px",
+    paddingBottom: 200
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
+  container: {
+    textAlign: "center",
+    backgroundColor: "transparent"
+  },
+  headerContent: {
+    height: "78vh",
+    marginTop: "15vh",
+    backgroundColor: "transparent",
     padding: theme.spacing(8, 0, 6),
   },
   heroButtons: {
@@ -46,6 +60,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center'
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -57,96 +72,119 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
-}));
+}));  
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function Main(props) {
+  let history = useHistory();
 
-export default function Album() {
+  const [animateIn, setAnimateIn] = useState(true);
+  
   const classes = useStyles();
 
-  return (
+  const getStarted = () => {
+    if (localStorage.getItem("loggedIn") === "false") {
+      return history.push("/signup")
+    }
+    return history.push("/dashboard")
+  }
+
+  const cards = [
+    {
+      name: "Vladimir P.",
+      quote: "To forgive the terrorists is up to God, but to send them to him is up to me.",
+      stars: 4,
+      url: "http://www.hotavatars.com/wp-content/uploads/2019/01/I80W1Q0.png"
+    },
+    {
+      name: "Anonymous",
+      quote: "I finessed my way into a dev role thanks to Codex",
+      stars: 5,
+      url: "https://www.nuclearinst.com/write/MediaUploads/avataaars.png"
+    },
+    {
+      name: "Anonymous",
+      quote: "Told me I cannot build my whole app using HTML... Liers",
+      stars: 2,
+      url: "https://goticradio.files.wordpress.com/2017/11/avataaars.png?w=264"
+    }
+  ]
+
+  return (   
+
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Album layout
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
+      <Topbar />
+      <Grow in={animateIn}>
+        <div className={classes.root}>
+          <main>
+          <div className={classes.headerContent}>
+            <Container className={classes.container} maxWidth="sm">
+                <img className={classes.logo} src={logo}></img>
+              <Typography variant="h5" align="center" color="textSecondary" paragraph>
+              We strive to cultivate an environment that empower developers and connect 
+              them to solutions that enable productivity, growth, and discovery.
+              </Typography>
+              <div className={classes.heroButtons}>
+                <Grid container spacing={2} justify="center">
+                  <Grid item>
+                    <Button variant="contained" color="primary" onClick={getStarted}>
+                      Getting Started
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="outlined" color="primary">
+                      See Reviews
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
+              </div>
+            </Container>
+          </div>
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container spacing={4}>
+              <div style={{display: "flex", justifyContent: "flex-start"}}>
+                {cards.map( (card, index) => (
+                  <div style={index === 1 ? {alignSelf: "flex-start", flexGrow: "2"} : {alignSelf: "flex-end"}}>
+                    <Grid item key={card} xs={12} sm={6} md={4}>
+                      <Card className={classes.card}>
+                        <CardMedia>
+                          <TestimonialAvatar url={card.url} />
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                          <Box display="flex" flexDirection="row">
+                            <Box p={1} flexGrow={1}>
+                              <Typography gutterBottom variant="h5" component="h2">
+                                {card.name}
+                              </Typography>
+                            </Box>
+                            <Box p={1}>
+                              <Rating name="read-only" value={card.stars} readOnly />
+                            </Box>                        
+                          </Box>
+                          <Quote quote={card.quote}/>
+                        </CardContent>
+                        {/* <CardActions>
+                          <Button size="small" color="primary">
+                            View
+                          </Button>
+                          <Button size="small" color="primary">
+                            Edit
+                          </Button>
+                        </CardActions> */}
+                      </Card>
+                    </Grid>
+                  </div>
+                ))}
+              </div>
+            </Grid>
           </Container>
+        </main>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
+      </Grow>
+      <Footer />
     </React.Fragment>
   );
+  
 }
+
+export default withRouter(Main);

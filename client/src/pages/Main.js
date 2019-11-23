@@ -13,10 +13,15 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from "@material-ui/core/styles";
 import Grow from '@material-ui/core/Grow';
+import Slide from '@material-ui/core/Slide';
 import Topbar from "../components/Topbar";
+import ScrollyScroll from "../components/ScrollyScroll";
+import TestimonialAvatar from "../components/TestimonialAvatar";
 import Footer from "../components/Footer";
+import Quote from "../components/Quote";
 import logo from "../images/pngLogo.png";
 import Box from '@material-ui/core/Box';
+import { flexbox } from '@material-ui/system';
 import Rating from '@material-ui/lab/Rating';
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
@@ -57,6 +62,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center'
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -73,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 function Main(props) {
   let history = useHistory();
 
-  const [animateIn, setAnimateIn] = useState(true);
+  // const [animateIn, setAnimateIn] = useState(false);
   
   const classes = useStyles();
 
@@ -84,14 +90,33 @@ function Main(props) {
     return history.push("/dashboard")
   }
 
-  const cards = [1, 2, 3]
+  const cards = [
+    {
+      name: "Vladimir P.",
+      quote: "To forgive the terrorists is up to God, but to send them to him is up to me.",
+      stars: 4,
+      url: "http://www.hotavatars.com/wp-content/uploads/2019/01/I80W1Q0.png"
+    },
+    {
+      name: "Anonymous",
+      quote: "I finessed my way into a dev role thanks to Codex",
+      stars: 5,
+      url: "https://www.nuclearinst.com/write/MediaUploads/avataaars.png"
+    },
+    {
+      name: "Anonymous",
+      quote: "Told me I cannot build my whole app using HTML... Liers",
+      stars: 2,
+      url: "https://goticradio.files.wordpress.com/2017/11/avataaars.png?w=264"
+    }
+  ]
 
   return (   
 
     <React.Fragment>
       <CssBaseline />
       <Topbar />
-      <Grow in={animateIn}>
+      <Grow in={true}>
         <div className={classes.root}>
           <main>
           <div className={classes.headerContent}>
@@ -105,47 +130,41 @@ function Main(props) {
                 <Grid container spacing={2} justify="center">
                   <Grid item>
                     <Button variant="contained" color="primary" onClick={getStarted}>
-                      Get Started
+                      Getting Started
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined" color="primary">
-                      See Reviews
-                    </Button>
+                    <ScrollyScroll>
+                      <Button variant="outlined" color="primary">
+                        See Reviews
+                      </Button>
+                    </ScrollyScroll>
                   </Grid>
                 </Grid>
               </div>
             </Container>
           </div>
-          <Container className={classes.cardGrid} maxWidth="md">
+          <Container className={classes.cardGrid} maxWidth="md" id="to-the-reviews">
             <Grid container spacing={4}>
-              {cards.map(card => (
+              {cards.map( (card, index) => (              
                 <Grid item key={card} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image="https://source.unsplash.com/random"
-                      title="Image title"
-                    />
+                    <CardMedia>
+                      <TestimonialAvatar url={card.url} />
+                    </CardMedia>
                     <CardContent className={classes.cardContent}>
                       <Box display="flex" flexDirection="row">
-                        <Typography gutterBottom variant="h5" component="h2">
-                          Heading
-                        </Typography>
-                        <Rating name="size-small" value={2.5} precision={0.5} />
+                        <Box p={1} flexGrow={1}>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {card.name}
+                          </Typography>
+                        </Box>
+                        <Box p={1}>
+                          <Rating name="read-only" value={card.stars} readOnly />
+                        </Box>                        
                       </Box>
-                      <Typography>
-                        This is a media card. You can use this section to describe the content.
-                      </Typography>
+                      <Quote quote={card.quote}/>
                     </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        View
-                      </Button>
-                      <Button size="small" color="primary">
-                        Edit
-                      </Button>
-                    </CardActions>
                   </Card>
                 </Grid>
               ))}
