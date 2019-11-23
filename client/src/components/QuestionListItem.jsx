@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router,Link} from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
@@ -21,10 +21,10 @@ const styles = theme => ({
 
 const questionItem = props => {
   const { classes, questions } = props;
+  console.log(props);
   return (
     <>
-      {/*  */}
-      {props.questions.map(questions => {
+      {questions.questionList.map(questions => {
         console.log(questions);
         const {
           _id,
