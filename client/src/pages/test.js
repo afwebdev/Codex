@@ -13,9 +13,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from "@material-ui/core/styles";
 import Grow from '@material-ui/core/Grow';
-import Slide from '@material-ui/core/Slide';
 import Topbar from "../components/Topbar";
-import ScrollyScroll from "../components/ScrollyScroll";
 import TestimonialAvatar from "../components/TestimonialAvatar";
 import Footer from "../components/Footer";
 import Quote from "../components/Quote";
@@ -79,7 +77,7 @@ const useStyles = makeStyles(theme => ({
 function Main(props) {
   let history = useHistory();
 
-  // const [animateIn, setAnimateIn] = useState(false);
+  const [animateIn, setAnimateIn] = useState(true);
   
   const classes = useStyles();
 
@@ -116,7 +114,7 @@ function Main(props) {
     <React.Fragment>
       <CssBaseline />
       <Topbar />
-      <Grow in={true}>
+      <Grow in={animateIn}>
         <div className={classes.root}>
           <main>
           <div className={classes.headerContent}>
@@ -134,40 +132,50 @@ function Main(props) {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <ScrollyScroll>
-                      <Button variant="outlined" color="primary">
-                        See Reviews
-                      </Button>
-                    </ScrollyScroll>
+                    <Button variant="outlined" color="primary">
+                      See Reviews
+                    </Button>
                   </Grid>
                 </Grid>
               </div>
             </Container>
           </div>
-          <Container className={classes.cardGrid} maxWidth="md" id="to-the-reviews">
+          <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-              {cards.map( (card, index) => (              
-                <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia>
-                      <TestimonialAvatar url={card.url} />
-                    </CardMedia>
-                    <CardContent className={classes.cardContent}>
-                      <Box display="flex" flexDirection="row">
-                        <Box p={1} flexGrow={1}>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {card.name}
-                          </Typography>
-                        </Box>
-                        <Box p={1}>
-                          <Rating name="read-only" value={card.stars} readOnly />
-                        </Box>                        
-                      </Box>
-                      <Quote quote={card.quote}/>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+              <div style={{display: "flex", justifyContent: "flex-start"}}>
+                {cards.map( (card, index) => (
+                  <div style={index === 1 ? {alignSelf: "flex-start", flexGrow: "2"} : {alignSelf: "flex-end"}}>
+                    <Grid item key={card} xs={12} sm={6} md={4}>
+                      <Card className={classes.card}>
+                        <CardMedia>
+                          <TestimonialAvatar url={card.url} />
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                          <Box display="flex" flexDirection="row">
+                            <Box p={1} flexGrow={1}>
+                              <Typography gutterBottom variant="h5" component="h2">
+                                {card.name}
+                              </Typography>
+                            </Box>
+                            <Box p={1}>
+                              <Rating name="read-only" value={card.stars} readOnly />
+                            </Box>                        
+                          </Box>
+                          <Quote quote={card.quote}/>
+                        </CardContent>
+                        {/* <CardActions>
+                          <Button size="small" color="primary">
+                            View
+                          </Button>
+                          <Button size="small" color="primary">
+                            Edit
+                          </Button>
+                        </CardActions> */}
+                      </Card>
+                    </Grid>
+                  </div>
+                ))}
+              </div>
             </Grid>
           </Container>
         </main>
