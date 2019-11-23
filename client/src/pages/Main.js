@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,13 +8,15 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import InstructionDialog from "../components/dialogs/InstructionDialog";
 import SwipeDialog from "../components/dialogs/SwipeDialog";
-
+import { makeStyles } from "@material-ui/core/styles";
+import Grow from '@material-ui/core/Grow';
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
+import logo from "../images/LogoMakr_5Jc4Ki.png";
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.grey["100"],
@@ -88,39 +90,40 @@ const styles = theme => ({
     position: "absolute",
     top: "40%",
     left: "40%"
-  }
-});
+  }}));
 
-class Main extends Component {
-  state = {
-    learnMoredialog: false,
-    getStartedDialog: false
+
+function Main(props) {
+
+  const [animateIn, setAnimateIn] = useState(true);
+  const [learnMoredialog, setLearnMoredialog] = useState(false);
+  const [getStartedDialog, setGetStartedDialog] = useState(false);
+
+
+  const openDialog = event => {
+    setLearnMoredialog(true);
   };
 
-  componentDidMount() {}
-
-  openDialog = event => {
-    this.setState({ learnMoredialog: true });
+  const dialogClose = event => {
+    setLearnMoredialog(false);
   };
 
-  dialogClose = event => {
-    this.setState({ learnMoredialog: false });
+  const openGetStartedDialog = event => {
+    setGetStartedDialog(true)
   };
 
-  openGetStartedDialog = event => {
-    this.setState({ getStartedDialog: true });
+  const closeGetStartedDialog = event => {
+    setGetStartedDialog(false)
   };
+  
+  const classes = useStyles();
 
-  closeGetStartedDialog = event => {
-    this.setState({ getStartedDialog: false });
-  };
+  return (   
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Topbar />
+    <React.Fragment>
+      <CssBaseline />
+      <Topbar />
+      <Grow in={animateIn}>
         <div className={classes.root}>
           <Grid container justify="center">
             <Grid
@@ -197,14 +200,14 @@ class Main extends Component {
                   </div>
                   <div className={classes.alignRight}>
                     <Button
-                      onClick={this.openDialog}
+                      onClick={openDialog}
                       variant="outlined"
                       className={classes.actionButtom}
                     >
                       Learn more
                     </Button>
                     <Button
-                      onClick={this.openGetStartedDialog}
+                      onClick={openGetStartedDialog}
                       color="primary"
                       variant="contained"
                       className={classes.actionButtom}
@@ -245,18 +248,19 @@ class Main extends Component {
           
           */}
           <SwipeDialog
-            open={this.state.learnMoredialog}
-            onClose={this.dialogClose}
+            open={learnMoredialog}
+            onClose={dialogClose}
           />
           <InstructionDialog
-            open={this.state.getStartedDialog}
-            onClose={this.closeGetStartedDialog}
+            open={getStartedDialog}
+            onClose={closeGetStartedDialog}
           />
         </div>
-        <Footer />
-      </React.Fragment>
-    );
-  }
+      </Grow>
+      <Footer />
+    </React.Fragment>
+  );
+  
 }
 
-export default withRouter(withStyles(styles)(Main));
+export default withRouter(Main);

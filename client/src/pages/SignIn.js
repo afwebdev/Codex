@@ -149,7 +149,7 @@ function SignIn(props) {
       loggedIn: true,
       user: user
     }));
-    // localStorage.setItem("userId", _id)
+    localStorage.setItem("loggedIn", true)
     localStorage.setItem("user", JSON.stringify(user))
     history.push("/");
     // console.log(userStatus)
@@ -184,8 +184,8 @@ function SignIn(props) {
     if (values.userName.length < 2) {
       errors.userNameErr = "Please enter a valid User Name";
     }
-    if (values.password.length < 5) {
-      errors.passwordErr = "Passwords must be at least 5 characters long.";
+    if (values.password.length < 6) {
+      errors.passwordErr = "Passwords must be at least 6 characters long.";
     }
     return errors;
   };

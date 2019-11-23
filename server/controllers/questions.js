@@ -33,6 +33,7 @@ const getQuestion = (req, resp) => {
 
 const getQuestionByUser = (req, resp) => {
   console.log("Question By User");
+  console.log(req.params);
   // const userId = req.params.user
   let id = "5dd0b527f8671cb0e4d68648";
   Question.find({ user_id: id }).exec((err, res) => {
@@ -56,7 +57,13 @@ const getQuestionByID = (req, resp) => {
   //   }
   // })
   Question.findOne({ _id: id })
-    .populate("answer_id")
+    .populate({
+      path: "answer_id",
+      populate: {
+        path:"comment_id",
+        model: "Comment"
+      }
+    })
     .exec((err, docs) => {
       if (!err) {
         resp.json(docs);
