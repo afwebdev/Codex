@@ -43,6 +43,9 @@ export default {
 
   getQuestionByUser: function(user) {
     return axios.get("/api/questions", user);
+  },
+  getAnswersByUser: function(user) {
+    return axios.get("/api/answers", user);
   }
 
   // getUserInfo: function(userId) {

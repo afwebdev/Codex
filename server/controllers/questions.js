@@ -1,4 +1,4 @@
-const Question = require("../../models/Question");
+const Question = require("../models/Question");
 
 const askQuestion = (req, resp) => {
   const question = new Question(req.body);
@@ -33,9 +33,8 @@ const getQuestion = (req, resp) => {
 
 const getQuestionByUser = (req, resp) => {
   console.log("Question By User");
-  console.log(req.params);
-  // const userId = req.params.user
-  let id = "5dd0b527f8671cb0e4d68648";
+
+  let id = req.params;
   Question.find({ user_id: id }).exec((err, res) => {
     err ? resp.json(err) : resp.json(res);
   });
@@ -60,7 +59,7 @@ const getQuestionByID = (req, resp) => {
     .populate({
       path: "answer_id",
       populate: {
-        path:"comment_id",
+        path: "comment_id",
         model: "Comment"
       }
     })
