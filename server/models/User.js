@@ -13,18 +13,19 @@ const userSchema = new Schema({
     trim: true,
     required: "Last Name is required"
   },
-  user_username: {
-    type: String,
-    trim: true,
-    required: "User Name is required",
-    unique: "Username already exists"
-  },
   user_email: {
     type: String,
     trim: true,
     unique: "Email already exists",
     match: [/.+\@.+\..+/, "Please fill a valid email address"],
-    required: "Email is required"
+    required: "Email is required",
+    get: obfuscate
+  },
+  user_username: {
+    type: String,
+    trim: true,
+    unique: "Username already exists",
+    required: "Username is required"
   },
   user_country: {
     type: String,
@@ -38,6 +39,27 @@ const userSchema = new Schema({
     type: String
   }
 });
+
+//Allow use of getters.
+//Used here to obfuscate email when querying for it.
+userSchema.set("toJSON", { getters: true });
+
+function obfuscate(email) {
+  const separatorIndex = email.indexOf("@");
+  if (separatorIndex < 3) {
+    // 'ab@gmail.com' -> '**@gmail.com'
+    return (
+      email.slice(0, separatorIndex).replace(/./g, "*") +
+      email.slice(separatorIndex)
+    );
+  }
+  // 'test42@gmail.com' -> 'te****@gmail.com'
+  return (
+    email.slice(0, 2) +
+    email.slice(2, separatorIndex).replace(/./g, "*") +
+    email.slice(separatorIndex)
+  );
+}
 
 //Creates a "Virtual" document property called user_password (hidden col type thing)
 //the setter, which generates our hashed password, using the methods below,

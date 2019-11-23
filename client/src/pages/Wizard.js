@@ -16,10 +16,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Back from '../components/common/Back'
+import Back from '../components/common/Back';
+import Footer from "../components/Footer";
 
 const qs = require('query-string');
-const backgroundShape = require('../images/shape.svg');
+const backgroundShape = require('../images/Liquid-Cheese.svg');
 
 const numeral = require('numeral');
 numeral.defaultFormat('0,000');
@@ -499,6 +500,7 @@ PLEASE NOTE: We reserve the right, at our sole discretion, to change, modify or 
             </Grid>
           </Grid>
         </div>
+        <Footer />
       </React.Fragment>
     )
   }

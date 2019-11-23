@@ -2,17 +2,20 @@
   "name": "mern",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:4000/",
   "dependencies": {
-    "@material-ui/core": "^4.6.0",
-    "@material-ui/icons": "^4.5.1",
-    "@material-ui/styles": "^4.0.0",
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "@material-ui/lab": "latest",
+    "@material-ui/styles": "latest",
     "axios": "^0.19.0",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^2.2.0",
     "mini-create-react-context": "^0.3.2",
     "numeral": "^2.0.6",
     "query-string": "^6.2.0",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": "latest",
+    "react-dom": "latest",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^2.1.1",
     "react-swipeable-views": "^0.13.0",
@@ -30,5 +33,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {}
 }

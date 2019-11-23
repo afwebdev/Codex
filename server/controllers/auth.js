@@ -1,4 +1,4 @@
-const User = require("../../models/User");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const config = require("../config/index");
@@ -16,7 +16,8 @@ const config = require("../config/index");
 
 */
 const signin = (req, res) => {
-  User.findOne({ user_email: req.body.user_email }, (err, user) => {
+  // console.log(req.body.user_email, req.body.user_password)
+  User.findOne({ user_username: req.body.user_username }, (err, user) => {
     if (err || !user) {
       return res.status(401).json({
         error: "User not found"
@@ -48,10 +49,14 @@ const signin = (req, res) => {
 	THE TOKEN IS BEING SAVED ON CLIENT VIA COOKIE ABOVE. */
     return res.json({
       token,
+      loggedIn: true,
       user: {
         _id: user._id,
         username: user.user_username,
-        user_email: user.user_email
+        user_email: user.user_email,
+        user_firstName: user.user_firstName,
+        user_lastName: user.user_lastName,
+        user_country: user.user_country
       }
     });
   });
@@ -82,6 +87,7 @@ const requireSignin = expressJwt({
 });
 
 const hasAuthorization = (req, res) => {
+  console.log(req.auth);
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!authorized) {
     return res.status(403).json({

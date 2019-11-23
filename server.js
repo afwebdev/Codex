@@ -6,8 +6,12 @@ const cookieParser = require("cookie-parser");
 const config = require("./server/config");
 const userRoute = require("./server/routes/user");
 const authRoute = require("./server/routes/auth");
+const questionRoute = require("./server/routes/questions");
+const answerRoute = require("./server/routes/answer");
+const commentRoute = require("./server/routes/comment");
+
 //Init the Connection to the DB.
-require("./server/config/dbConnection");
+require(path.join(__dirname, "./server/config/dbconnection"))();
 
 // Creating express app and configuring middleware needed for authentication
 const app = express();
@@ -23,11 +27,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -39,6 +40,9 @@ app.use((err, req, res, next) => {
 // Requiring our API routes
 app.use("/", userRoute);
 app.use("/", authRoute);
+app.use("/", questionRoute);
+app.use("/", answerRoute);
+app.use("/", commentRoute);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {

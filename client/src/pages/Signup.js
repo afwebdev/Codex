@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,10 +15,12 @@ import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Topbar from "../components/Topbar";
+import CountryDropDown from "../components/CountryDropDown";
 import API from "../utils/API";
-
-
-const backgroundShape = require("../images/shape.svg");
+import { useHistory } from "react-router-dom";
+import Grow from "@material-ui/core/Grow";
+import Footer from "../components/Footer";
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
   root: {
@@ -129,50 +131,159 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getUserInputInfo = (event) => {
-  event.preventDefault();
-  console.log(event.target)
-}
+function SignUp(props) {
+  const [animateIn, setAnimateIn] = useState(true);
 
-// const classes = useStyles();
+  const currentPath = props.location.pathname;
 
-class SignUp extends Component {
+  let history = useHistory();
+  //Declaring User Signup state to be passed into Signup call
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    userName: "",
+    userCountry: ""
+  });
 
-  state = {
-    firstName : "",
-    lastName : "",
-    email : "",
-    password : ""    
-  }
+  const [valuesError, setValuesError] = useState({
+    firstNameErr: "",
+    lastNameErr: "",
+    emailErr: "",
+    passwordErr: "",
+    userNameErr: ""
+  });
 
-  classes = () => {
-    useStyles()
-  }
+  const [isSubmitted, toggleIsSubmitted] = useState(false);
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
+  //Destructure error state for cleaner conditional rendering in JSX code
+  const {
+    firstNameErr,
+    lastNameErr,
+    emailErr,
+    passwordErr,
+    userNameErr
+  } = valuesError;
+
+  const validate = values => {
+    let errors = {};
+
+    if (values.firstName.length < 2) {
+      errors.firstNameErr = "Please enter a valid First Name i.e John";
+    }
+    if (values.lastName.length < 2) {
+      errors.lastNameErr = "Please enter a valid Last Name i.e Doe";
+    }
+    if (values.userName.length < 2) {
+      errors.userNameErr = "Please enter a valid User Name";
+    }
+    if (!/(.+)@(.+){2,}\.(.+){2,}/.test(values.email)) {
+      errors.emailErr =
+        "Please enter a valid Email Address i.e john.doe@codex.com";
+    }
+    if (values.password.length < 6) {
+      errors.passwordErr = "Your password must be at least 6 characters long!";
+    }
+    console.log(errors);
+    return errors;
+  };
+
+  const handleChange = e => {
+    //Destructure name and value from event
+    const { name, value } = e.target;
+
+    //Use the state update function to update the values object
+    //Note that I spread the existing values and overwrite only what changed
+    setValues({
+      ...values,
       [name]: value
     });
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <Topbar />
+  //Had to create a seperate event handler for country as I could not get the value of the input element
+  const handleCountry = () => {
+    //On input change (an onEvent change found in Auto-Complete api documentation) I get the value of the country
+    let country = document
+      .getElementById("country-select-demo")
+      .getAttribute("value");
+    //Since we only plan to use this for the flag API I will be getting the letters of the country only
+    let countryCode = country.split(" ")[country.split(" ").length - 1];
+    if (country) {
+      setValues({
+        ...values,
+        userCountry: countryCode
+      });
+    }
+  };
+
+  const handleFormSubmission = event => {
+    //Prevent Default
+    event.preventDefault();
+    console.log(event.target);
+    //Set Submission boolean to true to trigger validation
+    toggleIsSubmitted(true);
+    //Call the error state update function to update the error state object
+    //with any errors that we need to show user based on input
+    setValuesError(validate(values));
+  };
+
+  useEffect(() => {
+    if (Object.keys(valuesError).length === 0 && isSubmitted) {
+      console.log("Execute api call here");
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        userName,
+        userCountry
+      } = values;
+      // console.log({
+      //     user_firstName: firstName,
+      //     user_lastName: lastName,
+      //     user_email: email,
+      //     user_password: password,
+      //     user_username: userName,
+      //     user_country: userCountry
+      //   })
+      API.signUp({
+        user_firstName: firstName,
+        user_lastName: lastName,
+        user_email: email,
+        user_password: password,
+        user_username: userName,
+        user_country: userCountry
+      })
+        .then(history.push("/signin"))
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, [valuesError]);
+
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <Topbar currentPath={currentPath} />
+
+      <Grow in={animateIn}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <div className={this.classes.paper}>
-            <Avatar className={this.classes.avatar}>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <form className={this.classes.form} noValidate>
+            <form className={classes.form} noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    error={isSubmitted && firstNameErr ? true : false}
+                    helperText={isSubmitted && firstNameErr ? firstNameErr : ""}
                     autoComplete="fname"
                     name="firstName"
                     variant="outlined"
@@ -181,11 +292,13 @@ class SignUp extends Component {
                     id="firstName"
                     label="First Name"
                     autoFocus
-                    onChange={this.handleInputChange}
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    error={isSubmitted && lastNameErr ? true : false}
+                    helperText={isSubmitted && lastNameErr ? lastNameErr : ""}
                     variant="outlined"
                     required
                     fullWidth
@@ -193,11 +306,44 @@ class SignUp extends Component {
                     label="Last Name"
                     name="lastName"
                     autoComplete="lname"
-                    onChange={this.handleInputChange}
+                    onChange={handleChange}
                   />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    error={isSubmitted && userNameErr ? true : false}
+                    helperText={isSubmitted && userNameErr ? userNameErr : ""}
+                    autoComplete="uname"
+                    name="userName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="userName"
+                    label="User Name"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <CountryDropDown handleCountry={handleCountry} />
+                  {/* <TextField
+                  error={isSubmitted && userCountryErr ? true : false}
+                  helperText={
+                    isSubmitted && userCountryErr ? userCountryErr : ""
+                  }
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="userCountry"
+                  label="Country"
+                  name="userCountry"
+                  autoComplete="country"
+                  onChange={handleChange}
+                /> */}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    error={isSubmitted && emailErr ? true : false}
+                    helperText={isSubmitted && emailErr ? emailErr : ""}
                     variant="outlined"
                     required
                     fullWidth
@@ -205,11 +351,13 @@ class SignUp extends Component {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
-                    onChange={this.handleInputChange}
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    error={isSubmitted && passwordErr ? true : false}
+                    helperText={isSubmitted && passwordErr ? passwordErr : ""}
                     variant="outlined"
                     required
                     fullWidth
@@ -218,7 +366,7 @@ class SignUp extends Component {
                     type="password"
                     id="password"
                     autoComplete="current-password"
-                    onChange={this.handleInputChange}
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -235,8 +383,8 @@ class SignUp extends Component {
                 fullWidth
                 variant="contained"
                 color="primary"
-                className={this.classes.submit}
-                onClick={getUserInputInfo}
+                className={classes.submit}
+                onClick={handleFormSubmission}
               >
                 Sign Up
               </Button>
@@ -253,9 +401,11 @@ class SignUp extends Component {
             <Copyright />
           </Box>
         </Container>
-      </React.Fragment>
-    );
-  }
+      </Grow>
+      <br/>
+      <Footer />
+    </React.Fragment>
+  );
 }
 
 export default withRouter(withStyles(styles)(SignUp));

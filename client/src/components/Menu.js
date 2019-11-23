@@ -4,27 +4,28 @@ const Menu = [
     pathname: "/"
   },
   {
-    label: "Dashboard (No purpose atm)",
+    label: "Dashboard",
     pathname: "/dashboard"
   },
-  {
-    label: "Signup",
-    pathname: "/signup"
-  },
-  {
-    label: "Sign In",
-    pathname: "/signin"
-  },
+  // {
+  //   label: "Signup",
+  //   pathname: "/signup"
+  // },
+  // {
+  //   label: "Sign In",
+  //   pathname: "/signin"
+  // },
   {
     label: "Wizard (No purpose atm)",
     pathname: "/wizard"
   },
   {
-    label: "Github",
-    pathname: "https://reactjs.org/docs/getting-started.html",
-    external: true
-  }
-
+    label: "Open Questions",
+    pathname: "/Questions"
+  },
+  // {
+  //   label: "logout"
+  // }
 ];
 
 export default Menu;

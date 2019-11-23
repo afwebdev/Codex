@@ -1,10 +1,11 @@
-const User = require("../../models/User");
+const User = require("../models/User");
 
 /* Our User controller
 	to be used as a a link between server, and the front end (Our API Calls)
 */
 
 const registerUser = (req, res, next) => {
+  console.log(req.body);
   const user = new User(req.body);
   user.save((err, result) => {
     if (err) {
@@ -34,7 +35,13 @@ const findUserProfile = (req, res) => {
   // eliminate password related fields before sending the user object
   req.profile.hashedPassword = undefined;
   req.profile.salt = undefined;
-  return res.json(req.profile);
+  console.log(req.profile);
+  return res.json({
+    loggedIn: true,
+    user: {
+      ...req.profile._doc
+    }
+  });
 };
 
 module.exports = { findUserById, findUserProfile, registerUser };
