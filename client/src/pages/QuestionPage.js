@@ -21,6 +21,8 @@ import QuestionItems from "../components/QuestionListItem";
 import Footer from "../components/Footer";
 import NewQuestion from "../components/Modal/NewQuestion";
 import Slide from "@material-ui/core/Slide";
+import Skeleton from "@material-ui/lab/Skeleton";
+
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const styles = theme => ({
@@ -50,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
     paddingBottom: 200,
-    height: "100vh"
+    height: "100%"
   },
 
   rangeLabel: {
@@ -217,27 +219,37 @@ function Question(props) {
                   </Paper>
                 </Grid>
                 <Grid item xs={6} sm={6} md={12}>
-                  <Paper>
-                    <Container>
-                      <Box component="h4" textAlign="center">
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          className={classes.button}
-                          onClick={handleClickOpen}
-                        >
-                          New Question
-                        </Button>
-                      </Box>
-                    </Container>
-                  </Paper>
+                  <Container>
+                    <Box component="h4" textAlign="center">
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={handleClickOpen}
+                      >
+                        New Question
+                      </Button>
+                    </Box>
+                  </Container>
                 </Grid>
               </Grid>
             </Grid>
 
             <Grid item xs={12} sm={8} md={8}>
               <Container>
-                <QuestionItems questions={questionList} />
+                {questionList.questionList != "" ? (
+                  <QuestionItems questions={questionList} />
+                ) : (
+                  <React.Fragment>
+                    <Skeleton
+                      height={200}
+                      variant="rect"
+                      style={{ marginTop: "1em" }}
+                      width="100%"
+                    />
+                  </React.Fragment>
+                )}
+                {/* <QuestionItems questions={questionList} /> */}
               </Container>
             </Grid>
           </Grid>
