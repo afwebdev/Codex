@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
-// import { LoginContext } from "../components/LoginContext";
 // import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 // import Loading from "../components/common/Loading";
 // import Box from "@material-ui/core/Box";
@@ -155,9 +154,6 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   const classes = useStyles();
   const currentPath = props.location.pathname;
-  // const [userStatus, setUserStatus] = useContext(LoginContext);
-
-  useEffect(() => {});
 
   //Dashboard Return Component.
   return (
