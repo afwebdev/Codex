@@ -8,9 +8,12 @@ import Container from "@material-ui/core/Container";
 import ToolTip from "@material-ui/core/Tooltip";
 import withStyles from "@material-ui/styles/withStyles";
 import { Typography } from "@material-ui/core";
+import { blue } from "@material-ui/core/colors";
 
 const styles = theme => ({
   avatar: {
+    padding: "1em",
+    backgroundColor: theme.palette.secondary.main,
     fontSize: "14px",
     fontWeight: "bold"
   },
