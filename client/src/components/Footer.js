@@ -16,7 +16,11 @@ import logo from "../images/LogoMakr_5Jc4Ki.png";
 
 const styles = theme => ({
   root: {
-    width: 500
+    flexGrow: 1,
+    backgroundColor: "white",
+    borderStyle: "solid",
+    borderColor: "grey",
+    borderWidth: 1
   },
   bottomnavigation: {
     position: "relative",
@@ -24,13 +28,6 @@ const styles = theme => ({
   },
   footer: {
     backgroundColor: "black"
-  },
-  root: {
-    flexGrow: 1,
-    backgroundColor: "white",
-    borderStyle: "solid",
-    borderColor: "grey",
-    borderWidth: 1
   },
   // paper: {
   //   padding: theme.spacing(2),

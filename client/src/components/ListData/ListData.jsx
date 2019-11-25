@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/styles/withStyles";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+// import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import API from "../../utils/API";
@@ -162,6 +162,7 @@ const ListData = props => {
                 </ListItemLink>
               );
             }
+            return true
           })}
         </List>
       </Collapse>

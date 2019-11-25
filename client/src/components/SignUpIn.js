@@ -42,11 +42,11 @@ export default function SignUpIn(props) {
   const anchorRef = React.useRef(null);
   const loggedIn = (localStorage.getItem("loggedIn") ? JSON.parse(localStorage.getItem("loggedIn")) : "");
   const {
-    user_country,
+    // user_country,
     user_firstName,
     user_lastName,
-    username,
-    _id
+    // username,
+    // _id
   } = (localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "")
 
   const handleToggle = () => {

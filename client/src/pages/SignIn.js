@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Component } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -134,13 +134,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn(props) {
-  const [animateIn, setAnimateIn] = useState(true);
+  // const [animateIn, setAnimateIn] = useState(true);
   const currentPath = props.location.pathname;
 
   let history = useHistory();
-  const [userStatus, setUserStatus] = useContext(LoginContext);
 
-  const userStatusObject = {};
+  const [userStatus, setUserStatus] = useContext(LoginContext);
 
   const storeUserStatus = resp => {
     const { dex, user } = resp
@@ -153,8 +152,8 @@ function SignIn(props) {
     localStorage.setItem("loggedIn", true)
     localStorage.setItem("dex", dex)
     localStorage.setItem("user", JSON.stringify(user))
+    localStorage.setItem("useStatus", JSON.stringify(userStatus))
     history.push("/");
-    // console.log(userStatus)
   };
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
@@ -223,7 +222,7 @@ function SignIn(props) {
   return (
     <React.Fragment>
       <Topbar currentPath={currentPath} />
-      <Grow in={animateIn}>
+      <Grow in={true}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>

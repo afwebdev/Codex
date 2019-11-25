@@ -1,14 +1,14 @@
-import React, { Component, useState, useEffect } from "react";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+// import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import withStyles from "@material-ui/styles/withStyles";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import Topbar from "../components/Topbar";
 import Container from "@material-ui/core/Container";
 import Radio from "@material-ui/core/Radio";
@@ -16,7 +16,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Box from "@material-ui/core/Box";
 import API from "../utils/API";
-import ToolTip from "@material-ui/core/Tooltip";
+// import ToolTip from "@material-ui/core/Tooltip";
 import QuestionItems from "../components/QuestionListItem";
 import Footer from "../components/Footer";
 import NewQuestion from "../components/Modal/NewQuestion";
@@ -237,7 +237,7 @@ function Question(props) {
 
             <Grid item xs={12} sm={8} md={8}>
               <Container>
-                {questionList.questionList != "" ? (
+                {questionList.questionList !== "" ? (
                   <QuestionItems questions={questionList} />
                 ) : (
                   <React.Fragment>
