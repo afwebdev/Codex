@@ -142,14 +142,16 @@ function SignIn(props) {
 
   const userStatusObject = {};
 
-  const storeUserStatus = user => {
-    // let { _id, username, user_firstName, user_lastName, user_email, user_country } = user;
+  const storeUserStatus = resp => {
+    const { dex, user } = resp
     //fix the state to store everything.
     setUserStatus(user => ({
       loggedIn: true,
-      user: user
+      user: user,
+      dex: dex
     }));
     localStorage.setItem("loggedIn", true)
+    localStorage.setItem("dex", dex)
     localStorage.setItem("user", JSON.stringify(user))
     history.push("/");
     // console.log(userStatus)
@@ -202,17 +204,17 @@ function SignIn(props) {
   useEffect(() => {
     const { userName, password } = values;
     if (Object.keys(valuesError).length === 0 && isSubmitted) {
-      console.log("Api would execute");
+      // console.log("Api would execute");
       API.signIn({
         user_username: userName,
         user_password: password
       })
         .then(resp => {
-          // console.log(resp.data.user);
+          console.log(resp.data);
           //STORE THE USER INFO IN GLOBAL STATE
-          storeUserStatus(resp.data.user);
+          storeUserStatus(resp.data);
         })
-        .catch(err => toggleIsFailAuthentication(true));
+        .catch((err) => {toggleIsFailAuthentication(true)});
     }
   }, [valuesError]);
 

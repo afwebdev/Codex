@@ -115,7 +115,7 @@ export default function SignUpIn(props) {
               {loggedIn ? (
                 <Box display="flex" justifyContent="center" flexDirection="row">
                   <AccountBalanceWalletTwoToneIcon />
-                  <p>69</p>
+              <p>{localStorage.getItem("dex") ? localStorage.getItem("dex") : 0}</p>
                 </Box>
                 // <React.Fragment>
                 //   <i className="fas fa-wallet"></i> 69
