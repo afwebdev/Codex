@@ -153,7 +153,10 @@ const ListData = props => {
           {questions.userQuestions.length > 0
             ? questions.userQuestions.map(question => {
                 return (
-                  <ListItemLink to={`/answer/${question._id}`}>
+                  <ListItemLink
+                    key={question._id}
+                    to={`/answer/${question._id}`}
+                  >
                     <ListItemText primary={question.question_title} />
                   </ListItemLink>
                 );
