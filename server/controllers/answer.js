@@ -6,6 +6,7 @@ const { Answer, Question } = require("../models");
 const getAnsweredQuestions = (req, res, next) => {
   // allows you to get user id from the cookie
   let user_id = req.params.user_id;
+  console.log("@ getAnsweredQuestions, uid: ", user_id);
 
   Answer.find({ user_id })
     .populate("question_id")

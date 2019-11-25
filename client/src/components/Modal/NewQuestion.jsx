@@ -88,6 +88,7 @@ export default function NewQuestion(props) {
     console.log(userStatus);
     e.preventDefault();
     API.postQuestion({ ...questionData, user_id: userStatus.user._id });
+    props.handleClickClose();
   };
 
   const onChangeHandler = e => {

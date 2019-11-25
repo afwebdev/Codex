@@ -175,6 +175,11 @@ function Question(props) {
   };
 
   const handleClickClose = () => {
+    API.getQuestions(null).then(res => {
+      setQuestionList(() => ({
+        questionList: res.data
+      }));
+    });
     setNewQuestionDialog(false);
   };
 
