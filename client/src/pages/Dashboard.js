@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
+import { LoginContext } from "../components/LoginContext";
 // import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 // import Loading from "../components/common/Loading";
 // import Box from "@material-ui/core/Box";
@@ -28,6 +29,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 // import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import currentLoginStatus from "../utils/currentLoginStatus";
 import Footer from "../components/Footer";
 import ListData from "../components/ListData/ListData";
 
@@ -154,6 +156,26 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   const classes = useStyles();
   const currentPath = props.location.pathname;
+  const [userStatus, setUserStatus] = useContext(LoginContext);
+
+  useEffect(() => {
+    // console.log(userStatus)
+    if (localStorage.getItem("user")) {
+      if (JSON.parse(localStorage.getItem("user"))._id !== userStatus._id) {
+        currentLoginStatus
+          .checkStatus()
+          .then(res => {
+            //User is logged in, re-store global state vars
+            setUserStatus(res.data);
+            // console.log(res.data);
+          })
+          .catch(err => {
+            //User is not logged in.
+            console.error(err);
+          });
+      }
+    }
+  }, []);
 
   //Dashboard Return Component.
   return (
