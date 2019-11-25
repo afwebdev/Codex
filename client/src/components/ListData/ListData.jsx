@@ -151,13 +151,15 @@ const ListData = props => {
       </ListItem>
       <Collapse in={open.question} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {questions.userQuestions.length > 0 ? questions.userQuestions.map(question => {
-            return (
-              <ListItemLink to={`/answer/${question._id}`}>
-                <ListItemText primary={question.question_title} />
-              </ListItemLink>
-            );
-          }) : false}
+          {questions.userQuestions.length > 0
+            ? questions.userQuestions.map(question => {
+                return (
+                  <ListItemLink to={`/answer/${question._id}`}>
+                    <ListItemText primary={question.question_title} />
+                  </ListItemLink>
+                );
+              })
+            : false}
         </List>
       </Collapse>
 
@@ -171,21 +173,11 @@ const ListData = props => {
       <Collapse in={open.answer} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {answers.userAnswers.map(question => {
-<<<<<<< HEAD
             return (
               <ListItemLink to={`/answer/${question._id}`}>
                 <ListItemText primary={question.question_title} />
               </ListItemLink>
             );
-=======
-            if (question) {
-              return (
-                <ListItemLink to={`/answer/${question.question_id._id}`}>
-                  <ListItemText primary={question.question_id.question_title} />
-                </ListItemLink>
-              );
-            }
->>>>>>> 001b20dda25fec88a1531778409083789a645c52
           })}
         </List>
       </Collapse>
