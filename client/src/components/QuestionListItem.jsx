@@ -36,15 +36,15 @@ const questionItem = props => {
           category,
           dex
         } = questions;
-        const { user_email, user_firstName } = questions.user_id;
+        // const { user_email, user_firstName } = questions.user_id;
         console.log(
           _id,
           question_title,
           question_description,
           category,
-          dex,
-          user_email,
-          user_firstName
+          dex
+          // user_email,
+          // user_firstName
         );
         return (
           <Paper key={questions._id} className={classes.questionList}>

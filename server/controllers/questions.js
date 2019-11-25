@@ -33,10 +33,16 @@ const getQuestion = (req, resp) => {
 
 const getQuestionByUser = (req, resp) => {
   console.log("Question By User");
+  let user_id = req.params.user_id;
+  console.log(user_id);
 
-  let id = req.params;
-  Question.find({ user_id: id }).exec((err, res) => {
-    err ? resp.json(err) : resp.json(res);
+  Question.find({ user_id: user_id }).exec((err, res) => {
+    if (err) {
+      console.log(err);
+      resp.json(err);
+    } else {
+      resp.json(res);
+    }
   });
 };
 
@@ -46,15 +52,8 @@ const getQuestionByUser = (req, resp) => {
 const getQuestionByID = (req, resp) => {
   console.log("Accesing getQuestionByID function");
   const id = req.params._id;
-  //   Question.findOne({_id: id}, (err,docs) =>{
-  //     if(!err){
-  //     console.log(docs)
-  //     resp.json(docs);
-  //   }
-  //   else{
-  //     throw err;
-  //   }
-  // })
+  console.log(id);
+
   Question.findOne({ _id: id })
     .populate({
       path: "answer_id",

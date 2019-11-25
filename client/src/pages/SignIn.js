@@ -145,12 +145,12 @@ function SignIn(props) {
   const storeUserStatus = user => {
     // let { _id, username, user_firstName, user_lastName, user_email, user_country } = user;
     //fix the state to store everything.
-    setUserStatus(user => ({
+    setUserStatus(prevState => ({
       loggedIn: true,
       user: user
     }));
-    localStorage.setItem("loggedIn", true)
-    localStorage.setItem("user", JSON.stringify(user))
+    localStorage.setItem("loggedIn", true);
+    localStorage.setItem("user", JSON.stringify(user));
     history.push("/");
     // console.log(userStatus)
   };
@@ -302,7 +302,7 @@ function SignIn(props) {
           </Box>
         </Container>
       </Grow>
-      <br/>
+      <br />
       <Footer />
     </React.Fragment>
   );
