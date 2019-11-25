@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 // import withStyles from "@material-ui/styles/withStyles";
 import { withRouter, useHistory } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,13 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from "@material-ui/core/styles";
 import Grow from '@material-ui/core/Grow';
-import Slide from '@material-ui/core/Slide';
+// import Slide from '@material-ui/core/Slide';
 import Topbar from "../components/Topbar";
 import ScrollyScroll from "../components/ScrollyScroll";
 import TestimonialAvatar from "../components/TestimonialAvatar";
@@ -21,7 +21,6 @@ import Footer from "../components/Footer";
 import Quote from "../components/Quote";
 import logo from "../images/pngLogo.png";
 import Box from '@material-ui/core/Box';
-import { flexbox } from '@material-ui/system';
 import Rating from '@material-ui/lab/Rating';
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
@@ -121,7 +120,7 @@ function Main(props) {
           <main>
           <div className={classes.headerContent}>
             <Container className={classes.container} maxWidth="sm">
-                <img className={classes.logo} src={logo}></img>
+                <img className={classes.logo} src={logo} alt="you-had-one-job"></img>
               <Typography variant="h5" align="center" color="textSecondary" paragraph>
               We strive to cultivate an environment that empower developers and connect 
               them to solutions that enable productivity, growth, and discovery.
@@ -147,7 +146,7 @@ function Main(props) {
           <Container className={classes.cardGrid} maxWidth="md" id="to-the-reviews">
             <Grid container spacing={4}>
               {cards.map( (card, index) => (              
-                <Grid item key={card} xs={12} sm={6} md={4}>
+                <Grid item key={index} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia>
                       <TestimonialAvatar url={card.url} />

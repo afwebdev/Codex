@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Component } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -134,27 +134,27 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn(props) {
-  const [animateIn, setAnimateIn] = useState(true);
+  // const [animateIn, setAnimateIn] = useState(true);
   const currentPath = props.location.pathname;
 
   let history = useHistory();
+
   const [userStatus, setUserStatus] = useContext(LoginContext);
 
-  const userStatusObject = {};
-
-  const storeUserStatus = user => {
-    // let { _id, username, user_firstName, user_lastName, user_email, user_country } = user;
+  const storeUserStatus = resp => {
+    const { dex, user } = resp;
     //fix the state to store everything.
     setUserStatus(prevState => ({
       loggedIn: true,
-      user: user
+      user: user,
+      dex: dex
     }));
     localStorage.setItem("loggedIn", true);
+    localStorage.setItem("dex", dex);
     localStorage.setItem("user", JSON.stringify(user));
-    // history.push("/");
-    //ONE TIME REFRESH.
+    localStorage.setItem("useStatus", JSON.stringify(userStatus));
+    //One time reload, starts our new logged in session with fresh storage info.
     window.location = "/";
-    // console.log(userStatus)
   };
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
@@ -204,17 +204,19 @@ function SignIn(props) {
   useEffect(() => {
     const { userName, password } = values;
     if (Object.keys(valuesError).length === 0 && isSubmitted) {
-      console.log("Api would execute");
+      // console.log("Api would execute");
       API.signIn({
         user_username: userName,
         user_password: password
       })
         .then(resp => {
-          // console.log(resp.data.user);
+          console.log(resp.data);
           //STORE THE USER INFO IN GLOBAL STATE
-          storeUserStatus(resp.data.user);
+          storeUserStatus(resp.data);
         })
-        .catch(err => toggleIsFailAuthentication(true));
+        .catch(err => {
+          toggleIsFailAuthentication(true);
+        });
     }
   }, [valuesError]);
 
@@ -223,7 +225,7 @@ function SignIn(props) {
   return (
     <React.Fragment>
       <Topbar currentPath={currentPath} />
-      <Grow in={animateIn}>
+      <Grow in={true}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>

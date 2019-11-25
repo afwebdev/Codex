@@ -44,7 +44,7 @@ export default function SignUpIn(props) {
     ? JSON.parse(localStorage.getItem("loggedIn"))
     : "";
   const {
-    user_country,
+    // user_country,
     user_firstName,
     user_lastName,
     username,
@@ -123,7 +123,11 @@ export default function SignUpIn(props) {
               {loggedIn ? (
                 <Box display="flex" justifyContent="center" flexDirection="row">
                   <AccountBalanceWalletTwoToneIcon />
-                  <p>69</p>
+                  <p>
+                    {localStorage.getItem("dex")
+                      ? localStorage.getItem("dex")
+                      : 0}
+                  </p>
                 </Box>
               ) : (
                 // <React.Fragment>

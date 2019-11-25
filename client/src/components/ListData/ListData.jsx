@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+// import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import API from "../../utils/API";

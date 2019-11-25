@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const UserDex = require("../models/UserDex");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const config = require("../config/index");
@@ -17,13 +18,15 @@ const config = require("../config/index");
 */
 const signin = (req, res) => {
   // console.log(req.body.user_email, req.body.user_password)
-  User.findOne({ user_username: req.body.user_username }, (err, user) => {
+  User.findOne({ user_username: req.body.user_username }).then((user, err) => {
     if (err || !user) {
+      console.log("Username not found")
       return res.status(401).json({
         error: "User not found"
       });
     }
     if (!user.authenticate(req.body.user_password)) {
+      console.log("password not found")
       return res.status(401).json({
         error: "Wrong Email or Password!"
       });
@@ -43,22 +46,26 @@ const signin = (req, res) => {
       expire: new Date() + 9999
     });
 
-    /* Mission Success.. lets send back some json, 
-	We're sending back the token, and user info via JSON. 
-	**THIS INFO IS WHAT WE STORE FOR STATE**
-	THE TOKEN IS BEING SAVED ON CLIENT VIA COOKIE ABOVE. */
-    return res.json({
-      token,
-      loggedIn: true,
-      user: {
-        _id: user._id,
-        username: user.user_username,
-        user_email: user.user_email,
-        user_firstName: user.user_firstName,
-        user_lastName: user.user_lastName,
-        user_country: user.user_country
-      }
-    });
+    UserDex.findOne({ user_id: user._id }).then((dexRes, err) => {
+      // console.log(dexRes);
+      /* Mission Success.. lets send back some json, 
+      We're sending back the token, and user info via JSON. 
+      **THIS INFO IS WHAT WE STORE FOR STATE**
+      THE TOKEN IS BEING SAVED ON CLIENT VIA COOKIE ABOVE. */
+      return res.json({
+        token,
+        loggedIn: true,
+        user: {
+          _id: user._id,
+          username: user.user_username,
+          user_email: user.user_email,
+          user_firstName: user.user_firstName,
+          user_lastName: user.user_lastName,
+          user_country: user.user_country
+        },
+        dex: dexRes.dex
+      });
+    })
   });
 };
 
