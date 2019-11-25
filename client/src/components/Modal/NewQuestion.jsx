@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { LoginContext } from "../LoginContext";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -19,6 +20,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
+import API from "../../utils/API";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
 
@@ -33,6 +35,8 @@ import "ace-builds/src-noconflict/theme-github";
 import { TextArea } from "semantic-ui-react";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
+
+import languages from "../../utils/LanguageList";
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -66,6 +70,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewQuestion(props) {
+  const [userStatus, setUserStatus] = useContext(LoginContext);
+  console.log(userStatus);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -77,6 +83,13 @@ export default function NewQuestion(props) {
     question_code: `console.log("Hello World!")`, //use of backticks here is important.
     dex: 0
   });
+
+  const submitHandler = e => {
+    console.log(userStatus);
+    e.preventDefault();
+    API.postQuestion({ ...questionData, user_id: userStatus.user._id });
+    props.handleClickClose();
+  };
 
   const onChangeHandler = e => {
     let { name, value } = e.target;
@@ -189,16 +202,20 @@ export default function NewQuestion(props) {
                     id="demo-simple-select"
                     value={questionData.category}
                   >
-                    <MenuItem value={"Javascript"}>Javascript</MenuItem>
-                    <MenuItem value={"HTML"}>HTML</MenuItem>
-                    <MenuItem value={"CSS"}>CSS</MenuItem>
-                    <MenuItem value={"React"}>React</MenuItem>
+                    {languages.map(language => {
+                      return (
+                        <MenuItem value={language.short}>
+                          {language.lang}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 </FormControl>
                 <Button
                   variant="contained"
                   color="secondary"
                   className={classes.button}
+                  onClick={submitHandler}
                   // onClick={handleClickOpen}
                 >
                   Submit

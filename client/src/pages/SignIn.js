@@ -142,18 +142,19 @@ function SignIn(props) {
   const [userStatus, setUserStatus] = useContext(LoginContext);
 
   const storeUserStatus = resp => {
-    const { dex, user } = resp
+    const { dex, user } = resp;
     //fix the state to store everything.
-    setUserStatus(user => ({
+    setUserStatus(prevState => ({
       loggedIn: true,
       user: user,
       dex: dex
     }));
-    localStorage.setItem("loggedIn", true)
-    localStorage.setItem("dex", dex)
-    localStorage.setItem("user", JSON.stringify(user))
-    localStorage.setItem("useStatus", JSON.stringify(userStatus))
-    history.push("/");
+    localStorage.setItem("loggedIn", true);
+    localStorage.setItem("dex", dex);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("useStatus", JSON.stringify(userStatus));
+    //One time reload, starts our new logged in session with fresh storage info.
+    window.location = "/";
   };
   //Declaring User Signin state to be passed into Signin call
   const [values, setValues] = useState({
@@ -213,7 +214,9 @@ function SignIn(props) {
           //STORE THE USER INFO IN GLOBAL STATE
           storeUserStatus(resp.data);
         })
-        .catch((err) => {toggleIsFailAuthentication(true)});
+        .catch(err => {
+          toggleIsFailAuthentication(true);
+        });
     }
   }, [valuesError]);
 
@@ -303,7 +306,7 @@ function SignIn(props) {
           </Box>
         </Container>
       </Grow>
-      <br/>
+      <br />
       <Footer />
     </React.Fragment>
   );
