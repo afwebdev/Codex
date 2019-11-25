@@ -36,6 +36,8 @@ import { TextArea } from "semantic-ui-react";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
+import languages from "../../utils/LanguageList";
+
 const useStyles = makeStyles(theme => ({
   grid: {
     width: 1200,
@@ -199,7 +201,7 @@ export default function NewQuestion(props) {
                     id="demo-simple-select"
                     value={questionData.category}
                   >
-                    <MenuItem value={"Javascript"}>Javascript</MenuItem>
+                    <MenuItem value={"JS"}>Javascript</MenuItem>
                     <MenuItem value={"HTML"}>HTML</MenuItem>
                     <MenuItem value={"CSS"}>CSS</MenuItem>
                     <MenuItem value={"React"}>React</MenuItem>
