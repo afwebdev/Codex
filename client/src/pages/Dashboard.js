@@ -159,10 +159,7 @@ function Dashboard(props) {
   const classes = useStyles();
   const currentPath = props.location.pathname;
 
-  useEffect(() => {
-    setUserStatus({ user: user });
-    // console.log(userStatus._id);
-  }, []);
+  // useEffect(prevState => {}, []);
 
   //Dashboard Return Component.
   return (

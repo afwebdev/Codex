@@ -15,6 +15,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import API from "../../utils/API";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import { LoginContext } from "../LoginContext";
+import QuestionLink from "../QuestionLink.jsx";
 
 const styles = theme => ({});
 
@@ -71,6 +72,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// //retrieve and store user info
+// const storage = localStorage.getItem("user");
+// console.log(storage);
+// const user = JSON.parse(storage);
+// console.log(user);
+
 //List Item Link Component
 const ListItemLink = props => {
   return (
@@ -91,6 +98,7 @@ const ListData = props => {
   const user = props.user;
   //Dashboard useEfect
   useEffect(() => {
+    // console.log(userStatus);
     API.getQuestionByUser(user).then(res => {
       console.log("getQuestionByUser");
       console.log(user); //id says 5ddadcb494b9698f856a74e4
@@ -99,7 +107,9 @@ const ListData = props => {
       setQuestions(prev => ({
         userQuestions: res.data
       }));
+      console.log(questions);
     });
+
     API.getAnswersByUser(user).then(res => {
       console.log("GETANSWERBYUSER");
       console.log(res);
@@ -160,17 +170,13 @@ const ListData = props => {
       </ListItem>
       <Collapse in={open.answer} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {() => {
-            if (questions.userAnswers !== []) {
-              questions.userAnswers.map(question => {
-                return (
-                  <ListItemLink to={`/answer/${question._id}`}>
-                    <ListItemText primary={question.question_title} />
-                  </ListItemLink>
-                );
-              });
-            }
-          }}
+          {answers.userAnswers.map(question => {
+            return (
+              <ListItemLink to={`/answer/${question._id}`}>
+                <ListItemText primary={question.question_title} />
+              </ListItemLink>
+            );
+          })}
         </List>
       </Collapse>
     </List>

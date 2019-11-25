@@ -151,7 +151,9 @@ function SignIn(props) {
     }));
     localStorage.setItem("loggedIn", true);
     localStorage.setItem("user", JSON.stringify(user));
-    history.push("/");
+    // history.push("/");
+    //ONE TIME REFRESH.
+    window.location = "/";
     // console.log(userStatus)
   };
   //Declaring User Signin state to be passed into Signin call
