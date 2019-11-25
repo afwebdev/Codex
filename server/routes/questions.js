@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const {
   askQuestion,
   getQuestion,
@@ -8,7 +9,6 @@ const {
 
 const { requireSignin } = require("../controllers/auth");
 
-const router = express.Router();
 
 // Post a question
 router.route("/api/questions").post(askQuestion);

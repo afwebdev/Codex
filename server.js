@@ -9,6 +9,7 @@ const authRoute = require("./server/routes/auth");
 const questionRoute = require("./server/routes/questions");
 const answerRoute = require("./server/routes/answer");
 const commentRoute = require("./server/routes/comment");
+const userDexRoute = require("./server/routes/userDex");
 
 //Init the Connection to the DB.
 require(path.join(__dirname, "./server/config/dbconnection"))();
@@ -43,6 +44,7 @@ app.use("/", authRoute);
 app.use("/", questionRoute);
 app.use("/", answerRoute);
 app.use("/", commentRoute);
+app.use("/", userDexRoute);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {
