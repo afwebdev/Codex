@@ -201,10 +201,13 @@ export default function NewQuestion(props) {
                     id="demo-simple-select"
                     value={questionData.category}
                   >
-                    <MenuItem value={"JS"}>Javascript</MenuItem>
-                    <MenuItem value={"HTML"}>HTML</MenuItem>
-                    <MenuItem value={"CSS"}>CSS</MenuItem>
-                    <MenuItem value={"React"}>React</MenuItem>
+                    {languages.map(language => {
+                      return (
+                        <MenuItem value={language.short}>
+                          {language.lang}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 </FormControl>
                 <Button

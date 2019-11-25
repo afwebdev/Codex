@@ -15,7 +15,6 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import API from "../../utils/API";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import { LoginContext } from "../LoginContext";
-import QuestionLink from "../QuestionLink.jsx";
 
 const styles = theme => ({});
 
