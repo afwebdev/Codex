@@ -7,12 +7,13 @@ var QuestionSchema = new Schema(
     category: { type: String, required: true },
     question_title: { type: String, required: true },
     question_description: { type: String, required: true },
+    question_code: { type: String },
     dex: { type: Number, required: true },
     expiry_time: { type: Date },
     is_pickedup: { type: Boolean, required: true, default: false },
     is_answer_approved: { type: Boolean, required: true, default: false },
     user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    answer_id: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
+    answer_id: [{ type: Schema.Types.ObjectId, ref: "Answer" }]
   },
   { timestamps: true }
 );

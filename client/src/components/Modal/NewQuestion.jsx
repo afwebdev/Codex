@@ -15,13 +15,24 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-jsx";
 import "ace-builds/src-noconflict/theme-github";
+
+import { TextArea } from "semantic-ui-react";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -31,6 +42,10 @@ const useStyles = makeStyles(theme => ({
       width: "calc(100% - 20px)"
     }
   },
+  button: {
+    // margin: theme.spacing(1),
+    marginTop: "2em"
+  },
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.grey["100"],
@@ -38,7 +53,8 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 200
   },
   appBar: {
-    position: "relative"
+    position: "relative",
+    backgroundColor: theme.palette.secondary.main
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -54,6 +70,30 @@ export default function NewQuestion(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [questionData, setQuestionData] = React.useState({
+    question_title: "",
+    question_description: "",
+    category: "Javascript",
+    question_code: `console.log("Hello World!")`, //use of backticks here is important.
+    dex: 0
+  });
+
+  const onChangeHandler = e => {
+    let { name, value } = e.target;
+    console.log("Name: " + name + " " + "Value: " + value);
+    setQuestionData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const codeChangeHandler = code => {
+    console.log(code);
+    setQuestionData(prevState => ({
+      ...prevState,
+      question_code: code
+    }));
+  };
 
   return (
     <Dialog
@@ -80,59 +120,118 @@ export default function NewQuestion(props) {
       {/* Top Parent Div */}
       <Container>
         <Grid spacing={2}>
-          <Grid item xs={12}>
-            <h1>New Question</h1>
-          </Grid>
-          <Grid item xs={6}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: ""
-              }}
-            >
-              <TextField
-                className={classes.textFieldInput}
-                autoFocus={true}
-                name="questionTitle"
-                fullWidth={true}
-                placeholder="..."
-                label="Title"
-              ></TextField>
-              <TextField
-                className={classes.textFieldInput}
-                margin="normal"
-                name="questionDescription"
-                fullWidth={true}
-                placeholder="..."
-                label="Description"
-              ></TextField>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <AceEditor
-              placeholder="Placeholder Text"
-              mode="javascript"
-              theme="monokai"
-              name="blah2"
-              // onLoad={this.onLoad}
-              // onChange={this.onChange}
-              fontSize={14}
-              showPrintMargin={false}
-              width={"100%"}
-              height={"400px"}
-              showGutter={true}
-              highlightActiveLine={true}
-              value={`console.log("Hello World")`}
-              setOptions={{
-                enableBasicAutocompletion: false,
-                enableLiveAutocompletion: false,
-                enableSnippets: false,
-                showLineNumbers: true,
-                tabSize: 2
-              }}
-            />
-          </Grid>
+          <form>
+            <Grid item xs={6}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: ""
+                }}
+              >
+                {/* Title */}
+                <TextField
+                  InputLabelProps={{ shrink: true }}
+                  value={questionData.question_title}
+                  className={classes.textFieldInput}
+                  autoFocus={true}
+                  name="question_title"
+                  fullWidth={true}
+                  placeholder="..."
+                  label="Title"
+                  margin="normal"
+                  onChange={onChangeHandler}
+                ></TextField>
+                {/* Description */}
+                <TextField
+                  InputLabelProps={{ shrink: true }}
+                  margin="normal"
+                  value={questionData.question_description}
+                  className={classes.textFieldInput}
+                  margin="normal"
+                  name="question_description"
+                  fullWidth={true}
+                  placeholder="..."
+                  label="Description"
+                  onChange={onChangeHandler}
+                ></TextField>
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between"
+                }}
+              >
+                <Input
+                  style={{ width: "10em" }}
+                  className={classes.textFieldInput}
+                  type="number"
+                  name="dex"
+                  value={questionData.dex}
+                  onChange={onChangeHandler}
+                  inputProps={{
+                    "aria-label": "Bounty"
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">Dex</InputAdornment>
+                  }
+                />
+                <FormControl className={classes.textFieldInput}>
+                  <InputLabel id="category-label">Category</InputLabel>
+                  <Select
+                    name="category"
+                    onChange={onChangeHandler}
+                    style={{ width: "20em" }}
+                    className={classes.textFieldInput}
+                    labelId="category-label"
+                    id="demo-simple-select"
+                    value={questionData.category}
+                  >
+                    <MenuItem value={"Javascript"}>Javascript</MenuItem>
+                    <MenuItem value={"HTML"}>HTML</MenuItem>
+                    <MenuItem value={"CSS"}>CSS</MenuItem>
+                    <MenuItem value={"React"}>React</MenuItem>
+                  </Select>
+                </FormControl>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  // onClick={handleClickOpen}
+                >
+                  Submit
+                </Button>
+              </div>
+            </Grid>
+
+            <Grid style={{ marginTop: "2em" }} item xs={12}>
+              <h4>Code</h4>
+              <AceEditor
+                placeholder='console.log("Hello World!")'
+                mode="javascript"
+                theme="github"
+                name="codeInput"
+                // onLoad={this.onLoad}
+                onChange={codeChangeHandler}
+                fontSize={14}
+                showPrintMargin={false}
+                width={"100%"}
+                height={"400px"}
+                showGutter={true}
+                highlightActiveLine={true}
+                value={questionData.question_code}
+                setOptions={{
+                  enableBasicAutocompletion: true,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: false,
+                  showLineNumbers: true,
+                  tabSize: 2
+                }}
+              />
+            </Grid>
+          </form>
         </Grid>
       </Container>
     </Dialog>
