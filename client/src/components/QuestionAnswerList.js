@@ -61,6 +61,9 @@ const Answerlist = props => {
                 <Comment.Action id={props.id} onClick={props.reply}>
                   Reply
                 </Comment.Action>
+                <Comment.Action id={props.id} onClick={props.showmorereply}>
+                  See All Replies
+                </Comment.Action>
               </Comment.Actions>
             </Comment.Content>
           </Comment>
