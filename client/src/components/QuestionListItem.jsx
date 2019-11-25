@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
@@ -8,7 +8,7 @@ import Container from "@material-ui/core/Container";
 import ToolTip from "@material-ui/core/Tooltip";
 import withStyles from "@material-ui/styles/withStyles";
 import { Typography } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+// import { blue } from "@material-ui/core/colors";
 
 const styles = theme => ({
   avatar: {

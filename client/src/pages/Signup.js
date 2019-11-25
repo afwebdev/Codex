@@ -132,7 +132,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignUp(props) {
-  const [animateIn, setAnimateIn] = useState(true);
 
   const currentPath = props.location.pathname;
 
@@ -268,7 +267,7 @@ function SignUp(props) {
     <React.Fragment>
       <Topbar currentPath={currentPath} />
 
-      <Grow in={animateIn}>
+      <Grow in={true}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>

@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 // import Avatar from "@material-ui/core/Avatar";
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 // import Radio from "@material-ui/core/Radio";
 // import RadioGroup from "@material-ui/core/RadioGroup";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -27,10 +27,10 @@ import { Reply } from "../components/Reply";
 import { makeStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+// import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
@@ -177,6 +177,7 @@ const Answer = props => {
       });
   };
 
+  //Let's move all references of user info to local storage
   const [userStatus, setUserStatus] = useContext(LoginContext);
   const questionID = props.match.params.id;
   useEffect(() => {
@@ -272,8 +273,8 @@ const Answer = props => {
       <div className={classes.root}>
         {/* Beginning of Question */}
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={4}></Grid>
-          <Grid item item xs={12} sm={12} md={4}>
+          {/* <Grid item xs={12} sm={12} md={4}></Grid> */}
+          <Grid item xs={12} sm={12} md={4}>
             <Paper className={classes.paper}>
               <Questionlist
                 questionStyle={classes.question}

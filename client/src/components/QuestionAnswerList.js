@@ -1,21 +1,21 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import {
-  Button,
+  // Button,
   Comment,
-  Form,
-  Header,
-  Segment,
-  CommentGroup,
+  // Form,
+  // Header,
+  // Segment,
+  // CommentGroup,
   Card,
-  Container
+  // Container
 } from "semantic-ui-react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import { mergeClasses } from "@material-ui/styles";
+// import { makeStyles } from "@material-ui/core/styles";
+// import Paper from "@material-ui/core/Paper";
+// import Grid from "@material-ui/core/Grid";
+// import Typography from "@material-ui/core/Typography";
+// import ButtonBase from "@material-ui/core/ButtonBase";
+// import { mergeClasses } from "@material-ui/styles";
 
 // const useStyles = makeStyles(theme => ({
 //   root: {

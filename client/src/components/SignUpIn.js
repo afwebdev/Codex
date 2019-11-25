@@ -42,11 +42,11 @@ export default function SignUpIn(props) {
   const anchorRef = React.useRef(null);
   const loggedIn = (localStorage.getItem("loggedIn") ? JSON.parse(localStorage.getItem("loggedIn")) : "");
   const {
-    user_country,
+    // user_country,
     user_firstName,
     user_lastName,
-    username,
-    _id
+    // username,
+    // _id
   } = (localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "")
 
   const handleToggle = () => {
@@ -115,7 +115,7 @@ export default function SignUpIn(props) {
               {loggedIn ? (
                 <Box display="flex" justifyContent="center" flexDirection="row">
                   <AccountBalanceWalletTwoToneIcon />
-                  <p>69</p>
+              <p>{localStorage.getItem("dex") ? localStorage.getItem("dex") : 0}</p>
                 </Box>
                 // <React.Fragment>
                 //   <i className="fas fa-wallet"></i> 69

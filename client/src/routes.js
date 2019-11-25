@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch,Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom"; //redirect
 import Answer from "./pages/Answer"
 import Dashboard from "./pages/Dashboard";
 import Wizard from "./pages/Wizard";

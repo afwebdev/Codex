@@ -38,7 +38,7 @@ export default function CountrySelect({ handleCountry }) {
       renderOption={option => (
         <React.Fragment>
           <span>{countryToFlag(option.code)}</span>
-          {option.label} <span> </span> <img src={`https://www.countryflags.io/${option.code.trim()}/flat/32.png`}></img>
+          {option.label} <span> </span> <img src={`https://www.countryflags.io/${option.code.trim()}/flat/32.png`} alt="flag"></img>
         </React.Fragment>
       )}
       renderInput={params => (
