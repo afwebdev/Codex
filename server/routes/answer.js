@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {getAnsweredQuestions, postAnswer,upVoteAnswer} = require("../controllers/answer");
+const {
+  getAnsweredQuestions,
+  postAnswer,
+  upVoteAnswer
+} = require("../controllers/answer");
 
 const { requireSignin } = require("../controllers/auth");
 
@@ -10,7 +14,10 @@ router.route("/api/answers").post(postAnswer);
 // Upvote an answer
 router.route("/api/answers/upvote").post(upVoteAnswer);
 
-// Get all answered questions for a specific user
-router.route("/api/answers").get(getAnsweredQuestions);
+// // Get all answers for a specific user
+// router.route("/api/answers").get(getAnsweredQuestions);
+
+//Get all answered QUESTIONS for a specified user
+router.route("/api/answers/user/:user_id").get(getAnsweredQuestions);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/styles/withStyles";
 import { Link } from "react-router-dom";
@@ -9,11 +9,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+// import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import API from "../../utils/API";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import { LoginContext } from "../LoginContext";
 
 const styles = theme => ({});
 
@@ -70,6 +71,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// //retrieve and store user info
+// const storage = localStorage.getItem("user");
+// console.log(storage);
+// const user = JSON.parse(storage);
+// console.log(user);
+
 //List Item Link Component
 const ListItemLink = props => {
   return (
@@ -81,6 +88,8 @@ const ListItemLink = props => {
 
 //ListData Component.
 const ListData = props => {
+  const [userStatus, setUserStatus] = useContext(LoginContext);
+  console.log(props);
   const classes = useStyles();
   //Hooks for question/answer to be displayed
   const [questions, setQuestions] = React.useState({ userQuestions: [] });
@@ -88,13 +97,19 @@ const ListData = props => {
   const user = props.user;
   //Dashboard useEfect
   useEffect(() => {
-    API.getQuestionByUser(user._id).then(res => {
-      // console.log(res);
+    // console.log(userStatus);
+    API.getQuestionByUser(user).then(res => {
+      console.log("getQuestionByUser");
+      console.log(user); //id says 5ddadcb494b9698f856a74e4
+      console.log(res.data); //res
+
       setQuestions(prev => ({
         userQuestions: res.data
       }));
+      console.log(questions);
     });
-    API.getAnswersByUser(user._id).then(res => {
+
+    API.getAnswersByUser(user).then(res => {
       console.log("GETANSWERBYUSER");
       console.log(res);
       setAnswers(prev => ({
@@ -135,13 +150,18 @@ const ListData = props => {
       </ListItem>
       <Collapse in={open.question} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {questions.userQuestions.map(question => {
-            return (
-              <ListItemLink to={`/answer/${question._id}`}>
-                <ListItemText primary={question.question_title} />
-              </ListItemLink>
-            );
-          })}
+          {questions.userQuestions.length > 0
+            ? questions.userQuestions.map(question => {
+                return (
+                  <ListItemLink
+                    key={question._id}
+                    to={`/answer/${question._id}`}
+                  >
+                    <ListItemText primary={question.question_title} />
+                  </ListItemLink>
+                );
+              })
+            : false}
         </List>
       </Collapse>
 
@@ -155,10 +175,9 @@ const ListData = props => {
       <Collapse in={open.answer} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {answers.userAnswers.map(question => {
-            console.log(question);
             return (
-              <ListItemLink to={`/answer/${question.question_id._id}`}>
-                <ListItemText primary={question.question_id.question_title} />
+              <ListItemLink to={`/answer/${question._id}`}>
+                <ListItemText primary={question.question_title} />
               </ListItemLink>
             );
           })}

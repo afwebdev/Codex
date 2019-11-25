@@ -45,12 +45,16 @@ export default {
     return axios.post("/api/comment", comment);
   },
 
-  getQuestionByUser: function(user) {
-    return axios.get("/api/questions", user);
+  getQuestionByUser: function(user_id) {
+    return axios.get(`/api/questions/user/${user_id}`);
   },
 
-  getAnswersByUser: function(user) {
-    return axios.get("/api/answers", user);
+  getAnswersByUser: function(user_id) {
+    return axios.get(`/api/answers/user/${user_id}`);
+  },
+
+  postQuestion: function(question) {
+    return axios.post("/api/question/add", question);
   }
 
   // getUserInfo: function(userId) {

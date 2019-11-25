@@ -24,7 +24,7 @@ export default function NoMatch() {
       <div className={classes.root} style={{ marginTop: "5vh" }}>
         <Typography variant="h5" component="h3">
           404 Page Not Found
-          <img src={Ufo}></img>
+          <img src={Ufo} alt="cool-ufo"></img>
           <Link to={{ pathname: "/" }}>
             <button
               style={{

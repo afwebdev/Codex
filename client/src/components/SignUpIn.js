@@ -12,8 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { LoginContext } from "../components/LoginContext";
 import Grid from "@material-ui/core/Grid";
 import API from "../utils/API";
-import Box from '@material-ui/core/Box';
-import AccountBalanceWalletTwoToneIcon from '@material-ui/icons/AccountBalanceWalletTwoTone';
+import Box from "@material-ui/core/Box";
+import AccountBalanceWalletTwoToneIcon from "@material-ui/icons/AccountBalanceWalletTwoTone";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,14 +40,18 @@ export default function SignUpIn(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const loggedIn = (localStorage.getItem("loggedIn") ? JSON.parse(localStorage.getItem("loggedIn")) : "");
+  const loggedIn = localStorage.getItem("loggedIn")
+    ? JSON.parse(localStorage.getItem("loggedIn"))
+    : "";
   const {
-    user_country,
+    // user_country,
     user_firstName,
     user_lastName,
     username,
     _id
-  } = (localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "")
+  } = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : "";
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
@@ -70,6 +74,7 @@ export default function SignUpIn(props) {
       });
       localStorage.setItem("loggedIn", false);
       history.push("/");
+      // window.location = "/";
     });
   };
 
@@ -101,9 +106,12 @@ export default function SignUpIn(props) {
           onClick={handleToggle}
         >
           <Grid container justify="center" spacing={0}>
-            <Grid item >
+            <Grid item>
               {loggedIn ? (
-                <Avatar className={classes.loggedInAvatar}>{user_firstName[0] + user_lastName[0]}</Avatar>
+                <Avatar className={classes.loggedInAvatar}>
+                  {userStatus.user.user_firstName[0] +
+                    userStatus.user.user_lastName[0]}
+                </Avatar>
               ) : (
                 <Avatar
                   alt="Remy Sharp"
@@ -115,12 +123,16 @@ export default function SignUpIn(props) {
               {loggedIn ? (
                 <Box display="flex" justifyContent="center" flexDirection="row">
                   <AccountBalanceWalletTwoToneIcon />
-                  <p>69</p>
+                  <p>
+                    {localStorage.getItem("dex")
+                      ? localStorage.getItem("dex")
+                      : 0}
+                  </p>
                 </Box>
+              ) : (
                 // <React.Fragment>
                 //   <i className="fas fa-wallet"></i> 69
                 // </React.Fragment>
-              ) : (
                 <p>Guest</p>
               )}
             </Grid>

@@ -5,8 +5,10 @@ const { Answer, Question } = require("../models");
 // it in requests
 const getAnsweredQuestions = (req, res, next) => {
   // allows you to get user id from the cookie
-  var userID = req.cookies._id;
-  Answer.find({ user_id: userID })
+  let user_id = req.params.user_id;
+  console.log("@ getAnsweredQuestions, uid: ", user_id);
+
+  Answer.find({ user_id })
     .populate("question_id")
     .exec((err, docs) => {
       if (!err) {
