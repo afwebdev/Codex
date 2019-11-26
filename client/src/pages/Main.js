@@ -23,7 +23,7 @@ import logo from "../images/pngLogo.png";
 import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
 
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: "cover",
     // height: "100%",
-    // width: "100%",
+    // width: "100",
     // backgroundPosition: "0 400px",
     paddingBottom: 200
   },
@@ -42,7 +42,9 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     textAlign: "center",
-    backgroundColor: "transparent"
+    // backgroundColor: "transparent",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderRadius: 4
   },
   headerContent: {
     height: "78vh",
