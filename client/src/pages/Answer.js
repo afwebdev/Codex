@@ -2,18 +2,15 @@ import React, { useContext, useState, useEffect } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
-// import Paper from "@material-ui/core/Paper";
-// import Typography from "@material-ui/core/Typography";
+
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 // import Avatar from "@material-ui/core/Avatar";
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
-// import Container from "@material-ui/core/Container";
-// import Radio from "@material-ui/core/Radio";
-// import RadioGroup from "@material-ui/core/RadioGroup";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Box from "@material-ui/core/Box";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import atomdarkreason from "react-syntax-highlighter/dist/esm/styles/hljs/atomdarkreason";
+import Container from "@material-ui/core/Container";
 import API from "../utils/API";
 // import ToolTip from "@material-ui/core/Tooltip";
 import {
@@ -35,11 +32,12 @@ import TextField from "@material-ui/core/TextField";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-github";
+import { display } from "@material-ui/system";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const useStyles = makeStyles(theme => ({
   grid: {
-    alignItems: "center",
+    // alignItems: "center",
     marginTop: "15px"
   },
   answerBox: {
@@ -70,8 +68,7 @@ const useStyles = makeStyles(theme => ({
     margin: "auto"
   },
   paper: {
-    padding: theme.spacing(5),
-    padding: "1em"
+    padding: theme.spacing(3)
   },
   topGrid: {
     marginTop: "2em"
@@ -95,10 +92,10 @@ const Answer = props => {
   // Handles change of Answer box/Text edititor and updates state accordingly
   const handleInputchangeCode = newValue => {
     console.log(newValue);
-    setAnswerState(prevState => ({
-      ...prevState,
-      question: { ...prevState.question, code: newValue }
-    }));
+    // setAnswerState(prevState => ({
+    //   ...prevState,
+    //   question: { ...prevState.question, code: newValue }
+    // }));
   };
 
   // Once you click reply, this function will run
@@ -270,6 +267,7 @@ const Answer = props => {
         }));
         // This will allow you to get the refreshed comments, while updating state as well.
         API.getQuestionAnswers(questionID).then(res => {
+          console.log(res);
           console.log("THIS IS ON COMPONENT MOUNT");
           console.log(res.data.answer_id[0].comment_id);
           setAnswerState(prevState => ({
@@ -296,26 +294,79 @@ const Answer = props => {
       <Topbar currentPath={currentPath} />
       <div className={classes.root}>
         {/* Beginning of Answer Page Grid */}
-        <Grid direction="column" justify="center" className={classes.topGrid}>
+        {/* <Paper> */}
+        <Grid direction="column" className={classes.topGrid}>
           {/* Beginnning Of Top Section */}
           <Grid item xs={12} md={6} style={{ margin: "0 auto" }}>
-            <Paper style={{ textAlign: "center" }} className={classes.paper}>
-              <Typography variant="h4">{answerState.question.title}</Typography>
+            <Paper
+              style={{
+                textAlign: "center"
+              }}
+              className={classes.paper}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column"
+                }}
+              >
+                <Typography variant="h5">
+                  {answerState.question.title}
+                </Typography>
+              </div>
             </Paper>
           </Grid>
-          {/* End of question */}
-          <Grid item xs={12} sm={12} md={12} className={classes.grid}>
+          {/* End of Top Title/desc Section */}
+
+          {/* Start of question info section */}
+          <Grid style={{ margin: "0 auto" }} item xs={8}>
+            <Grid justify="center" container direction="column">
+              <Paper style={{ marginTop: "2em", width: "100%" }}>
+                <Container
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    padding: "2em",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="p"
+                      style={{ margin: "0 auto", fontSize: "16px" }}
+                    >
+                      {answerState.question.description}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <div style={{ width: "auto" }}>
+                      <SyntaxHighlighter
+                        language="javascript"
+                        style={atomdarkreason}
+                      >
+                        {answerState.question.code}
+                      </SyntaxHighlighter>
+                    </div>
+                  </Grid>
+                </Container>
+              </Paper>
+            </Grid>
+          </Grid>
+
+          {/* User answers section */}
+          <Grid className={classes.grid}>
             <div
               style={{
                 padding: "1em",
                 overflowX: "auto",
                 maxHeight: "500px",
-                maxWidth: "500px",
+                minWidth: "100%",
                 backgroundColor: "#efefef"
               }}
             >
               {answerState.answers.map(answer => {
-                console.log(answer);
+                // console.log(answer);
                 buttonId = answer._id;
                 // setting the ID of the reply box
                 // This is for the conditional rendering of the reply box.
@@ -400,6 +451,7 @@ const Answer = props => {
           {/* End of code editor */}
           {/* </Grid> */}
         </Grid>
+        {/* </Paper> */}
         {/* End of TOP LEVEL GRID (Parent of all) */}
       </div>
       <Footer />

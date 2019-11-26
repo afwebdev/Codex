@@ -7,7 +7,7 @@ import {
   // Header,
   // Segment,
   // CommentGroup,
-  Card,
+  Card
   // Container
 } from "semantic-ui-react";
 // import { makeStyles } from "@material-ui/core/styles";
@@ -38,7 +38,7 @@ const Questionlist = props => {
   return (
     <>
       <div className={props.questionStyle}>
-                <h1>{props.question}</h1>
+        <h1>{props.question}</h1>
       </div>
     </>
   );
@@ -47,7 +47,7 @@ const Questionlist = props => {
 const Answerlist = props => {
   return (
     <>
-      <Card style={{ padding: "10px", margin: "10px" }}>
+      <Card style={{ padding: "10px", width: "50%" }}>
         <Comment.Group>
           <Comment>
             <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/matt.jpg" />
