@@ -5,6 +5,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import "./App.css";
 import PageRoutes from "./routes";
 import { blue, indigo, grey } from "@material-ui/core/colors";
+import Example from "./pages/Payments";
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +30,7 @@ function App() {
     <Router>
       <div>
         <ThemeProvider theme={theme}>
+          <Example />
           <PageRoutes />
         </ThemeProvider>
       </div>

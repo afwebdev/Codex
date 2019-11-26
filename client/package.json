@@ -17,6 +17,7 @@
     "react": "latest",
     "react-ace": "^8.0.0",
     "react-dom": "latest",
+    "react-paypal-button-v2": "^2.6.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^2.1.1",
     "react-swipeable-views": "^0.13.0",
