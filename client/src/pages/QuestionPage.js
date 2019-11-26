@@ -23,7 +23,7 @@ import NewQuestion from "../components/Modal/NewQuestion";
 import Slide from "@material-ui/core/Slide";
 import Skeleton from "@material-ui/lab/Skeleton";
 
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const styles = theme => ({
   avatar: {
@@ -48,9 +48,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2),
     flexGrow: 1,
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat`,
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: "cover",
-    backgroundPosition: "0 400px",
+    // backgroundPosition: "0 400px",
     paddingBottom: 200,
     height: "100%"
   },

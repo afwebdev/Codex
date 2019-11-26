@@ -12,15 +12,18 @@ import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 
-import logo from "../images/LogoMakr_5Jc4Ki.png";
+import logo from "../images/pngLogo.png";
+
+const backgroundShape = require("../images/Data-background.png");
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderStyle: "solid",
     borderColor: "grey",
-    borderWidth: 1
+    borderWidth: 1,
+    // opacity: 0.5
   },
   // paper: {
   //   padding: theme.spacing(2),
@@ -36,7 +39,7 @@ const styles = theme => ({
     color: "grey"
   },
   p: {
- color: 'lightgrey',
+ color: 'grey',
  fontSize: 10,
   // position: 'absolute',
   paddingTop: 40,
@@ -51,7 +54,7 @@ class Footer extends Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <Grid container spacing={3}>
           {/* <Grid item xs>
             <List>

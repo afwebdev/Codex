@@ -35,7 +35,7 @@ import TextField from "@material-ui/core/TextField";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-github";
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "5px",
     flexGrow: 1,
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat`,
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: "cover",
     //backgroundPosition: "0 400px",
     paddingBottom: 200
