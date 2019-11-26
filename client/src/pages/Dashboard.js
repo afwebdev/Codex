@@ -208,6 +208,7 @@ function Dashboard(props) {
                     color="primary"
                     variant="contained"
                     className={classes.actionButtom}
+                    x
                   >
                     My Questions
                   </Button>

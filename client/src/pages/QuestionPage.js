@@ -242,16 +242,18 @@ function Question(props) {
 
             <Grid item xs={12} sm={8} md={8}>
               <Container>
-                {questionList.questionList !== "" ? (
+                {questionList.questionList != "" ? (
                   <QuestionItems questions={questionList} />
                 ) : (
                   <React.Fragment>
-                    <Skeleton
-                      height={200}
-                      variant="rect"
-                      style={{ marginTop: "1em" }}
-                      width="100%"
-                    />
+                    <div>
+                      <Skeleton
+                        height={200}
+                        variant="rect"
+                        style={{ marginTop: "1.2em" }}
+                        width="100%"
+                      />
+                    </div>
                   </React.Fragment>
                 )}
                 {/* <QuestionItems questions={questionList} /> */}
