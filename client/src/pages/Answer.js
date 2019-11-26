@@ -223,21 +223,26 @@ const Answer = props => {
     };
     console.log(answerObj);
     API.postAnswer(answerObj)
-      .then(res => {
+      .then(postRes => {
         setAnswerState(prevState => ({
           ...prevState,
-          answers: res.data.answer_id
+          answers: postRes.data.answer_id
         }));
         // This will allow you to get the refreshed comments, while updating state as well.
-        API.getQuestionAnswers(questionID).then(res => {
+        API.getQuestionAnswers(questionID).then(questionRes => {
           console.log("THIS IS ON COMPONENT MOUNT");
-          console.log(res.data.answer_id[0].comment_id);
-          setAnswerState({
-            questions: res.data.question_description,
-            answers: res.data.answer_id,
+          console.log(questionRes.data.answer_id[0].comment_id);
+
+          setAnswerState(prevState => ({
+            ...prevState,
+            question: {
+              ...prevState.question,
+              description: questionRes.data.question_description
+            },
+            answers: questionRes.data.answer_id,
             commentsToRender: 3
-          });
-          console.log(res.data);
+          }));
+          console.log(questionRes.data);
         });
         console.log("Posted the reply");
       })
@@ -267,10 +272,10 @@ const Answer = props => {
         API.getQuestionAnswers(questionID).then(res => {
           console.log("THIS IS ON COMPONENT MOUNT");
           console.log(res.data.answer_id[0].comment_id);
-          setAnswerState({
-            questions: res.data.question_description,
+          setAnswerState(prevState => ({
+            ...prevState,
             answers: res.data.answer_id
-          });
+          }));
           console.log(res.data);
         });
         console.log("Posted the reply");
