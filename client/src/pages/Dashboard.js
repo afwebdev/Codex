@@ -1,4 +1,4 @@
-import React, { useEffect, useContext} from "react";
+import React, { useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import withStyles from "@material-ui/styles/withStyles";
@@ -9,13 +9,12 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
-import { LoginContext } from "../components/LoginContext";
 // import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 // import Loading from "../components/common/Loading";
 // import Box from "@material-ui/core/Box";
 // import Container from "@material-ui/core/Container";
 import API from "../utils/API";
-// import { LoginContext } from "../components/LoginContext";
+import { LoginContext } from "../components/LoginContext";
 // import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
 // import ListSubheader from "@material-ui/core/ListSubheader";
@@ -38,6 +37,7 @@ const backgroundShape = require("../images/Liquid-Cheese.svg");
 //retrieve and store user info
 const storage = localStorage.getItem("user");
 const user = JSON.parse(storage);
+console.log(user);
 
 const styles = theme => ({
   root: {
@@ -154,28 +154,13 @@ const useStyles = makeStyles(theme => ({
 
 //MAIN Component.
 function Dashboard(props) {
+  const [userStatus, setUserStatus] = useContext(LoginContext);
+  console.log(userStatus);
+
   const classes = useStyles();
   const currentPath = props.location.pathname;
-  const [userStatus, setUserStatus] = useContext(LoginContext);
 
-  useEffect(() => {
-    // console.log(userStatus)
-    if (localStorage.getItem("user")) {
-      if (JSON.parse(localStorage.getItem("user"))._id !== userStatus._id) {
-        currentLoginStatus
-          .checkStatus()
-          .then(res => {
-            //User is logged in, re-store global state vars
-            setUserStatus(res.data);
-            // console.log(res.data);
-          })
-          .catch(err => {
-            //User is not logged in.
-            console.error(err);
-          });
-      }
-    }
-  }, []);
+  // useEffect(prevState => {}, []);
 
   //Dashboard Return Component.
   return (
@@ -198,15 +183,17 @@ function Dashboard(props) {
                 <div className={classes.box}>
                   <Avatar className={classes.avatar}>
                     {(() =>
-                      `${user.user_firstName[0]}${user.user_lastName[0]}`.toUpperCase())()}
+                      `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()}
                   </Avatar>
                   <Typography variant="body2" gutterBottom>
                     Hello,
                     <br />
-                    {`${user.user_firstName}`.charAt(0).toUpperCase() +
-                      `${user.user_firstName}`.slice(
+                    {`${userStatus.user.user_firstName}`
+                      .charAt(0)
+                      .toUpperCase() +
+                      `${userStatus.user.user_firstName}`.slice(
                         1,
-                        user.user_firstName.length
+                        userStatus.user.user_firstName.length
                       )}
                   </Typography>
                   <Typography variant="body2">Dex: 00</Typography>
@@ -222,6 +209,7 @@ function Dashboard(props) {
                     color="primary"
                     variant="contained"
                     className={classes.actionButtom}
+                    x
                   >
                     My Questions
                   </Button>
@@ -244,7 +232,7 @@ function Dashboard(props) {
                 <Paper className={classes.paper}>
                   <div>
                     <div className={classes.content}>
-                      <ListData user={user} />
+                      <ListData user={user._id} />
                     </div>
                   </div>
                 </Paper>
