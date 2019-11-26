@@ -22,6 +22,10 @@ import Footer from "../components/Footer";
 import NewQuestion from "../components/Modal/NewQuestion";
 import Slide from "@material-ui/core/Slide";
 import Skeleton from "@material-ui/lab/Skeleton";
+import languages from "../utils/LanguageList";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import AddQuestionButton from "../components/AddQuestionButton";
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
@@ -29,9 +33,6 @@ const styles = theme => ({
   avatar: {
     fontSize: "14px",
     fontWeight: "bold"
-  },
-  button: {
-    margin: theme.spacing(1)
   }
 });
 
@@ -44,15 +45,15 @@ const useStyles = makeStyles(theme => ({
     }
   },
   root: {
-    marginTop: "2em",
-    padding: theme.spacing(3, 2),
+    paddingTop: "2em",
     flexGrow: 1,
+    backgroundColor: "transparent",
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat`,
-    backgroundSize: "cover",
-    backgroundPosition: "0 400px",
-    paddingBottom: 200,
-    height: "100%"
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
+    backgroundSize: "cover"
+  },
+  fab: {
+    margin: theme.spacing(1)
   },
 
   rangeLabel: {
@@ -146,6 +147,7 @@ function Question(props) {
   //On Component Mount, build out an answer array in state.
   useEffect(() => {
     API.getQuestions(null).then(res => {
+      console.log(res.data)
       setQuestionList(() => ({
         questionList: res.data
       }));
@@ -202,7 +204,7 @@ function Question(props) {
                 <Grid item xs={12} sm={6} md={12}>
                   <Paper>
                     <Container>
-                      <Box component="h4" textAlign="center">
+                      <Box component="h2" textAlign="center">
                         Categories
                       </Box>
                       <RadioGroup
@@ -211,12 +213,12 @@ function Question(props) {
                         onChange={handleChange}
                         column="true"
                       >
-                        {["JS", "HTML", "CSS", "REACT"].map(value => (
+                        {languages.map((language, index) => (
                           <FormControlLabel
-                            key={value}
-                            value={value.toString()}
+                            key={index}
+                            value={language.short}
                             control={<Radio />}
-                            label={value.toString()}
+                            label={language.lang}
                           />
                         ))}
                       </RadioGroup>
@@ -226,14 +228,16 @@ function Question(props) {
                 <Grid item xs={6} sm={6} md={12}>
                   <Container>
                     <Box component="h4" textAlign="center">
-                      <Button
+                      {/* <Button
                         variant="contained"
                         color="secondary"
                         className={classes.button}
                         onClick={handleClickOpen}
                       >
                         New Question
-                      </Button>
+                      </Button> */}
+                      <AddQuestionButton handleClickOpen={handleClickOpen}/>
+                      
                     </Box>
                   </Container>
                 </Grid>

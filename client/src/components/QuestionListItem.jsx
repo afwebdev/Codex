@@ -8,6 +8,8 @@ import Container from "@material-ui/core/Container";
 import ToolTip from "@material-ui/core/Tooltip";
 import withStyles from "@material-ui/styles/withStyles";
 import { Typography } from "@material-ui/core";
+import ListDivider from "./ListDivider";
+
 // import { blue } from "@material-ui/core/colors";
 
 const styles = theme => ({
@@ -50,7 +52,10 @@ const questionItem = props => {
           <Paper key={questions._id} className={classes.questionList}>
             <Container style={{ marginTop: "2em", padding: "1em" }}>
               <Grid container spacing={1}>
-                <Grid item xs={2} sm={2} md={2}>
+                <Grid item xs={2} sm={4} md={4}>
+                  <ListDivider />
+                </Grid>
+                {/* <Grid item xs={2} sm={2} md={2}>
                   <Box
                     component="div"
                     display="flex"
@@ -69,8 +74,8 @@ const questionItem = props => {
                       </Avatar>
                     </ToolTip>
                   </Box>
-                </Grid>
-                <Grid item xs={10} sm={10} md={10}>
+                </Grid> */}
+                <Grid item xs={10} sm={4} md={5}>
                   <Box component="h3">{question_title}</Box>
                   <Typography variant="body1">
                     {question_description}
