@@ -35,7 +35,7 @@ import TextField from "@material-ui/core/TextField";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-github";
-const backgroundShape = require("../images/tech-backgrounds-2.jpg");
+const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "5px",
     flexGrow: 1,
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat center center fixed`,
+    background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     //backgroundPosition: "0 400px",
     paddingBottom: 200
@@ -166,7 +166,6 @@ const Answer = props => {
         API.getQuestionAnswers(questionID).then(res => {
           console.log("THIS IS ON COMPONENT MOUNT");
           console.log(res.data.answer_id[0].comment_id);
-
 
           setAnswerState(prevState => ({
             ...prevState,
@@ -297,9 +296,6 @@ const Answer = props => {
           <Grid item xs={12} md={6} style={{ margin: "0 auto" }}>
             <Paper style={{ textAlign: "center" }} className={classes.paper}>
               <Typography variant="h4">{answerState.question.title}</Typography>
-              <Typography variant="p">
-                {answerState.question.description}
-              </Typography>
             </Paper>
           </Grid>
           {/* End of question */}
