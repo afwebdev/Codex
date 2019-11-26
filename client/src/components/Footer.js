@@ -22,13 +22,6 @@ const styles = theme => ({
     borderColor: "grey",
     borderWidth: 1
   },
-  bottomnavigation: {
-    position: "relative",
-    backgroundColor: "red"
-  },
-  footer: {
-    backgroundColor: "black"
-  },
   // paper: {
   //   padding: theme.spacing(2),
   //   textAlign: "center",
@@ -36,11 +29,19 @@ const styles = theme => ({
   // },
   logo: {
     marginTop: 1,
-    height: 50
+    height: 75
   },
   link: {
     textDecoration: "none",
     color: "grey"
+  },
+  p: {
+ color: 'lightgrey',
+ fontSize: 10,
+  // position: 'absolute',
+  paddingTop: 40,
+  marginLeft: 10
+
   }
 });
 const useStyles = makeStyles(theme => ({}));
@@ -52,50 +53,51 @@ class Footer extends Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs>
-            <Link className={classes.link} to={{ pathname: "/" }}>
-              <img className={classes.logo} src={logo}></img>
-            </Link>
-          </Grid>
-          <Grid item xs={5}>
+          {/* <Grid item xs>
             <List>
               <ListItem>
                 <Link className={classes.link} to={{ pathname: "/" }}>
-                  <HomeIcon />
+                  <HomeIcon fontSize="small" />
                   Home
                 </Link>
               </ListItem>
               <ListItem>
                 <Link className={classes.link} to={{ pathname: "/dashboard" }}>
-                  <DashboardIcon />
+                  <DashboardIcon fontSize="small" />
                   Dashboard
                 </Link>
               </ListItem>
               <ListItem>
                 <Link className={classes.link} to={{ pathname: "/wizard" }}>
-                  <MoneyIcon />
+                  <MoneyIcon fontSize="small" />
                   Wizard
                 </Link>
               </ListItem>
-              <ListItem>
+            </List>
+          </Grid> */}
+          <Grid item xs={10}>
+            <Link className={classes.link} to={{ pathname: "/" }}>
+              <img className={classes.logo} src={logo}></img>
+            </Link>
+            <p className={classes.p}> Site design / Logo © 2019 Codex; <br /> Made and Owned by 'This-Is-Our-Group</p>
+          </Grid>
+          <Grid item xs>
+            <List style={{paddingTop: 25}}>
+              <ListItem >
                 <Link className={classes.link} to={{ pathname: "/Questions" }}>
-                  <QuestionAnswerIcon />
+                  <QuestionAnswerIcon fontSize="small" style={{textAlign: 'right'}}/>
                   Questions
                 </Link>
               </ListItem>
-            </List>
-          </Grid>
-          <Grid item xs>
-            <List>
               <ListItem>
                 <Link className={classes.link} to={{ pathname: "/signup" }}>
-                  <LockOpenIcon />
+                  <LockOpenIcon fontSize="small" />
                   Signup
                 </Link>
               </ListItem>
               <ListItem>
                 <Link className={classes.link} to={{ pathname: "/help" }}>
-                  <ContactSupportIcon />
+                  <ContactSupportIcon fontSize="small" />
                   Help
                 </Link>
               </ListItem>
