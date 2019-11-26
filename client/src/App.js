@@ -24,15 +24,6 @@ const theme = createMuiTheme({
   }
 });
 
-// localStorage.setItem("user", {
-//   _id: "",
-//   username: "",
-//   user_email: "",
-//   user_firstName: "",
-//   user_lastName: "",
-//   user_country: ""
-// });
-
 function App() {
   return (
     <Router>
