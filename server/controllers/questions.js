@@ -59,13 +59,15 @@ const getQuestionByID = (req, resp) => {
     .populate({
       path: "answer_id",
       populate: {
-        path: "comment_id",
-        model: "Comment"
+        path: "user_id",
+        select: "user_username",
+        model: "User"
       }
     })
     .populate("user_id", "user_username")
     .exec((err, docs) => {
       if (!err) {
+        console.log(docs);
         resp.json(docs);
       } else {
         console.log(err);

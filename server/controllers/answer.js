@@ -20,7 +20,7 @@ const getAnsweredQuestions = (req, res, next) => {
 };
 
 // Posts an answer with that specific user id which will be accessed from context
-const postAnswer = (req, res, next) => {
+const postAnswer = (req, resp, next) => {
   console.log("Request being send via postAnswer");
   console.log("REQ BODY IN POST ANSWER", req.body);
   //let question = "5dd03a4de89b62aed0e3080d";
@@ -37,12 +37,21 @@ const postAnswer = (req, res, next) => {
     })
     .then(dbQuestion => {
       Question.findOne({ _id: questionID })
-        .populate("answer_id")
+        .populate({
+          path: "answer_id",
+          populate: {
+            path: "user_id",
+            select: "user_username",
+            model: "User"
+          }
+        })
+        .populate("user_id", "user_username")
         .exec((err, docs) => {
           if (!err) {
             console.log(docs);
-            res.json(docs);
+            resp.json(docs);
           } else {
+            console.log(err);
             throw err;
           }
         });
