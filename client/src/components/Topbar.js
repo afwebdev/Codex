@@ -98,6 +98,7 @@ const Topbar = props => {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     // console.log(userStatus)
     if (localStorage.getItem("user")) {
       if (JSON.parse(localStorage.getItem("user"))._id !== userStatus._id) {
@@ -132,10 +133,6 @@ const Topbar = props => {
     localStorage.setItem("loggedIn", false);
     API.signOut();
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const current = () => {
     if (props.currentPath === "/home") {

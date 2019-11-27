@@ -2,37 +2,41 @@ import React, { useContext, useState, useEffect } from "react";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Collapse from "@material-ui/core/Collapse";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-// import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import MDE from "../components/MDE/mde";
+import SendIcon from "@material-ui/icons/Send";
+
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import atomdarkreason from "react-syntax-highlighter/dist/esm/styles/hljs/atomdarkreason";
+import atomdarkreason from "react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark-reasonable";
 import Container from "@material-ui/core/Container";
 import API from "../utils/API";
-// import ToolTip from "@material-ui/core/Tooltip";
 import {
   Questionlist,
   Answerlist,
   Replylist
 } from "../components/QuestionAnswerList";
 import { LoginContext } from "./../components/LoginContext";
-// import Footer from "../components/Footer";
 import { Reply } from "../components/Reply";
 import { makeStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-// import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 import TextField from "@material-ui/core/TextField";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-github";
 import { display } from "@material-ui/system";
+import ReplyBox from "../components/ReplyBox";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +56,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: "5px"
   },
   root: {
-    color: "green",
     paddingTop: "5px",
     flexGrow: 1,
     overflow: "hidden",
@@ -78,9 +81,14 @@ const useStyles = makeStyles(theme => ({
 const Answer = props => {
   const classes = useStyles();
   const currentPath = props.location.pathname;
+  const questionID = props.match.params.id;
 
   const [userStatus, setUserStatus] = useContext(LoginContext);
-  const questionID = props.match.params.id;
+  //States for reply box toggle.
+  const [openReply, setOpenReply] = React.useState(false);
+
+  const [newAnswer, setNewAnswer] = React.useState("");
+
   const [answerState, setAnswerState] = useState({
     commentsToRender: 3,
     question: { title: "", description: "", code: "", dex: 0, category: "" },
@@ -89,97 +97,13 @@ const Answer = props => {
     showReply: false
   });
 
-  // Handles change of Answer box/Text edititor and updates state accordingly
-  const handleInputchangeCode = newValue => {
-    console.log(newValue);
-    // setAnswerState(prevState => ({
-    //   ...prevState,
-    //   question: { ...prevState.question, code: newValue }
-    // }));
+  const handleExpandClick = () => {
+    setOpenReply(!openReply);
   };
 
-  // Once you click reply, this function will run
-  const reply = event => {
-    console.log("REPLY IS CLICKED STILL");
-    const replyId = event.target.id;
-    if (answerState.reply === replyId) {
-      setAnswerState(prevState => ({
-        ...prevState,
-        reply: false
-      }));
-    } else {
-      setAnswerState(prevState => ({
-        ...prevState,
-        reply: replyId
-      }));
-    }
-  };
-
-  // Once you click show more replies, this function will run
-  const showmorereply = event => {
-    const replyId = event.target.id;
-    if (answerState.showReply === replyId) {
-      setAnswerState(prevState => ({
-        ...prevState,
-        showReply: false
-      }));
-    } else {
-      setAnswerState(prevState => ({
-        ...prevState,
-        showReply: replyId,
-        commentsToRender: 3
-      }));
-    }
-  };
-
-  // Once you click show more comments, this will show two more comments.
-  const showComments = () => {
-    setAnswerState(prevState => ({
-      ...prevState,
-      commentsToRender: answerState.commentsToRender + 2
-    }));
-  };
-
-  // SUBMIT REPLY
-  // API call to post a reply to an answer
-  const submitReply = event => {
-    const answer_id = event.target.id;
-    console.log(answer_id);
-    const reply = document.getElementById(answer_id + 1).value;
-    console.log(reply);
-    const comment = {
-      answer_id,
-      comment: reply,
-      rejection_reason: null,
-      user_id: userStatus.userId
-    };
-    API.postReply(comment)
-      .then(res => {
-        setAnswerState(prevState => ({
-          ...prevState,
-          reply: false
-        }));
-        // This will allow you to get the refreshed comments, while updating state as well.
-        API.getQuestionAnswers(questionID).then(res => {
-          console.log("THIS IS ON COMPONENT MOUNT");
-          console.log(res.data.answer_id[0].comment_id);
-
-          setAnswerState(prevState => ({
-            ...prevState,
-            question: {
-              ...prevState.question,
-              description: res.data.question_description
-            },
-            answers: res.data.answer_id
-          }));
-
-          console.log(res.data);
-        });
-        console.log("Posted the reply");
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  const codeChangeHandler = e => {
+    console.log(e);
+    setNewAnswer(e);
   };
 
   useEffect(() => {
@@ -187,8 +111,9 @@ const Answer = props => {
     // sets state to the question and answers for that question
     console.log(questionID);
     API.getQuestionAnswers(questionID).then(res => {
-      // console.log(res);
+      console.log(res);
       console.log("THIS IS ON COMPONENT MOUNT");
+      console.log(res);
       // console.log(res.data.answer_id[0].comment_id);
       setAnswerState(prevState => ({
         ...prevState,
@@ -205,22 +130,22 @@ const Answer = props => {
 
       console.log(res.data);
     });
-  }, []);
+  }, [openReply]);
 
   //SUBMIT ANSWER
   // On click of the answer button, submit an answer. This is only for text box
   // This will update answer collection, as well as question collection
   const submitAnswer = () => {
-    const answer = document.getElementById("outlined-basic").value;
-    console.log(userStatus.userId);
+    // console.log(userStatus);
     const answerObj = {
       question_id: questionID,
-      answer,
-      user_id: userStatus.userId
+      answer: newAnswer,
+      user_id: userStatus.user._id
     };
-    console.log(answerObj);
+    // console.log(answerObj);
     API.postAnswer(answerObj)
       .then(postRes => {
+        console.log(postRes);
         setAnswerState(prevState => ({
           ...prevState,
           answers: postRes.data.answer_id
@@ -248,46 +173,8 @@ const Answer = props => {
       });
   };
 
-  //ACE EDITOR
-  // This for the the Ace editor. Takes the code and submits it as an answer
-  const submitAnswerCode = () => {
-    const answer = answerState.codeText;
-    console.log(userStatus.userId);
-    const answerObj = {
-      question_id: questionID,
-      answer,
-      user_id: userStatus.userId
-    };
-    console.log(answerObj);
-    API.postAnswer(answerObj)
-      .then(res => {
-        setAnswerState(prevState => ({
-          ...prevState,
-          answers: res.data.answer_id
-        }));
-        // This will allow you to get the refreshed comments, while updating state as well.
-        API.getQuestionAnswers(questionID).then(res => {
-          console.log(res);
-          console.log("THIS IS ON COMPONENT MOUNT");
-          console.log(res.data.answer_id[0].comment_id);
-          setAnswerState(prevState => ({
-            ...prevState,
-            answers: res.data.answer_id
-          }));
-          console.log(res.data);
-        });
-        console.log("Posted the reply");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  let replyHTML;
-  let showReplyHTML;
-  let buttonId;
-
-  // RENDER THE JSX
+  // RENDER THE MAIN COMPONENT JSX.
+  //EVVERYTHING IS IN HERE.
   return (
     <>
       <CssBaseline />
@@ -295,7 +182,7 @@ const Answer = props => {
       <div className={classes.root}>
         {/* Beginning of Answer Page Grid */}
         {/* <Paper> */}
-        <Grid direction="column" className={classes.topGrid}>
+        <Grid container direction="column" className={classes.topGrid}>
           {/* Beginnning Of Top Section */}
           <Grid item xs={12} md={6} style={{ margin: "0 auto" }}>
             <Paper
@@ -320,7 +207,7 @@ const Answer = props => {
           {/* End of Top Title/desc Section */}
 
           {/* Start of question info section */}
-          <Grid style={{ margin: "0 auto" }} item xs={8}>
+          <Grid style={{ margin: "0 auto" }} item xs={12} sm={10}>
             <Grid justify="center" container direction="column">
               <Paper style={{ marginTop: "2em", width: "100%" }}>
                 <Container
@@ -355,103 +242,56 @@ const Answer = props => {
           </Grid>
 
           {/* User answers section */}
-          <Grid className={classes.grid}>
+          <Grid
+            direction="column"
+            container
+            spacing={2}
+            className={classes.grid}
+          >
             <div
               style={{
+                display: "flex",
+                flexDirection: "column",
                 padding: "1em",
                 overflowX: "auto",
-                maxHeight: "500px",
+                // maxHeight: "500px",
                 minWidth: "100%",
-                backgroundColor: "#efefef"
+                backgroundColor: "#fff"
               }}
             >
-              {answerState.answers.map(answer => {
-                // console.log(answer);
-                buttonId = answer._id;
-                // setting the ID of the reply box
-                // This is for the conditional rendering of the reply box.
-                if (answerState.reply === answer._id) {
-                  replyHTML = <Reply id={buttonId} submitReply={submitReply} />;
-                } else {
-                  replyHTML = <></>;
-                }
-                // Setting up additional replies
-                if (answerState.showReply === answer._id) {
-                  showReplyHTML = (
-                    <>
-                      {/* This is for collapsing the replies */}
-                      <ExpansionPanel>
-                        <ExpansionPanelDetails>
-                          <Typography>
-                            {answer.comment_id
-                              .slice(0, answerState.commentsToRender)
-                              .map(comment => {
-                                console.log(comment);
-                                return <Replylist>{comment.comment}</Replylist>;
-                              })}
-                          </Typography>
-                          <h5 onClick={showComments}>show more</h5>
-                        </ExpansionPanelDetails>
-                      </ExpansionPanel>
-                    </>
-                  );
-                } else {
-                  showReplyHTML = <></>;
-                }
-                return (
-                  <>
-                    <Answerlist
-                      id={answer._id}
-                      key={answer._id}
-                      reply={reply}
-                      showmorereply={showmorereply}
+              <Grid item xs={12} sm={12}>
+                <IconButton
+                  onClick={handleExpandClick}
+                  aria-expanded={openReply}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                  New Answer
+                </IconButton>
+                <Collapse in={openReply} timeout="auto" unmountOnExit>
+                  {/* STUFF HERE EDITOR */}
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      onClick={submitAnswer}
+                      color="primary"
+                      variant="contained"
+                      style={{ margin: "2em" }}
                     >
-                      {answer.answer}
-                    </Answerlist>
-                    {showReplyHTML}
-                    {replyHTML}
-                  </>
-                );
-              })}
+                      <SendIcon />
+                      Submit
+                    </Button>
+                  </div>
+                  <MDE change={codeChangeHandler} value={newAnswer} />
+                </Collapse>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <>
+                  <Answerlist answers={answerState.answers} />
+                </>
+              </Grid>
             </div>
-
-            <TextField
-              className={classes.answerBox}
-              id="outlined-basic"
-              label="Submit an Answer Here"
-              variant="outlined"
-            />
-            <Button
-              className={classes.submitButton}
-              onClick={submitAnswer}
-              variant="contained"
-              color="primary"
-            >
-              Submit Answer
-            </Button>
           </Grid>
-          {/* Ending of Reply Box */}
-
-          {/* Begining of the code editor */}
-          <Grid item xs={12} sm={12} md={3} className={classes.grid}>
-            <AceEditor
-              onChange={handleInputchangeCode}
-              value={answerState.codeText}
-              mode="javascript"
-            />
-            <Button
-              className={classes.submitButton}
-              onClick={submitAnswerCode}
-              variant="contained"
-              color="primary"
-            >
-              Submit Code
-            </Button>
-          </Grid>
-          {/* End of code editor */}
-          {/* </Grid> */}
         </Grid>
-        {/* </Paper> */}
         {/* End of TOP LEVEL GRID (Parent of all) */}
       </div>
       <Footer />

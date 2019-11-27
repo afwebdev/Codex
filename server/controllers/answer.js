@@ -22,21 +22,21 @@ const getAnsweredQuestions = (req, res, next) => {
 // Posts an answer with that specific user id which will be accessed from context
 const postAnswer = (req, res, next) => {
   console.log("Request being send via postAnswer");
-  console.log(req.body);
+  console.log("REQ BODY IN POST ANSWER", req.body);
   //let question = "5dd03a4de89b62aed0e3080d";
-  let question = req.body.question_id;
+  let questionID = req.body.question_id;
   Answer.create(req.body)
     .then(dbAnswer => {
       // When a new answer is posted successfully, use the question id
       // from the request, to push answer id into its array
       return Question.findOneAndUpdate(
-        { _id: question },
+        { _id: questionID },
         { $push: { answer_id: dbAnswer._id } },
         { new: true }
       );
     })
     .then(dbQuestion => {
-      Question.findOne({ _id: question })
+      Question.findOne({ _id: questionID })
         .populate("answer_id")
         .exec((err, docs) => {
           if (!err) {
@@ -48,6 +48,8 @@ const postAnswer = (req, res, next) => {
         });
     })
     .catch(err => {
+      console.log("ERR!");
+      console.log(err);
       res.json(err);
     });
 };

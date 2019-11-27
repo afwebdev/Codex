@@ -50,7 +50,6 @@ const getQuestionByUser = (req, resp) => {
 
 // Gets question with a certain _id, when you are trying to answer it
 // and loads all answers
-
 const getQuestionByID = (req, resp) => {
   console.log("Accesing getQuestionByID function");
   const id = req.params._id;
@@ -64,10 +63,12 @@ const getQuestionByID = (req, resp) => {
         model: "Comment"
       }
     })
+    .populate("user_id", "user_username")
     .exec((err, docs) => {
       if (!err) {
         resp.json(docs);
       } else {
+        console.log(err);
         throw err;
       }
     });
