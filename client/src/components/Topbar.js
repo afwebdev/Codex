@@ -141,19 +141,19 @@ const Topbar = props => {
     if (props.currentPath === "/dashboard") {
       return 1;
     }
-    if (props.currentPath === "/signup") {
+    if (props.currentPath === "/Questions") {
       return 2;
     }
-    if (props.currentPath === "/signin") {
-      return 3;
-    }
-    if (props.currentPath === "/wizard") {
-      return 4;
-    }
-    if (props.currentPath === "/Questions") {
-      return 5;
-    }
-  };
+  //   if (props.currentPath === "/signup") {
+  //     return 2;
+  //   }
+  //   if (props.currentPath === "/signin") {
+  //     return 3;
+  //   }
+  //   if (props.currentPath === "/wizard") {
+  //     return 4;
+  //   }
+   };
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>

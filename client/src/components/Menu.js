@@ -15,10 +15,10 @@ const Menu = [
   //   label: "Sign In",
   //   pathname: "/signin"
   // },
-  {
-    label: "Wizard (No purpose atm)",
-    pathname: "/wizard"
-  },
+  // {
+  //   label: "Wizard (No purpose atm)",
+  //   pathname: "/wizard"
+  // },
   {
     label: "Open Questions",
     pathname: "/Questions"
