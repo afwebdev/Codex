@@ -9,6 +9,9 @@ import ToolTip from "@material-ui/core/Tooltip";
 import withStyles from "@material-ui/styles/withStyles";
 import { Typography } from "@material-ui/core";
 import ListDivider from "./ListDivider";
+import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone';
+import Fab from '@material-ui/core/Fab';
+
 
 // import { blue } from "@material-ui/core/colors";
 
@@ -19,8 +22,30 @@ const styles = theme => ({
     fontSize: "14px",
     fontWeight: "bold"
   },
+  questionGrid: {
+    justifyContent: "space-between",
+    flexDirection: "column",
+    display: "flex"
+  },
   questionList: {
-    minHeight: "10em"
+    minHeight: "10em",
+    marginBottom: "1.5em"
+  },
+  questionInfo: {
+    paddingTop: "16px",
+    paddingLeft: "8px",
+    paddingRight: "8px"
+  },
+  questionDescription: {
+    padding: "0px 8px"
+  },
+  answerBox: {
+    justifyContent: "flex-end",
+    display: "flex",
+    padding: "1.5em"
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
   }
 });
 
@@ -36,7 +61,8 @@ const questionItem = props => {
           question_title,
           question_description,
           category,
-          dex
+          dex,
+          createdAt
         } = questions;
         // const { user_email, user_firstName } = questions.user_id;
         console.log(
@@ -50,10 +76,10 @@ const questionItem = props => {
         );
         return (
           <Paper key={questions._id} className={classes.questionList}>
-            <Container style={{ marginTop: "2em", padding: "1em" }}>
+            <Container style={{ padding: "1em" }}>
               <Grid container spacing={1}>
                 <Grid item xs={2} sm={4} md={4}>
-                  <ListDivider />
+                  <ListDivider category={category} dex={dex} createdAt={createdAt} />
                 </Grid>
                 {/* <Grid item xs={2} sm={2} md={2}>
                   <Box
@@ -75,14 +101,21 @@ const questionItem = props => {
                     </ToolTip>
                   </Box>
                 </Grid> */}
-                <Grid item xs={10} sm={4} md={5}>
-                  <Box component="h3">{question_title}</Box>
-                  <Typography variant="body1">
-                    {question_description}
-                  </Typography>
-                  <div>
-                    <Link to={`/answer/${_id}`}>Answer this question </Link>
-                  </div>
+                <Grid className={classes.questionGrid} item xs={10} sm={4} md={8}>
+                  <Box>
+                    <Box className={classes.questionInfo} component="h2">{question_title}</Box>
+                    <Typography className={classes.questionDescription} >
+                      {question_description}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.answerBox}>
+                    <Link to={`/answer/${_id}`}>
+                      <Fab variant="extended">
+                        <QuestionAnswerTwoToneIcon className={classes.extendedIcon} />
+                        Answer
+                      </Fab>
+                    </Link>
+                  </Box>
                 </Grid>
               </Grid>
             </Container>
