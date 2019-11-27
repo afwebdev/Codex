@@ -39,7 +39,7 @@ const userSchema = new Schema({
     type: String
   },
   user_dex: {type: Schema.Types.ObjectId, ref: "UserDex"}
-});
+}, {timestamps: true});
 
 //Allow use of getters.
 //Used here to obfuscate email when querying for it.

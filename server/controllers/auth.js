@@ -61,7 +61,8 @@ const signin = (req, res) => {
           user_email: user.user_email,
           user_firstName: user.user_firstName,
           user_lastName: user.user_lastName,
-          user_country: user.user_country
+          user_country: user.user_country,
+          user_createdAt: user.createdAt
         },
         dex: dexRes.dex
       });

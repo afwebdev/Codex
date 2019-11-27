@@ -1,6 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import ThumbUpTwoToneIcon from '@material-ui/icons/ThumbUpTwoTone';
+import Slide from "@material-ui/core/Slide";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter, Link } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,14 +10,16 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
+import Rating from "@material-ui/lab/Rating";
 // import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 // import Loading from "../components/common/Loading";
-// import Box from "@material-ui/core/Box";
+import Box from "@material-ui/core/Box";
 // import Container from "@material-ui/core/Container";
 import API from "../utils/API";
 import { LoginContext } from "../components/LoginContext";
 // import currentLoginStatus from "../utils/currentLoginStatus";
 import Topbar from "../components/Topbar";
+import Divider from "@material-ui/core/Divider";
 // import ListSubheader from "@material-ui/core/ListSubheader";
 // import List from "@material-ui/core/List";
 // import ListItem from "@material-ui/core/ListItem";
@@ -31,6 +34,11 @@ import Topbar from "../components/Topbar";
 import currentLoginStatus from "../utils/currentLoginStatus";
 import Footer from "../components/Footer";
 import ListData from "../components/ListData/ListData";
+import Chip from '@material-ui/core/Chip';
+import DoneIcon from '@material-ui/icons/Done';
+import AddQuestionButton from "../components/AddQuestionButton"
+import NewQuestion from "../components/Modal/NewQuestion";
+var moment = require('moment');
 
 const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
@@ -150,12 +158,43 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     // maxWidth: 360,
     backgroundColor: theme.palette.background.paper
+  },
+  boxCon: {
+    justifyContent: "center",
+    flexDirection: "column",
+    display: "flex"
+  },
+  divider: {
+    margin: "6px 0px"
+  },
+  chip: {
+    backgroundColor: "red"
+  },
+  thumb: {
+    paddingTop: "2px"
+  },
+  userFlagBox: {
+    textAlign: "center"
   }
 }));
 
 //MAIN Component.
 function Dashboard(props) {
   const [userStatus, setUserStatus] = useContext(LoginContext);
+  const [newQuestionDialog, setNewQuestionDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setNewQuestionDialog(true);
+  };
+
+  const handleClickClose = () => {
+    setNewQuestionDialog(false);
+  };
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="down" ref={ref} {...props} />;
+  });
+
   console.log(userStatus);
 
   const classes = useStyles();
@@ -170,6 +209,12 @@ function Dashboard(props) {
       <Topbar currentPath={currentPath} />
       <div className={classes.root}>
         {/* Top Level Grid */}
+        <NewQuestion
+          open={newQuestionDialog}
+          handleClickOpen={handleClickOpen}
+          handleClickClose={handleClickClose}
+          Transition={Transition}
+        />
         <Grid container justify="center">
           <Grid
             spacing={4}
@@ -182,45 +227,40 @@ function Dashboard(props) {
             <Grid item xs={12} md={4}>
               <Paper className={classes.paperProfile}>
                 <div className={classes.box}>
-                  <Avatar className={classes.avatar}>
-                    {(() =>
-                      `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()}
+                  <Avatar
+                    className={classes.avatar}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkURUEI6Sdvw9hSY3qZc8oFfUJMF50iB68eNeoyjAW8GnHq1FZ&s"
+                  >
+                    {/* {(() =>
+                      `${userStatus.user.user_firstName[0]}${userStatus.user.user_lastName[0]}`.toUpperCase())()} */}
                   </Avatar>
-                  <Typography variant="body2" gutterBottom>
-                    Hello,
-                    <br />
-                    {`${userStatus.user.user_firstName}`.charAt(0).toUpperCase() +
-                      `${userStatus.user.user_firstName}`.slice(
-                        1,
-                        userStatus.user.user_firstName.length
-                      )}
-                  </Typography>
-                  <Typography variant="body2">Dex: 00</Typography>
+                  <Box className={classes.boxCon}>
+                    <Typography variant="h5"><ThumbUpTwoToneIcon className={classes.thumb}/> 4.1</Typography>
+                    <Grid>
+                      <Rating name="read-only" value={4} readOnly />
+                    </Grid>
+                    <Box display="flex" justifyContent="center" flexDirection="row">
+                      <Typography variant="h5" >
+                        {user.user_firstName}
+                      </Typography>
+                      <span style={{color: "white"}}> ..</span>
+                      <img style={{alignSelf: "center"}} src={`https://www.countryflags.io/${user.user_country}/flat/32.png`} alt="flag"></img>
+                    </Box>
+                    <Divider className={classes.divider} variant="fullWidth" />
+                    <Typography fontSize="fontSize">
+                    Member for {moment().diff(moment(user.user_createdAt), "days")} days.
+                    </Typography>
+                  </Box>
                 </div>
                 <div
                   style={{
-                    marginTop: "5em",
+                    marginTop: "6em",
+                    padding: "6px",
                     display: "flex",
                     justifyContent: "center"
                   }}
                 >
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.actionButtom}
-                    x
-                  >
-                    My Questions
-                  </Button>
-                </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.actionButtom}
-                  >
-                    My Answers
-                  </Button>
+                  <AddQuestionButton handleClickOpen={handleClickOpen} />
                 </div>
               </Paper>
             </Grid>

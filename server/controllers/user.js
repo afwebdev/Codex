@@ -14,7 +14,7 @@ const registerUser = (req, res, next) => {
         error: err
       });
     }
-    const userDex = new UserDex({user_id: result._id})
+    const userDex = new UserDex({user_id: result._id, dex: 100})
     userDex.save().then(() => {
       if (err) {
         return res.status(400).json({

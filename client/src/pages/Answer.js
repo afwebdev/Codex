@@ -6,6 +6,10 @@ import Collapse from "@material-ui/core/Collapse";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import ErrorIcon from '@material-ui/icons/Error';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -83,6 +87,12 @@ const useStyles = makeStyles(theme => ({
   },
   topGrid: {
     marginTop: "2em"
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  icon: {
+    fontSize: 20,
   }
 }));
 
@@ -137,6 +147,7 @@ const Answer = props => {
     }
   };
 
+  
   // Final Answer, when user is prompted are you sure?
   const finalAnswer = () => {
     devID = answerState.answers[0].user_id
@@ -217,9 +228,14 @@ const Answer = props => {
       answer: newAnswer,
       user_id: userStatus.user._id
     };
+
+    if(!answerObj.answer){
+      return
+    }
     // console.log(answerObj);
     API.postAnswer(answerObj)
       .then(postRes => {
+        handleExpandClick()
         console.log(postRes);
         setAnswerState(prevState => ({
           ...prevState,
