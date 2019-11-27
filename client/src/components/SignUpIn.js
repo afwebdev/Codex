@@ -72,7 +72,8 @@ export default function SignUpIn(props) {
         ...userStatus,
         loggedIn: false
       });
-      localStorage.setItem("loggedIn", false);
+      localStorage.clear()
+      //localStorage.setItem("loggedIn", false);
       history.push("/");
       // window.location = "/";
     });
