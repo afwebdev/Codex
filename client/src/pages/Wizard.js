@@ -20,7 +20,7 @@ import Back from '../components/common/Back';
 import Footer from "../components/Footer";
 
 const qs = require('query-string');
-const backgroundShape = require('../images/Liquid-Cheese.svg');
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const numeral = require('numeral');
 numeral.defaultFormat('0,000');
@@ -30,9 +30,9 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.primary['A100'],
     overflow: 'hidden',
-    background: `url(${backgroundShape}) no-repeat`,
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: 'cover',
-    backgroundPosition: '0 400px',
+    // backgroundPosition: '0 400px',
     marginTop: 10,
     padding: 20,
     paddingBottom: 200

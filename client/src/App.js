@@ -20,7 +20,19 @@ const theme = createMuiTheme({
   },
   typography: {
     // Use the system font instead of the default Roboto font.
-    fontFamily: ['"Lato"', "sans-serif"].join(",")
+    // fontFamily: ["Arial", "'Helvetica Neue'", "Helvetica", "sans-serif"].join(
+    //   ","
+    // )
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "'Segoe UI'",
+      "Roboto",
+      "Oxygen-Sans",
+      "Ubuntu,Cantarell",
+      "'Helvetica Neue'",
+      "sans-serif"
+    ].join(",")
   }
 });
 

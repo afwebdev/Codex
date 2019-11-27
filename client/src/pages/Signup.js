@@ -20,7 +20,7 @@ import API from "../utils/API";
 import { useHistory } from "react-router-dom";
 import Grow from "@material-ui/core/Grow";
 import Footer from "../components/Footer";
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const styles = theme => ({
   root: {
@@ -112,6 +112,20 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.common.white
     }
   },
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.secondary["A100"],
+    overflow: "hidden",
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
+    backgroundSize: "cover",
+    // backgroundPosition: "0 400px",
+    marginTop: 10,
+    padding: 20,
+    paddingBottom: 50
+  },
+  container: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)'
+      },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -266,9 +280,9 @@ function SignUp(props) {
   return (
     <React.Fragment>
       <Topbar currentPath={currentPath} />
-
+<div className={classes.root}>
       <Grow in={true}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" className={classes.container}>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -402,6 +416,7 @@ function SignUp(props) {
         </Container>
       </Grow>
       <br/>
+      </div>
       <Footer />
     </React.Fragment>
   );
