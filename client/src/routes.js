@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import SignIn from "./pages/SignIn";
 import NoMatch from "./pages/NoMatch";
 import Questions from "./pages/QuestionPage";
+import Payments from "./pages/Payments";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   console.log(document.cookie);
@@ -39,6 +40,7 @@ export default props => (
     <Route exact path="/wizard" component={Wizard} />
     <Route exact path="/Questions" component={Questions} />
     <Route exact path="/answer/:id" component={Answer} />
+    <Route exact path="/Payments" component={Payments} />
     <Route component={NoMatch} />
   </Switch>
 );

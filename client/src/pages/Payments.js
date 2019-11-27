@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // import withStyles from "@material-ui/styles/withStyles";
 import { withRouter, useHistory } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,22 +7,22 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Grow from "@material-ui/core/Grow";
+// import Slide from '@material-ui/core/Slide';
 import Topbar from "../components/Topbar";
+import ScrollyScroll from "../components/ScrollyScroll";
 import TestimonialAvatar from "../components/TestimonialAvatar";
 import Footer from "../components/Footer";
 import Quote from "../components/Quote";
 import logo from "../images/pngLogo.png";
 import Box from "@material-ui/core/Box";
-import { flexbox } from "@material-ui/system";
 import Rating from "@material-ui/lab/Rating";
-import { PayPalButton } from "react-paypal-button-v2";
-// import PaypalExpressBtn from "react-paypal-express-checkout";
+import PayPalButton from "../components/PayPal"
 
 const backgroundShape = require("../images/Liquid-Cheese.svg");
 
@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 function Main(props) {
   let history = useHistory();
 
-  const [animateIn, setAnimateIn] = useState(true);
+  // const [animateIn, setAnimateIn] = useState(false);
 
   const classes = useStyles();
 
@@ -90,43 +90,42 @@ function Main(props) {
     return history.push("/dashboard");
   };
 
-  const cards = [
-    {
-      name: "Vladimir P.",
-      quote:
-        "To forgive the terrorists is up to God, but to send them to him is up to me.",
-      stars: 4,
-      url: "http://www.hotavatars.com/wp-content/uploads/2019/01/I80W1Q0.png"
-    },
-    {
-      name: "Anonymous",
-      quote: "I finessed my way into a dev role thanks to Codex",
-      stars: 5,
-      url: "https://www.nuclearinst.com/write/MediaUploads/avataaars.png"
-    },
-    {
-      name: "Anonymous",
-      quote: "Told me I cannot build my whole app using HTML... Liers",
-      stars: 2,
-      url: "https://goticradio.files.wordpress.com/2017/11/avataaars.png?w=264"
-    }
-  ];
+  // const cards = [
+  //   {
+  //     name: "Vladimir P.",
+  //     quote:
+  //       "To forgive the terrorists is up to God, but to send them to him is up to me.",
+  //     stars: 4,
+  //     url: "http://www.hotavatars.com/wp-content/uploads/2019/01/I80W1Q0.png"
+  //   },
+  //   {
+  //     name: "Anonymous",
+  //     quote: "I finessed my way into a dev role thanks to Codex",
+  //     stars: 5,
+  //     url: "https://www.nuclearinst.com/write/MediaUploads/avataaars.png"
+  //   },
+  //   {
+  //     name: "Anonymous",
+  //     quote: "Told me I cannot build my whole app using HTML... Liers",
+  //     stars: 2,
+  //     url: "https://goticradio.files.wordpress.com/2017/11/avataaars.png?w=264"
+  //   }
+  // ];
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Topbar />
-      <Grow in={animateIn}>
+      <Grow in={true}>
         <div className={classes.root}>
           <main>
             <div className={classes.headerContent}>
               <Container className={classes.container} maxWidth="sm">
-                <img className={classes.logo} src={logo}></img>
-
-                <Typography>
-                  <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
-                  <script>paypal.Buttons().render('body');</script>
-                </Typography>
+                {/* <img
+                  className={classes.logo}
+                  src={logo}
+                  alt="you-had-one-job"
+                ></img>
                 <Typography
                   variant="h5"
                   align="center"
@@ -135,81 +134,53 @@ function Main(props) {
                 >
                   We strive to cultivate an environment that empower developers
                   and connect them to solutions that enable productivity,
-                  growth, and discovery. JJJJJJSSSSSS
-                </Typography>
-                <div className={classes.heroButtons}>
-                  <Grid container spacing={2} justify="center">
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={getStarted}
-                      >
-                        Getting Started
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button variant="outlined" color="primary">
-                        See Reviews
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </div>
+                  growth, and discovery. jjjjjjjjjjjjjkkkkkkkkgvvvvvvvvvv
+                </Typography> */}
+                <PayPalButton></PayPalButton>
               </Container>
             </div>
-            <Container className={classes.cardGrid} maxWidth="md">
-              <Grid container spacing={4}>
-                <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                  {cards.map((card, index) => (
-                    <div
-                      style={
-                        index === 1
-                          ? { alignSelf: "flex-start", flexGrow: "2" }
-                          : { alignSelf: "flex-end" }
-                      }
-                    >
-                      <Grid item key={card} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
-                          <CardMedia>
-                            <TestimonialAvatar url={card.url} />
-                          </CardMedia>
-                          <CardContent className={classes.cardContent}>
-                            <Box display="flex" flexDirection="row">
-                              <Box p={1} flexGrow={1}>
-                                <Typography
-                                  gutterBottom
-                                  variant="h5"
-                                  component="h2"
-                                >
-                                  {card.name}
-                                </Typography>
-                              </Box>
-                              <Box p={1}>
-                                <Rating
-                                  name="read-only"
-                                  value={card.stars}
-                                  readOnly
-                                />
-                              </Box>
-                            </Box>
-                            <Quote quote={card.quote} />
-                          </CardContent>
-                          {/* <CardActions>
-                          <Button size="small" color="primary">
-                            View
-                          </Button>
-                          <Button size="small" color="primary">
-                            Edit
-                          </Button>
-                        </CardActions> */}
-                        </Card>
-                      </Grid>
-                    </div>
-                  ))}
-                </div>
-              </Grid>
+            <Container
+              className={classes.cardGrid}
+              maxWidth="md"
+              id="to-the-reviews"
+            >
+              {/* <Grid container spacing={4}>
+                {cards.map((card, index) => (
+                  <Grid item key={index} xs={12} sm={6} md={4}>
+                    <Card className={classes.card}>
+                      <CardMedia>
+                        <TestimonialAvatar url={card.url} />
+                      </CardMedia>
+                      <CardContent className={classes.cardContent}>
+                        <Box display="flex" flexDirection="row">
+                          <Box p={1} flexGrow={1}>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {card.name}
+                            </Typography>
+                          </Box>
+                          <Box p={1}>
+                            <Rating
+                              name="read-only"
+                              value={card.stars}
+                              readOnly
+                            />
+                          </Box>
+                        </Box>
+                        <Quote quote={card.quote} />
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid> */}
             </Container>
           </main>
+          <div>
+            
+          </div>
         </div>
       </Grow>
       <Footer />
@@ -217,29 +188,4 @@ function Main(props) {
   );
 }
 
-export class Example extends React.Component {
-  render() {
-    return (
-      <PayPalButton
-        amount="0.01"
-        // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-        onSuccess={(details, data) => {
-          alert("Transaction completed by " + details.payer.name.given_name);
-
-          // OPTIONAL: Call your server to save the transaction
-          return fetch("/paypal-transaction-complete", {
-            method: "post",
-            body: JSON.stringify({
-              orderId: data.orderID
-            })
-          });
-        }}
-        options={{
-          clientId: "Af7p189nFDY4nP_nic5xay4fUzi6y_FLRPYLg1Fn2mFqBxpp8okSY8DU3w_btg9D4GL0ZthXernPFmqo"
-        }}
-      />
-    );
-  }
-}
-
-export default withRouter(Example);
+export default withRouter(Main);
