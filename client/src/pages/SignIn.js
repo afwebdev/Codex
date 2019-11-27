@@ -22,16 +22,16 @@ import { useHistory } from "react-router-dom";
 import Grow from "@material-ui/core/Grow";
 import Footer from "../components/Footer";
 
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.secondary["A100"],
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat`,
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: "cover",
-    backgroundPosition: "0 400px",
+    // backgroundPosition: "0 400px",
     marginTop: 10,
     padding: 20,
     paddingBottom: 500
@@ -109,6 +109,18 @@ function Copyright() {
 }
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.secondary["A100"],
+    overflow: "hidden",
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
+    backgroundSize: "cover",
+    // backgroundPosition: "0 400px",
+    marginTop: 10,
+    padding: 20,
+    paddingBottom: 50
+  },
+  
   "@global": {
     body: {
       backgroundColor: theme.palette.common.white
@@ -118,7 +130,12 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    // backgroundColor: "white",
+    // padding: 10 
+  },
+  container: {
+backgroundColor: 'rgba(255, 255, 255, 0.9)'
   },
   avatar: {
     margin: theme.spacing(1),
@@ -225,8 +242,9 @@ function SignIn(props) {
   return (
     <React.Fragment>
       <Topbar currentPath={currentPath} />
-      <Grow in={true}>
-        <Container component="main" maxWidth="xs">
+      <div className={classes.root}>
+      <Grow in={true} >
+        <Container component="main" maxWidth="xs" className={classes.container}>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -307,6 +325,7 @@ function SignIn(props) {
         </Container>
       </Grow>
       <br />
+      </div>
       <Footer />
     </React.Fragment>
   );

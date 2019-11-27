@@ -32,7 +32,7 @@ import currentLoginStatus from "../utils/currentLoginStatus";
 import Footer from "../components/Footer";
 import ListData from "../components/ListData/ListData";
 
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 //retrieve and store user info
 const storage = localStorage.getItem("user");
@@ -42,11 +42,11 @@ console.log(user);
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.grey["100"],
+    // backgroundColor: theme.palette.grey["100"],
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat`,
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: "cover",
-    backgroundPosition: "0 400px",
+    // backgroundPosition: "0 400px",
     paddingBottom: 200
   }
 });
@@ -126,11 +126,12 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.grey["100"],
+    // backgroundColor: "transparent",
+    opacity: 1,
     overflow: "hidden",
-    background: `url(${backgroundShape}) no-repeat`,
+    background: `url(${backgroundShape}) no-repeat center center fixed`,
     backgroundSize: "cover",
-    backgroundPosition: "0 400px",
+    // backgroundPosition: "0 400px",
     paddingBottom: 200
   },
   grid: {
@@ -188,9 +189,7 @@ function Dashboard(props) {
                   <Typography variant="body2" gutterBottom>
                     Hello,
                     <br />
-                    {`${userStatus.user.user_firstName}`
-                      .charAt(0)
-                      .toUpperCase() +
+                    {`${userStatus.user.user_firstName}`.charAt(0).toUpperCase() +
                       `${userStatus.user.user_firstName}`.slice(
                         1,
                         userStatus.user.user_firstName.length
@@ -209,6 +208,7 @@ function Dashboard(props) {
                     color="primary"
                     variant="contained"
                     className={classes.actionButtom}
+                    x
                   >
                     My Questions
                   </Button>

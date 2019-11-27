@@ -27,7 +27,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import AddQuestionButton from "../components/AddQuestionButton";
 
-const backgroundShape = require("../images/Liquid-Cheese.svg");
+const backgroundShape = require("../images/tech-backgrounds-2.jpg");
 
 const styles = theme => ({
   avatar: {
@@ -50,10 +50,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "transparent",
     overflow: "hidden",
     background: `url(${backgroundShape}) no-repeat center center fixed`,
-    backgroundSize: "cover"
-  },
-  fab: {
-    margin: theme.spacing(1)
+    backgroundSize: "cover",
+    // backgroundPosition: "0 400px",
+    paddingBottom: 200,
+    height: "100%"
   },
 
   rangeLabel: {
@@ -246,16 +246,18 @@ function Question(props) {
 
             <Grid item xs={12} sm={8} md={8}>
               <Container>
-                {questionList.questionList !== "" ? (
+                {questionList.questionList != "" ? (
                   <QuestionItems questions={questionList} />
                 ) : (
                   <React.Fragment>
-                    <Skeleton
-                      height={200}
-                      variant="rect"
-                      style={{ marginTop: "1em" }}
-                      width="100%"
-                    />
+                    <div>
+                      <Skeleton
+                        height={200}
+                        variant="rect"
+                        style={{ marginTop: "1.2em" }}
+                        width="100%"
+                      />
+                    </div>
                   </React.Fragment>
                 )}
                 {/* <QuestionItems questions={questionList} /> */}
