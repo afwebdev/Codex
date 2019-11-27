@@ -37,8 +37,8 @@ const userSchema = new Schema({
   },
   salt: {
     type: String
-  }
-});
+  },
+}, {timestamps: true});
 
 //Allow use of getters.
 //Used here to obfuscate email when querying for it.

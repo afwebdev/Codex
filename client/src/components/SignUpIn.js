@@ -115,7 +115,7 @@ export default function SignUpIn(props) {
               ) : (
                 <Avatar
                   alt="Remy Sharp"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRqzORJ5GNFP9l8zNFPW-kHCE1n2UbtkpGObWNZSm0xCa1u4J7&s"
+                  src="https://www.kkmm.gov.my/images/sub_bahagian/icon.png"
                 />
               )}
             </Grid>
@@ -162,11 +162,11 @@ export default function SignUpIn(props) {
                   >
                     {loggedIn ? (
                       <div>
-                        <MenuItem onClick={() => console.log(loggedIn)}>
-                          Profile
+                        <MenuItem onClick={() => history.push("/dashboard")}>
+                          Dashboard
                         </MenuItem>
-                        <MenuItem onClick={() => history.push("/")}>
-                          My account
+                        <MenuItem onClick={() => console.log("Fart")}>
+                          My Account
                         </MenuItem>
                         <MenuItem onClick={signOut}>Logout</MenuItem>
                       </div>
@@ -178,9 +178,9 @@ export default function SignUpIn(props) {
                         <MenuItem onClick={() => history.push("/signup")}>
                           Sign Up
                         </MenuItem>
-                        <MenuItem onClick={() => history.push("/")}>
+                        {/* <MenuItem onClick={() => history.push("/")}>
                           Placeholder
-                        </MenuItem>
+                        </MenuItem> */}
                       </div>
                     )}
                   </MenuList>
