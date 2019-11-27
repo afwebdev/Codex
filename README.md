@@ -1,5 +1,3 @@
-#
-
 # Project 3 - Codex
 
 This project is a react application that competes with the likes of Stack Overflow and DIEM. The application in question is called Codex and it is an online based freelancing platforming that mimics the usability of Stack Overflow. Codex will enable users to post a question and set a bounty for the question to be solved by the community of developers on the platform.
@@ -38,98 +36,37 @@ This is a schema of the workflow on the app and how the app is supposed to work.
 
 ## **Getting Started**
 
-#
+### Install
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### **Prerequisites**
-
-What things you need to install the software and how to install them
-
-Give examples
-
-### **Installing**
-
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
-
-The front-end React app will auto-reload as it&#39;s updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
-
-#
-
-## **Starting the app locally**
-
-#
-
-Start by installing front and backend dependencies. While in this directory, run the following command:
+**From root folder.**
 
     npm install
 
-This should install node modules within the server and the client folder.
+### **Run**
 
-After both installations complete, run the following command in your terminal:
+**From root folder.**
 
     npm start
-
-Your app should now be running on [http://localhost:3000](http://localhost:3000/). The Express server should intercept any AJAX requests from the client.
-
-#
-
-## **Deployment (Heroku)**
-
-#
-
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
-
-#
-
-## **Running the tests**
-
-#
-
-Explain how to run the automated tests for this system
-
-### **Break down into end to end tests**
-
-Explain what these tests test and why
-
-Give an example
-
-### **And coding style tests**
-
-Explain what these tests test and why
-
-Give an example
-
-#
 
 ## **Built With**
 
 #
 
-- JavaScript
-  - AXIOS – The HTTP requesting library for asynchronous operations
-  - MERN – The Web Stack of the project
-    - MongoDB
-    - Express
-    - REACT
-      - Material UI – User-Interface for the application
-      - Hooks
-    - js
-  - Router – API routing
-  - jSON
-    - JWT – Used to secure API&#39;s and logins with digital certificates
-  - Context
-- CSS
+Backend
 
-## **Contributing**
+- [Axios](https://www.npmjs.com/package/axios)
+- [MongoDB/Mongoose](https://www.npmjs.com/package/mongoose)
+- [Express](https://www.npmjs.com/package/express)
+- User Auth via JWT
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Frontend
 
-## **Versioning**
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
-
-#
+- [Material ui](https://www.npmjs.com/package/@material-ui/core)
+- [ReactJS](https://www.npmjs.com/package/react)
+- [SyntaxHighlighter](https://www.npmjs.com/package/react-syntax-highlighter)
+- [react-markdown](https://www.npmjs.com/package/react-markdown)
+- [semantic-ui-react](https://www.npmjs.com/package/semantic-ui-react)
+- [react-mde](https://www.npmjs.com/package/react-mde)
 
 ## **Authors**
 

@@ -32,9 +32,6 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 
 import TextField from "@material-ui/core/TextField";
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-github";
 import { display } from "@material-ui/system";
 import ReplyBox from "../components/ReplyBox";
 const backgroundShape = require("../images/Liquid-Cheese.svg");
