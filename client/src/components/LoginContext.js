@@ -10,7 +10,8 @@ export const LoginProvider = props => {
       user_firstName: "",
       user_lastName: "",
       user_id: "",
-      user_country: ""
+      user_country: "",
+      dex: 0
     }
   });
   return (

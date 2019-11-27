@@ -55,6 +55,19 @@ export default {
 
   postQuestion: function(question) {
     return axios.post("/api/question/add", question);
+  },
+
+  flipAnswerFlag: function(id){
+    return axios.put("/api/answer/changeFlag", id)
+  },
+
+  
+  addDex: function(dex){
+    return axios.put("/transaction/add", dex)
+  },
+
+  subtractDex: function(dex){
+    return axios.put("/transaction/subtract", dex)
   }
 
   // getUserInfo: function(userId) {

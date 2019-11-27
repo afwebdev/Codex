@@ -36,9 +36,9 @@ export default props => (
     <ProtectedRoute exact path="/dashboard" component={Dashboard} />
     <Route exact path="/signup" component={Signup} />
     <Route exact path="/signin" component={SignIn} />
-    <Route exact path="/wizard" component={Wizard} />
-    <Route exact path="/Questions" component={Questions} />
-    <Route exact path="/answer/:id" component={Answer} />
+    <ProtectedRoute exact path="/wizard" component={Wizard} />
+    <ProtectedRoute exact path="/Questions" component={Questions} />
+    <ProtectedRoute exact path="/answer/:id" component={Answer} />
     <Route component={NoMatch} />
   </Switch>
 );

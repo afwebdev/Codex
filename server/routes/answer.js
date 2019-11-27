@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   getAnsweredQuestions,
   postAnswer,
-  upVoteAnswer
+  upVoteAnswer,
+  flipAnswerFlag
 } = require("../controllers/answer");
 
 const { requireSignin } = require("../controllers/auth");
@@ -19,5 +20,8 @@ router.route("/api/answers/upvote").post(upVoteAnswer);
 
 //Get all answered QUESTIONS for a specified user
 router.route("/api/answers/user/:user_id").get(getAnsweredQuestions);
+
+// Flip the flag
+router.route("/api/answer/changeFlag").put(flipAnswerFlag)
 
 module.exports = router;

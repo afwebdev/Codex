@@ -77,8 +77,23 @@ const upVoteAnswer = (req, res, next) => {
   });
 };
 
+const flipAnswerFlag = (req,res,next) => {
+  const questionID = (req.body.id)
+  console.log(questionID)
+  Question.update({_id: questionID},{
+    is_answer_approved: true
+  },function(err,docs){
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.json(docs)
+    }
+  })
+}
 module.exports = {
   getAnsweredQuestions,
   postAnswer,
-  upVoteAnswer
+  upVoteAnswer,
+  flipAnswerFlag
 };

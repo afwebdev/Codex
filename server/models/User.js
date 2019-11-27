@@ -37,7 +37,8 @@ const userSchema = new Schema({
   },
   salt: {
     type: String
-  }
+  },
+  user_dex: {type: Schema.Types.ObjectId, ref: "UserDex"}
 });
 
 //Allow use of getters.
